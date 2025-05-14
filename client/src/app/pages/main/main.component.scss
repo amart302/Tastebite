@@ -1,0 +1,44 @@
+.main{
+    
+}
+
+.first-screen{
+    max-width: 1200px;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 1fr 0.7fr;
+    padding-inline: 20px;
+    overflow: hidden;
+
+    &__image{
+        width: 100%;
+        border-radius: 20px 0 0 20px;
+        background-color: aqua;
+    }
+
+    &__content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #E3F1FF;
+        padding-inline: 20px;
+        border-radius: 0 20px 20px 0;
+    }
+
+    &__rating{
+        font-size: 14px;
+        width: 80%;
+    }
+
+    &__title{
+        font-family: auto;
+        font-size: 38px;
+        width: 80%;
+    }
+
+    &__description{
+        font-size: 18px;
+        width: 80%;
+    }
+}
