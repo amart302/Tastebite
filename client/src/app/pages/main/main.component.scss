@@ -1,10 +1,13 @@
 .main{
     
+    &__container{
+        max-width: 1200px;
+        margin-inline: auto;
+    }
 }
 
 .first-screen{
-    max-width: 1200px;
-    margin-inline: auto;
+    
     display: grid;
     grid-template-columns: 1fr 0.7fr;
     padding-inline: 20px;
@@ -40,5 +43,17 @@
     &__description{
         font-size: 18px;
         width: 80%;
+    }
+}
+
+.second-screen{
+
+    &__title{
+        font-family: var(--secondary-font);
+        font-size: 36px;
+    }
+
+    &__content{
+        
     }
 }

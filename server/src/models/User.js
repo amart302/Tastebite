@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-export const User = new Schema({
+const UserSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -22,6 +22,7 @@ export const User = new Schema({
   },
   password: {
     type: String,
+    length: 6,
     required: true
   }
 }, {
@@ -29,4 +30,4 @@ export const User = new Schema({
   collection: 'users'
 });
 
-const User = mongoose.model('User', userSchema);
+export const User = mongoose.model('User', UserSchema);

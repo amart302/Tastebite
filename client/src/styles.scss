@@ -1,7 +1,11 @@
+:root{
+    --primary-font: Arial, Helvetica, sans-serif;
+    --secondary-font: auto;
+}
 *{
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--primary-font);
 }
 
 .auth-form{

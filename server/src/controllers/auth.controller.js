@@ -9,7 +9,7 @@ const generateAccessToken = (id, role) => {
     return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "24h" });
 };
 
-export async function singup(req, res) {
+export async function signup(req, res) {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -20,24 +20,28 @@ export async function singup(req, res) {
         const hashPassword = bcrypt.hashSync(password, 8);
 
         const existingUser = await User.findOne({
-            where: {
-                [Op.or]: [
-                    { username: username },
-                    { email: email }
-                ]
-            }
+            $or: [
+                { username: username },
+                { email: email }
+            ]
         });
-
-        if(existingUser){
-            if(existingUser.username === username) return res.status(409).json({ message: "Пользователь с таким именем уже существует" });
-            else if(existingUser.email === email) return res.status(409).json({ message: "Пользователь с такой почтой уже существует" });
+        if (existingUser) {
+            if (existingUser.username === username) {
+                return res.status(409).json({ message: "Пользователь с таким именем уже существует" });
+            }
+        
+            if (existingUser.email === email) {
+                return res.status(409).json({ message: "Пользователь с такой почтой уже существует" });
+            }
         }
-        await User.create({
+        const newUser = new User({
             username: username,
             email: email,
             role: role,
             password: hashPassword
         });
+        await newUser.save();
+
         res.status(200).json({ message: "Регистрация прошла успешно" });
     } catch (error) {
         console.log(error);
@@ -48,8 +52,9 @@ export async function singup(req, res) {
 export async function signin(req, res) {
     try {
         const { email, password, } = req.body;
-
-        const existingUser = await User.findOne({ where: { email } });
+        console.log(process.env.SECRET_KEY);
+        
+        const existingUser = await User.findOne({ email });
         
         if(!existingUser){
             return res.status(401).json({ message: "Не правильный логин или пароль! Повторите вход" });

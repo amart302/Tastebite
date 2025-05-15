@@ -9,5 +9,5 @@ import { FooterComponent } from '../../components/footer/footer.component';
   styleUrl: './main.component.scss'
 })
 export class MainComponent {
-
+  
 }
