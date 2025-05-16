@@ -12,23 +12,25 @@ export class RecipesService {
       this.recipes = [
         {
           _id: 1,
-          poster: "/assets/images/cheesecake.png",
+          image: "/assets/images/cheesecake.png",
           name: "Cheesecake",
           rating: 3
         },
         {
           _id: 2,
-          poster: "/assets/images/cheesecake.png",
+          image: "/assets/images/cheesecake.png",
           name: "Cheesecake",
           rating: 5
         },
         {
           _id: 3,
-          poster: "/assets/images/cheesecake.png",
+          image: "/assets/images/cheesecake.png",
           name: "Cheesecake",
           rating: 4
         },
       ];
+
+      return this.recipes;
     } catch (error) {
       console.error("Не удалось загрузить рецепты", error);
     }
