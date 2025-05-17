@@ -5,7 +5,7 @@ import { signup, signin } from '../controllers/auth.controller.js';
 const router = new Router();
 
 router.post("/signup", [
-    body("username")
+    body("fullname")
         .trim()
         .notEmpty().withMessage("Имя пользователя не должно быть пустым")
         .isLength({ max: 100 }).withMessage("Имя пользователя слишком длинное"),

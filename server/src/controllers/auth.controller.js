@@ -16,17 +16,17 @@ export async function signup(req, res) {
             return res.status(400).json({ message: errors.array()[0].msg });
         }
 
-        const { username, email, role, password, } = req.body;
+        const { fullname, email, role, password, } = req.body;
         const hashPassword = bcrypt.hashSync(password, 8);
 
         const existingUser = await User.findOne({
             $or: [
-                { username: username },
+                { fullname: fullname },
                 { email: email }
             ]
         });
         if (existingUser) {
-            if (existingUser.username === username) {
+            if (existingUser.fullname === fullname) {
                 return res.status(409).json({ message: "Пользователь с таким именем уже существует" });
             }
         
@@ -35,7 +35,7 @@ export async function signup(req, res) {
             }
         }
         const newUser = new User({
-            username: username,
+            fullname: fullname,
             email: email,
             role: role,
             password: hashPassword
@@ -52,17 +52,16 @@ export async function signup(req, res) {
 export async function signin(req, res) {
     try {
         const { email, password, } = req.body;
-        console.log(process.env.SECRET_KEY);
         
         const existingUser = await User.findOne({ email });
         
         if(!existingUser){
-            return res.status(401).json({ message: "Не правильный логин или пароль! Повторите вход" });
+            return res.status(401).json({ message: "Не правильный логин или пароль!" });
         }
 
         const validPassword = bcrypt.compareSync(password, existingUser.password);
         if(!validPassword){
-            return res.status(401).json({ message: "Не правильный логин или пароль! Повторите вход" });
+            return res.status(401).json({ message: "Не правильный логин или пароль!" });
         }
 
         const token = generateAccessToken(existingUser.id, existingUser.role);
