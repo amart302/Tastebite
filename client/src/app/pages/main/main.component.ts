@@ -18,4 +18,8 @@ export class MainComponent {
   ngOnInit(): void{
     this.recipes = this.recipeService.getRecipes();
   }
+
+  getRatingArray(rating: number): number[] {
+    return Array(rating).fill(0);
+  }
 }
