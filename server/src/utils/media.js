@@ -1,7 +1,7 @@
 import express from "express";
 import fs from "fs";
 import { join } from 'path';
-import { getDirname } from "../utils/pathUtils.js";
+import { getDirname } from "./pathUtils.js";
 
 const __dirname = getDirname(import.meta.url);
 const router = express.Router();

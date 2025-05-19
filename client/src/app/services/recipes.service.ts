@@ -4,13 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class RecipesService {
-  private recipes: any;
-  private latestRecipes: any;
   constructor() { }
 
   getRecipes(){
     try {
-      this.recipes = [
+      const responce = [
         {
           _id: 1,
           image: "/assets/images/cheesecake.png",
@@ -31,15 +29,16 @@ export class RecipesService {
         },
       ];
 
-      return this.recipes;
+      return responce;
     } catch (error) {
       console.error("Не удалось загрузить рецепты", error);
+      throw error;
     }
   }
 
   getLatestRecipes(){
     try {
-      this.latestRecipes = [
+      const responce = [
         {
           _id: 1,
           image: "/assets/images/cheesecake.png",
@@ -132,9 +131,10 @@ export class RecipesService {
         },
       ];
 
-      return this.latestRecipes;
+      return responce;
     } catch (error) {
       console.error("Не удалось загрузить рецепты", error);
+      throw error;
     }
   }
 }

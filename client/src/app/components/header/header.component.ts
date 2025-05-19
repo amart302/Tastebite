@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import axios from 'axios';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +10,26 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  constructor(
+    private router: Router,
+    private userService: UserService
+  ){}
+  user: any;
+  avatar: any;
 
+  ngOnInit(){
+    const token = localStorage.getItem("token") || "";
+    if(token){
+      this.userAvatar(token);
+    }
+  }
+
+  async userAvatar(token: string){
+    try {
+      const response = await this.userService.getUserAvatar(token);
+      this.avatar = response.data;
+    } catch (error) {
+      console.error("Ошибка при попытке получить аватар пользователя", error);
+    }
+  }
 }

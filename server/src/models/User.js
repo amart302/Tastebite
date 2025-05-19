@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
+  avatar: {
+    type: String,
+    default: "http://localhost:5000/uploads/avatars/defaultAvatar.png"
+  },
   fullname: {
     type: String,
     required: true,
@@ -16,9 +20,9 @@ const UserSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'user'],
+    enum: ["admin", "user"],
     required: true,
-    default: 'user'
+    default: "user"
   },
   password: {
     type: String,
@@ -27,7 +31,7 @@ const UserSchema = new Schema({
   }
 }, {
   timestamps: true,
-  collection: 'users'
+  collection: "users"
 });
 
-export const User = mongoose.model('User', UserSchema);
+export const User = mongoose.model("User", UserSchema);

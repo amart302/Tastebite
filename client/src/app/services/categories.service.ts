@@ -4,12 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CategoriesService {
-  private categoies: any;
   constructor() { }
 
   getCategoies(){
     try {
-      this.categoies = [
+      const responce = [
         {
           _id: 1,
           image: "/assets/images/cheesecake.png",
@@ -42,9 +41,10 @@ export class CategoriesService {
         },
       ];
 
-      return this.categoies;
+      return responce;
     } catch (error) {
       console.error("Не удалось загрузить категории", error);
+      throw error;
     }
   }
 }

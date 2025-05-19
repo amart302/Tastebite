@@ -21,10 +21,6 @@ export class MainComponent {
   constructor(private recipesService: RecipesService, private categoriesService: CategoriesService, private router: Router){}
 
   ngOnInit(): void{
-    if(!localStorage.getItem("token")){
-      this.router.navigate(["/signin"]);
-      return ;
-    }
     this.recipes = this.recipesService.getRecipes();
     this.categories = this.categoriesService.getCategoies();
     this.latestRecipes = this.recipesService.getLatestRecipes();
