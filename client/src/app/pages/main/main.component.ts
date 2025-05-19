@@ -16,6 +16,7 @@ import { CategoriesService } from '../../services/categories.service';
 export class MainComponent {
   recipes: any;
   categories: any;
+  latestRecipes: any;
 
   constructor(private recipesService: RecipesService, private categoriesService: CategoriesService, private router: Router){}
 
@@ -23,9 +24,10 @@ export class MainComponent {
     if(!localStorage.getItem("token")){
       this.router.navigate(["/signin"]);
       return ;
-    }this.recipes = this.recipesService.getRecipes();
+    }
+    this.recipes = this.recipesService.getRecipes();
     this.categories = this.categoriesService.getCategoies();
-
+    this.latestRecipes = this.recipesService.getLatestRecipes();
   }
 
   getRatingArray(rating: number): number[] {

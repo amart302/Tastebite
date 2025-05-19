@@ -1,6 +1,7 @@
 .main{
     display: flex;
     flex-direction: column;
+    margin-block: 40px;
     gap: 60px;
 
     &__container{
@@ -21,6 +22,7 @@
     }
 
     &__content{
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -43,6 +45,13 @@
     &__description{
         font-size: 18px;
         width: 80%;
+    }
+
+    &__arrow-right{
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        cursor: pointer;
     }
 }
 
@@ -161,16 +170,33 @@
     &__input-container{
         width: 400px;
         display: grid;
-        grid-template-columns: 1fr 70px;
+        grid-template-columns: 1fr 80px;
     }
 
     &__input{
         border: none;
+        padding-inline: 10px;
+
+        &:focus{
+            outline: none;
+        }
     }
     
     &__button{
         border: none;
-        height: 32px;
-        background-color: ;
+        font-size: 12px;
+        height: 40px;
+        background-color: #FF642F;
+        color: #ffffff;
+        cursor: pointer;
+    }
+
+    &__conditions{
+        font-size: 12px;
+    }
+
+    span{
+        text-decoration: underline;
+        text-decoration-color: #FF642F;
     }
 }
