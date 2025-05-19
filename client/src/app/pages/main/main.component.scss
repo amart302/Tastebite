@@ -138,9 +138,39 @@
 }
 
 .email-subscription{
+    height: 420px;
     display: flex;
     flex-direction: column;
+    gap: 20px;
     align-items: center;
     justify-content: center;
-    background-color: aqua;
+    background-color: #FFD7C9;
+    padding: 20px;
+
+    &__title{
+        font-family: auto;
+        font-size: 66px;
+        font-weight: 700;
+    }
+
+    &__description{
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    &__input-container{
+        width: 400px;
+        display: grid;
+        grid-template-columns: 1fr 70px;
+    }
+
+    &__input{
+        border: none;
+    }
+    
+    &__button{
+        border: none;
+        height: 32px;
+        background-color: ;
+    }
 }
