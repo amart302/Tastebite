@@ -1,0 +1,27 @@
+<main class="main">
+    <form class="auth-form">
+        <h1>SIGN UP</h1>
+        <div class="auth-form__group">
+            <img src="/assets/icons/userIcon.svg" alt="fullname icon" class="auth-form__icon">
+            <input type="text" name="fullname" class="auth-form__input" placeholder="Full Name" [(ngModel)]="fullname">
+        </div>
+        <span class="auth-form__error-message" *ngIf="fullnameError">{{ fullnameError }}</span>
+        <div class="auth-form__group">
+            <img src="/assets/icons/mailIcon.svg" alt="email icon" class="auth-form__icon">
+            <input type="text" name="email" class="auth-form__input" placeholder="Email" [(ngModel)]="email">
+        </div>
+        <span class="auth-form__error-message" *ngIf="emailError">{{ emailError }}</span>
+        <div class="auth-form__group">
+            <img src="/assets/icons/lockIcon.svg" alt="password icon" class="auth-form__icon">
+            <input type="password" name="password" class="auth-form__input" placeholder="Password" [(ngModel)]="password">
+        </div>
+        <span class="auth-form__error-message" *ngIf="generalError || passwordError">{{ generalError || passwordError }}</span>
+        <button class="auth-form__button" type="submit" (click)="handleSubmit()">
+            <svg *ngIf="isLoading" class="spinner" viewBox="0 0 50 50">
+                <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+            </svg>
+            <span class="auth-form__button__text" *ngIf="!isLoading">Sign Up</span>
+        </button>
+        <div class="auth-form__footer">Do you have an account? <a routerLink="/signin" class="auth-form__link">Login</a></div>
+    </form>
+</main>

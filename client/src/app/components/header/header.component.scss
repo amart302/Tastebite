@@ -1,0 +1,66 @@
+.header{
+    padding: 20px;
+    &__inner{
+        display: grid;
+        grid-template-columns: 170px 1fr 200px;
+        gap: 20px;
+        max-width: 1200px;
+        margin-inline: auto;
+    }
+
+    &__brand{
+        cursor: pointer;
+    }
+
+    &__nav{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__controls{
+        display: flex;
+        gap: 20px;
+        align-content: center;
+        justify-content: end;
+    }
+}
+
+.search{
+    display: flex;
+    align-items: center;
+    &__icon{
+        width: 24px;
+        height: 24px;
+    }
+
+    &__button{
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+}
+.nav{
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-items: center;
+
+    &__link{
+        width: max-content;
+        color: #000000;
+        font-size: 18px;
+        text-decoration: none;
+    }
+}
+.user-avatar{
+    display: flex;
+    align-items: center;
+
+    &__image{
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
