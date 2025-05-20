@@ -49,7 +49,7 @@ router.get("/video/:video", (req, res) => {
 router.get("/images/:image", (req, res) => {
     try {
         const { image } = req.params;
-        const imagePath = join(__dirname, "../../uploads/images", image);
+        const imagePath = join(__dirname, "../../public/images", image);
 
         if (!fs.existsSync(imagePath)) {
             return res.status(404).json({ message: "Изображение не найдено" });

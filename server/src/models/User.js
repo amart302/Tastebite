@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
   avatar: {
     type: String,
-    default: "http://localhost:5000/uploads/avatars/defaultAvatar.png"
   },
   fullname: {
     type: String,

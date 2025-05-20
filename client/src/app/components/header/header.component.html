@@ -19,7 +19,7 @@
             </div>
             <div class="user-avatar">
                 <a routerLink="/profile" class="user-avatar__link">
-                    <img class="user-avatar__image" [src]="avatar" alt="avatar">
+                    <img class="user-avatar__image" [src]="avatar || '/assets/images/defaultAvatar.png'" alt="avatar">
                 </a>
             </div>
         </div>
