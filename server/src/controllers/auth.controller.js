@@ -9,7 +9,7 @@ const generateAccessToken = (id, role) => {
     return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "24h" });
 };
 
-export async function signup(req, res) {
+export async function signup(req, res){
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -49,7 +49,7 @@ export async function signup(req, res) {
     }
 };
 
-export async function signin(req, res) {
+export async function signin(req, res){
     try {
         const { email, password, } = req.body;
         

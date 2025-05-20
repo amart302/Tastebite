@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import axios from 'axios';
 
 @Injectable({
   providedIn: 'root'
@@ -6,42 +7,20 @@ import { Injectable } from '@angular/core';
 export class CategoriesService {
   constructor() { }
 
-  getCategoies(){
+  async getCategoies(){
     try {
-      const responce = [
-        {
-          _id: 1,
-          image: "http://localhost:5000/public/images/pasta.png",
-          name: "Pasta",
-        },
-        {
-          _id: 2,
-          image: "http://localhost:5000/public/images/pizza.png",
-          name: "Pizza",
-        },
-        {
-          _id: 3,
-          image: "http://localhost:5000/public/images/vegan.png",
-          name: "Breakfast",
-        },
-        {
-          _id: 4,
-          image: "http://localhost:5000/public/images/desserts.png",
-          name: "Smoothies",
-        },
-        {
-          _id: 5,
-          image: "http://localhost:5000/public/images/smoothies.png",
-          name: "Smoothies",
-        },
-        {
-          _id: 6,
-          image: "http://localhost:5000/public/images/breakfast.png",
-          name: "Smoothies",
-        },
-      ];
+      const responce = await axios.get("http://localhost:5000/categories/");
+      return responce.data;
+    } catch (error) {
+      console.error("Не удалось загрузить категории", error);
+      throw error;
+    }
+  }
 
-      return responce;
+  async getPopularCategoies(){
+    try {
+      const responce = await axios.get("http://localhost:5000/categories/");
+      return responce.data.slice(0, 6);
     } catch (error) {
       console.error("Не удалось загрузить категории", error);
       throw error;

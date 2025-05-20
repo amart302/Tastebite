@@ -20,9 +20,9 @@ export class MainComponent {
 
   constructor(private recipesService: RecipesService, private categoriesService: CategoriesService, private router: Router){}
 
-  ngOnInit(): void{
+  async ngOnInit(){
     this.recipes = this.recipesService.getRecipes();
-    this.categories = this.categoriesService.getCategoies();
+    this.categories = await this.categoriesService.getPopularCategoies();
     this.latestRecipes = this.recipesService.getLatestRecipes();
   }
 

@@ -24,6 +24,11 @@ export class HeaderComponent {
     }
   }
 
+  gg(){
+    console.log(123);
+    
+  }
+
   async userAvatar(token: string){
     try {
       const response = await this.userService.getUserAvatar(token);
