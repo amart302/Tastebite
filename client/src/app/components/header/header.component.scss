@@ -20,8 +20,8 @@
 
     &__controls{
         display: flex;
-        gap: 20px;
-        align-content: center;
+        align-items: center;
+        gap: 10px;
         justify-content: end;
     }
 }
@@ -62,5 +62,20 @@
         height: 46px;
         border-radius: 50%;
         object-fit: cover;
+    }
+}
+.add-recipe{
+    height: 40px;
+    border: none;
+    background-color: #FF642F;
+    color: #ffffff;
+    font-size: 12px;
+    transition: opacity 0.2s;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover{
+        opacity: 0.8;
     }
 }

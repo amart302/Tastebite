@@ -10,23 +10,47 @@ export class RecipesService {
     try {
       const responce = [
         {
-          _id: 1,
+          _id: "65a8f1b2e4d1f3a9c7d3e5a1",
+          title: "Spinach and Cheese Pasta",
+          category: "Pasta",
           image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
-          rating: 3
+          rating: 4
         },
         {
-          _id: 2,
+          _id: "65a8f1b2e4d1f3a9c7d3e5a2",
+          title: "Fancy Glazed Donuts",
+          category: "Dessert",
           image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
           rating: 5
         },
         {
-          _id: 3,
+          _id: "65a8f1b2e4d1f3a9c7d3e5a3",
+          title: "Mighty Cheesy Breakfast Burger",
+          category: "Burger",
           image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
+          rating: 3
+        },
+        {
+          _id: "65a8f1b2e4d1f3a9c7d3e5a4",
+          title: "Sweet Tooth",
+          category: "Dessert",
+          image: "/assets/images/cheesecake.png",
           rating: 4
         },
+        {
+          _id: "65a8f1b2e4d1f3a9c7d3e5a5",
+          title: "Caramel Strawberry Milkshake",
+          category: "Drink",
+          image: "/assets/images/cheesecake.png",
+          rating: 5
+        },
+        {
+          _id: "65a8f1b2e4d1f3a9c7d3e5a6",
+          title: "Chocolate and Banana Jar Cake",
+          category: "Dessert",
+          image: "/assets/images/cheesecake.png",
+          rating: 5
+        }
       ];
 
       return responce;
@@ -40,95 +64,117 @@ export class RecipesService {
     try {
       const responce = [
         {
-          _id: 1,
+          _id: "65a8f1b2e4d1f3a9c7d3e5a1",
+          title: "Spinach and Cheese Pasta",
+          category: "Pasta",
           image: "/assets/images/cheesecake.png",
-          name: "Чебурек",
-          rating: 3
-        },
-        {
-          _id: 2,
-          image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
-          rating: 5
-        },
-        {
-          _id: 3,
-          image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
           rating: 4
         },
         {
-          _id: 4,
+          _id: "65a8f1b2e4d1f3a9c7d3e5a2",
+          title: "Fancy Glazed Donuts",
+          category: "Dessert",
           image: "/assets/images/cheesecake.png",
-          name: "Чебурек",
-          rating: 3
-        },
-        {
-          _id: 5,
-          image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
           rating: 5
         },
         {
-          _id: 6,
+          _id: "65a8f1b2e4d1f3a9c7d3e5a3",
+          title: "Mighty Cheesy Breakfast Burger",
+          category: "Burger",
           image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
-          rating: 4
-        },
-        {
-          _id: 7,
-          image: "/assets/images/cheesecake.png",
-          name: "Чебурек",
           rating: 3
         },
         {
-          _id: 8,
+          _id: "65a8f1b2e4d1f3a9c7d3e5a4",
+          title: "Sweet Tooth",
+          category: "Dessert",
           image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
-          rating: 5
-        },
-        {
-          _id: 9,
-          image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
           rating: 4
         },
         {
-          _id: 10,
+          _id: "65a8f1b2e4d1f3a9c7d3e5a5",
+          title: "Caramel Strawberry Milkshake",
+          category: "Drink",
           image: "/assets/images/cheesecake.png",
-          name: "Чебурек",
+          rating: 5
+        },
+        {
+          _id: "65a8f1b2e4d1f3a9c7d3e5a6",
+          title: "Chocolate and Banana Jar Cake",
+          category: "Dessert",
+          image: "/assets/images/cheesecake.png",
+          rating: 5
+        },
+        {
+          _id: "65a8f1b2e4d1f3a9c7d3e5a8",
+          title: "Truffle Mushroom Risotto",
+          category: "Pasta",
+          image: "/assets/images/cheesecake.png",
+          rating: 5
+        },
+        {
+          _id: "65a8f1b2e4d1f3a9c7d3e5a9",
+          title: "Crispy Chicken Wings",
+          category: "Appetizer",
+          image: "/assets/images/cheesecake.png",
+          rating: 4
+        },
+        {
+          _id: "65a8f1b2e4d1f3a9c7d3e5b0",
+          title: "Avocado Toast",
+          category: "Breakfast",
+          image: "/assets/images/cheesecake.png",
           rating: 3
         },
         {
-          _id: 11,
+          _id: "65a8f1b2e4d1f3a9c7d3e5b1",
+          title: "Classic Margherita Pizza",
+          category: "Pizza",
           image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
           rating: 5
         },
         {
-          _id: 12,
+          _id: "65a8f1b2e4d1f3a9c7d3e5b2",
+          title: "Beef Taco Plate",
+          category: "Mexican",
           image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
           rating: 4
         },
         {
-          _id: 13,
+          _id: "65a8f1b2e4d1f3a9c7d3e5b3",
+          title: "Rainbow Veggie Salad",
+          category: "Salad",
           image: "/assets/images/cheesecake.png",
-          name: "Чебурек",
-          rating: 3
+          rating: 4
         },
         {
-          _id: 14,
+          _id: "65a8f1b2e4d1f3a9c7d3e5b4",
+          title: "Honey Glazed Salmon",
+          category: "Seafood",
           image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
           rating: 5
         },
         {
-          _id: 15,
+          _id: "65a8f1b2e4d1f3a9c7d3e5b5",
+          title: "Garlic Butter Shrimp Pasta",
+          category: "Pasta",
           image: "/assets/images/cheesecake.png",
-          name: "Cheesecake",
           rating: 4
         },
+        {
+          _id: "65a8f1b2e4d1f3a9c7d3e5b6",
+          title: "Chocolate Lava Cake",
+          category: "Dessert",
+          image: "/assets/images/cheesecake.png",
+          rating: 5
+        },
+        {
+          _id: "65a8f1b2e4d1f3a9c7d3e5b7",
+          title: "Iced Matcha Latte",
+          category: "Drink",
+          image: "/assets/images/cheesecake.png",
+          rating: 4
+        }
       ];
 
       return responce;

@@ -1,0 +1,58 @@
+<app-header />
+<main class="main">
+    <h1>Add New Recipe Post</h1>
+  <form class="add-recipe-form">
+    <div class="add-recipe-form__group">
+      <label class="add-recipe-form__label">Title</label>
+      <input class="add-recipe-form__input" type="text">
+    </div>
+    
+    <div class="add-recipe-form__group">
+      <label class="add-recipe-form__label">Description</label>
+      <div class="add-recipe-form__group__inner">
+        <textarea class="add-recipe-form__textarea"></textarea>
+      </div>
+    </div>
+    
+    <div class="add-recipe-form__group">
+      <div class="add-recipe-form__group__inner">
+        <label class="add-recipe-form__label">Prep Time</label>
+        <input class="add-recipe-form__input" type="text">
+        <label class="add-recipe-form__label">Servings</label>
+        <input class="add-recipe-form__input" type="text">
+      </div>
+    </div>
+    
+    <div class="add-recipe-form__group">
+      <label class="add-recipe-form__label">Ingredients</label>
+      <div class="add-recipe-form__group__inner">
+        <input class="add-recipe-form__input" type="text" placeholder="Amount">
+        <input class="add-recipe-form__input" type="text" placeholder="Ingredient name">
+        <button type="button">Remove</button>
+      </div>
+      <button type="button">Add Ingredient</button>
+    </div>
+    
+    <div class="add-recipe-form__group">
+        <label class="add-recipe-form__label">Instructions</label>
+        <div class="add-recipe-form__group__inner">
+            <textarea class="add-recipe-form__textarea" placeholder="Step"></textarea>
+            <button type="button">Remove</button>
+        </div>
+        <button type="button">Add Step</button>
+    </div>
+    
+    <div class="add-recipe-form__group">
+      <label class="add-recipe-form__label">Tags (comma separated)</label>
+      <input class="add-recipe-form__input" type="text" placeholder="dessert, cheesecake, easy">
+    </div>
+    
+    <div class="add-recipe-form__group">
+      <label class="add-recipe-form__label">Featured Image</label>
+      <input class="add-recipe-form__input" type="file" accept="image/*" multiple>
+    </div>
+    
+    <button type="submit">Publish Post</button>
+  </form>
+</main>
+<app-footer />
