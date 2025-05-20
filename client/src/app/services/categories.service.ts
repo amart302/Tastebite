@@ -11,32 +11,32 @@ export class CategoriesService {
       const responce = [
         {
           _id: 1,
-          image: "/assets/images/cheesecake.png",
+          image: "http://localhost:5000/public/images/pasta.png",
           name: "Pasta",
         },
         {
           _id: 2,
-          image: "/assets/images/cheesecake.png",
+          image: "http://localhost:5000/public/images/pizza.png",
           name: "Pizza",
         },
         {
           _id: 3,
-          image: "/assets/images/cheesecake.png",
+          image: "http://localhost:5000/public/images/vegan.png",
           name: "Breakfast",
         },
         {
           _id: 4,
-          image: "/assets/images/cheesecake.png",
+          image: "http://localhost:5000/public/images/desserts.png",
           name: "Smoothies",
         },
         {
           _id: 5,
-          image: "/assets/images/cheesecake.png",
+          image: "http://localhost:5000/public/images/smoothies.png",
           name: "Smoothies",
         },
         {
           _id: 6,
-          image: "/assets/images/cheesecake.png",
+          image: "http://localhost:5000/public/images/breakfast.png",
           name: "Smoothies",
         },
       ];
