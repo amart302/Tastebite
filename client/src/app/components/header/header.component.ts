@@ -24,11 +24,6 @@ export class HeaderComponent {
     }
   }
 
-  gg(){
-    console.log(123);
-    
-  }
-
   async userAvatar(token: string){
     try {
       const response = await this.userService.getUserAvatar(token);
@@ -36,5 +31,10 @@ export class HeaderComponent {
     } catch (error) {
       console.error("Ошибка при попытке получить аватар пользователя", error);
     }
+  }
+
+  goToAddRecipe(){
+    if(!localStorage.getItem("token")) this.router.navigate(["/signin"]);
+    else this.router.navigate(["/addrecipe"]);
   }
 }

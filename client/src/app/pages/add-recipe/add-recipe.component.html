@@ -4,34 +4,54 @@
   <form class="add-recipe-form">
     <div class="form-group">
       <label class="form-group__label">Title</label>
-      <input class="form-group__input" type="text" placeholder="Very tasty cake">
+      <input class="form-group__input" type="text" placeholder="Very tasty cake" name="title" [(ngModel)]="title">
+      <span class="form-error-message" *ngIf="titleError">{{ titleError }}</span>
     </div>
-    <select class="form-group__select">
+    <select class="form-group__select" name="category" [(ngModel)]="category">
       <option value="" disabled selected>Select a category</option>
-      <option *ngFor="let category of categories" [value]="category.id">
+      <option *ngFor="let category of categories" [value]="category.title">
         {{ category.title }}
       </option>
+      <span class="form-error-message" *ngIf="categoryError">{{ categoryError }}</span>
     </select>
     <div class="form-group">
       <label class="form-group__label">Description</label>
-      <textarea class="form-group__textarea" rows="4" placeholder="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis, sequi."></textarea>
+      <textarea class="form-group__textarea" rows="4" placeholder="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis, sequi." name="description" [(ngModel)]="description"></textarea>
+      <span class="form-error-message" *ngIf="descriptionError">{{ descriptionError }}</span>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-group__label">Prep Time (minutes)</label>
-        <input class="form-group__input" type="number" min="1" placeholder="30">
+        <input class="form-group__input" type="number" min="1" placeholder="30" name="prepTime" [(ngModel)]="prepTime">
+        <span class="form-error-message" *ngIf="prepTimeError">{{ prepTimeError }}</span>
       </div>
       <div class="form-group">
         <label class="form-group__label">Servings</label>
-        <input class="form-group__input" type="number" min="1" placeholder="5">
+        <input class="form-group__input" type="number" min="1" placeholder="5" name="servings" [(ngModel)]="servings">
       </div>
     </div>
     <div class="form-group">
       <label class="form-group__label">Ingredients</label>
       <div class="ingredients-list">
         <div class="ingredient-item">
-          <input class="form-group__input" type="text" placeholder="Amount">
-          <input class="form-group__input" type="text" placeholder="Ingredient name">
+          <input class="form-group__input" type="text" placeholder="Ingredient name" name="ingredientName" [(ngModel)]="ingredientName">
+          <span class="form-error-message" *ngIf="ingredientNameError">{{ ingredientNameError }}</span>
+          <input class="form-group__input" type="number" placeholder="Amount" name="ingredientAmount" [(ngModel)]="ingredientAmount">
+          <span class="form-error-message" *ngIf="ingredientAmountError">{{ ingredientAmountError }}</span>
+          <select class="form-group__select" name="ingredientUnit" [(ngModel)]="ingredientUnit">
+            <option value="" disabled selected>Select a unit</option>
+            <option value="mg">mg</option>
+            <option value="g">g</option>
+            <option value="kg">kg</option>
+            <option value="ml">ml</option>
+            <option value="l">l</option>
+            <option value="mm">mm</option>
+            <option value="cm">cm</option>
+            <option value="teaspoon">teaspoon</option>
+            <option value="tablespoon">tablespoon</option>
+            <option value="cup">cup</option>
+          </select>
+          <span class="form-error-message" *ngIf="ingredientUnitError">{{ ingredientUnitError }}</span>
           <button type="button" class="form-group__remove-button">×</button>
         </div>
       </div>
@@ -41,7 +61,8 @@
       <label class="form-group__label">Instructions</label>
       <div class="instructions-list">
         <div class="instruction-item">
-          <textarea class="form-group__textarea" rows="2" placeholder="Step description"></textarea>
+          <textarea class="form-group__textarea" rows="2" placeholder="Step description" name="instructionStep" [(ngModel)]="instructionStep"></textarea>
+          <span class="form-error-message" *ngIf="instructionStepError">{{ instructionStepError }}</span>
           <button type="button" class="form-group__remove-button">×</button>
         </div>
       </div>
@@ -56,8 +77,13 @@
         </label>
       </div>
     </div>
-    
-    <button type="submit" class="form-group__submit-button">Publish Post</button>
+    <span class="form-error-message" *ngIf="generalError">{{ generalError }}</span>
+        <button class="form-group__submit-button" type="submit" (click)="handleSubmit()">
+            <svg *ngIf="isLoading" class="spinner" viewBox="0 0 50 50">
+                <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+            </svg>
+            <span class="form-buttontext" *ngIf="!isLoading">Publish post</span>
+        </button>
   </form>
 </main>
 <app-footer />

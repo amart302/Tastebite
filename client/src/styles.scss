@@ -33,10 +33,6 @@
         }
     }
 
-    &__error-message{
-        color: red;
-    }
-
     &__button{
         display: flex;
         align-items: center;
@@ -54,10 +50,6 @@
         &:hover{
             opacity: 0.8;
         }
-
-        &__text{
-            font-size: 16px;
-        }
     }
 
     &__footer{
@@ -69,6 +61,14 @@
     &__link{
         color: #FF642F;
     }
+}
+
+.form-error-message{
+    color: red;
+}
+
+.submit-button-text{
+    font-size: 16px;
 }
 
 .spinner {
