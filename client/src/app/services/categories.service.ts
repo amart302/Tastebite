@@ -22,7 +22,6 @@ export class CategoriesService {
       const responce = await axios.get("http://localhost:5000/categories/");
       return responce.data.slice(0, 6);
     } catch (error) {
-      console.error("Не удалось загрузить категории", error);
       throw error;
     }
   }

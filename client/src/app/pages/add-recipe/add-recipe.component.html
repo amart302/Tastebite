@@ -7,13 +7,15 @@
       <input class="form-group__input" type="text" placeholder="Very tasty cake" name="title" [(ngModel)]="title">
       <span class="form-error-message" *ngIf="titleError">{{ titleError }}</span>
     </div>
-    <select class="form-group__select" name="category" [(ngModel)]="category">
-      <option value="" disabled selected>Select a category</option>
-      <option *ngFor="let category of categories" [value]="category.title">
-        {{ category.title }}
-      </option>
+    <div class="form-group">
+      <select class="form-group__select" name="category" [(ngModel)]="category">
+        <option value="" disabled selected>Select a category</option>
+        <option *ngFor="let category of categories" [value]="category.title">
+          {{ category.title }}
+        </option>
+      </select>
       <span class="form-error-message" *ngIf="categoryError">{{ categoryError }}</span>
-    </select>
+    </div>
     <div class="form-group">
       <label class="form-group__label">Description</label>
       <textarea class="form-group__textarea" rows="4" placeholder="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis, sequi." name="description" [(ngModel)]="description"></textarea>
@@ -33,11 +35,15 @@
     <div class="form-group">
       <label class="form-group__label">Ingredients</label>
       <div class="ingredients-list">
+        <div class="ingredient-item" *ngFor="let item of ingredients; let ind = index">
+          <div class="ingredient-item__meaning">{{ item.name }}</div>
+          <div class="ingredient-item__meaning">{{ item.amount }}</div>
+          <div class="ingredient-item__meaning">{{ item.unit }}</div>
+          <button type="button" class="form-group__remove-button" (click)="removeIngredient(ind)">×</button>
+        </div>
         <div class="ingredient-item">
           <input class="form-group__input" type="text" placeholder="Ingredient name" name="ingredientName" [(ngModel)]="ingredientName">
-          <span class="form-error-message" *ngIf="ingredientNameError">{{ ingredientNameError }}</span>
           <input class="form-group__input" type="number" placeholder="Amount" name="ingredientAmount" [(ngModel)]="ingredientAmount">
-          <span class="form-error-message" *ngIf="ingredientAmountError">{{ ingredientAmountError }}</span>
           <select class="form-group__select" name="ingredientUnit" [(ngModel)]="ingredientUnit">
             <option value="" disabled selected>Select a unit</option>
             <option value="mg">mg</option>
@@ -51,20 +57,23 @@
             <option value="tablespoon">tablespoon</option>
             <option value="cup">cup</option>
           </select>
-          <span class="form-error-message" *ngIf="ingredientUnitError">{{ ingredientUnitError }}</span>
-          <button type="button" class="form-group__remove-button">×</button>
+        </div>
+        <div class="ingredient-item">
+          <span class="form-error-message">{{ ingredientNameError }}</span>
+          <span class="form-error-message">{{ ingredientAmountError }}</span>
+          <span class="form-error-message">{{ ingredientUnitError }}</span>
         </div>
       </div>
-      <button type="button" class="form-group__add-button">Add Ingredient</button>
+      <button type="button" class="form-group__add-button" (click)="addIngredient()">Add Ingredient</button>
     </div>
     <div class="form-group">
       <label class="form-group__label">Instructions</label>
       <div class="instructions-list">
         <div class="instruction-item">
           <textarea class="form-group__textarea" rows="2" placeholder="Step description" name="instructionStep" [(ngModel)]="instructionStep"></textarea>
-          <span class="form-error-message" *ngIf="instructionStepError">{{ instructionStepError }}</span>
-          <button type="button" class="form-group__remove-button">×</button>
+          <!-- <button type="button" class="form-group__remove-button">×</button> -->
         </div>
+        <span class="form-error-message" *ngIf="instructionStepError">{{ instructionStepError }}</span>
       </div>
       <button type="button" class="form-group__add-button">Add Step</button>
     </div>

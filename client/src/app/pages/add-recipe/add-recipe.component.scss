@@ -85,6 +85,8 @@
     }
 
     &__remove-button{
+        position: absolute;
+        right: -45px;
         background-color: #ff6b6b;
         color: white;
         padding: 5px 10px;
@@ -152,7 +154,21 @@
     gap: 10px;
 }
 
-.ingredient-item,
+.ingredient-item{
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    align-items: center;
+
+    &__meaning{
+        padding-block: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 10px 12px;
+    }
+}
+
 .instruction-item {
     display: flex;
     gap: 10px;

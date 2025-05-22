@@ -19,89 +19,129 @@ export class AddRecipeComponent {
   title: string = "";
   category: string = "";
   description: string = "";
-  prepTime: number = 0;
-  servings: number = 0;
+  prepTime: number | undefined;
+  servings: number | undefined;
   ingredientName: string = "";
-  ingredientAmount: number = 0;
+  ingredientAmount: number | undefined;
   ingredientUnit: string = "";
   instructionStep: string = "";
 
-  titleError: string = "";
-  categoryError: string = "";
-  descriptionError: string = "";
-  prepTimeError: string = "";
-  ingredientNameError: string = "";
-  ingredientAmountError: string = "";
-  ingredientUnitError: string = "";
-  instructionStepError: string = "";
-  generalError: string = "";
+  errors = {
+    title: "",
+    category: "",
+    description: "",
+    prepTime: "",
+    ingredientName: "",
+    ingredientAmount: "",
+    ingredientUnit: "",
+    instructionStep: "",
+    general: ""
+  }
 
   isLoading: boolean = false;
 
   constructor(private categoriesService: CategoriesService){}
 
-  validateData(){
-    this.titleError = "";
-    this.categoryError = "";
-    this.descriptionError = "";
-    this.prepTimeError = "";
-    this.ingredientNameError = "";
-    this.ingredientAmountError = "";
-    this.instructionStepError = "";
-    this.generalError = "";
+  addIngredient(){
+    if(this.ingredientValidate()) return;
+    
+    const data = {
+      name: this.ingredientName.trim(),
+      amount: this.ingredientAmount,
+      unit: this.ingredientUnit
+    };
+    this.ingredients.push(data);
 
-    if(!this.title.trim()){
-        this.titleError = "Это поле обязательно для заполнения";
-    }else if(this.title.trim().length > 50){
-        this.titleError = "Максимальная длина 50 символов";
+    this.ingredientName = "";
+    this.ingredientAmount = undefined;
+    this.ingredientUnit = "";
+  };
+
+  removeIngredient(index: number){
+    this.ingredients.splice(index, 1);
+  };
+
+  ingredientValidate(){
+    this.errors.ingredientName = "";
+    this.errors.ingredientAmount = "";
+    this.errors.ingredientUnit = "";
+
+    if(!this.ingredientName.trim()){
+        this.errors.ingredientName = "Это поле обязательно для заполнения";
+    }else if(this.ingredientName.trim().length > 50){
+        this.errors.ingredientName = "Максимальная длина 50 символов";
     }
 
-    if(!this.category.trim()){
-        this.categoryError = "Это поле обязательно для заполнения";
+    if(!this.ingredientAmount){
+        this.errors.ingredientAmount = "Это поле обязательно для заполнения";
+    }
+
+    if(!this.ingredientUnit){
+      this.errors.ingredientUnit = "Это поле обязательно для заполнения";
+    }
+
+    if(this.errors.ingredientName ||
+      this.errors.ingredientAmount ||
+      this.errors.ingredientUnit){
+        return true;
+    }
+    return false;
+  };
+
+  validateData(){
+    this.errors.title = "";
+    this.errors.category = "";
+    this.errors.description = "";
+    this.errors.prepTime = "";
+    this.errors.ingredientName = "";
+    this.errors.ingredientAmount = "";
+    this.errors.ingredientUnit = "";
+    this.errors.instructionStep = "";
+    this.errors.general = "";
+
+    if(!this.title.trim()){
+        this.errors.title = "Это поле обязательно для заполнения";
+    }else if(this.title.trim().length > 50){
+        this.errors.title = "Максимальная длина 50 символов";
+    }
+    
+    if(!this.category){
+      this.errors.category = "Это поле обязательно для заполнения";
     }
 
     if(this.description.trim().length > 1000){
-        this.descriptionError = "Максимальная длина 1000 символов";
+        this.errors.description = "Максимальная длина 1000 символов";
     }
 
     if(!this.prepTime){
-        this.prepTimeError = "Это поле обязательно для заполнения";
-    }
-
-    if(!this.ingredientName.trim() && !this.instructions.length){
-        this.ingredientNameError = "Это поле обязательно для заполнения";
-    }else if(this.ingredientName.trim().length > 50){
-        this.ingredientNameError = "Максимальная длина 50 символов";
-    }
-
-    if(!this.ingredientAmount && !this.instructions.length){
-        this.ingredientAmountError = "Это поле обязательно для заполнения";
-    }
-
-    if(!this.ingredientUnit.trim() && !this.instructions.length){
-        this.ingredientUnitError = "Это поле обязательно для заполнения";
+        this.errors.prepTime = "Это поле обязательно для заполнения";
     }
 
     if(!this.instructionStep.trim() && !this.instructions.length){
-        this.instructionStepError = "Это поле обязательно для заполнения";
+        this.errors.instructionStep = "Это поле обязательно для заполнения";
     }else if(this.instructionStep.trim().length > 500){
-        this.instructionStepError = "Максимальная длина 500 символов";
+        this.errors.instructionStep = "Максимальная длина 500 символов";
     }
     
+    if(!this.ingredients.length){
+      this.errors.general = "Добавьте ингредиенты";
+    }
+
+    if(this.errors.title ||
+      this.errors.category ||
+      this.errors.description ||
+      this.errors.prepTime ||
+      this.errors.instructionStep ||
+      this.errors.general){
+      return true;
+    }
+    return false;
   };
 
   async handleSubmit(){
     try {
-      this.validateData();
-
-      if(this.titleError ||
-        this.categoryError ||
-        this.descriptionError ||
-        this.prepTimeError ||
-        this.ingredientNameError ||
-        this.ingredientAmountError ||
-        this.ingredientUnitError ||
-        this.instructionStepError) return;
+      const validateData = this.validateData();
+      if(validateData) return;
       
       const data = {
         title: this.title,
@@ -109,9 +149,7 @@ export class AddRecipeComponent {
         description: this.description,
         prepTime: this.prepTime,
         servings: this.servings,
-        ingredientName: this.ingredientName,
-        ingredientAmount: this.ingredientAmount,
-        ingredientUnit: this.ingredientUnit,
+        ingredients: this.ingredients,
         instructionStep: this.instructionStep
       };
 
@@ -122,9 +160,13 @@ export class AddRecipeComponent {
     } finally {
       setTimeout(() => this.isLoading = false, 600);
     }
-  }
+  };
 
   async ngOnInit(){
-    this.categories = await this.categoriesService.getCategoies();
-  }
+    try {
+      this.categories = await this.categoriesService.getCategoies();
+    } catch (error) {
+      console.error("Не удалось загрузить категории", error);
+    }
+  };
 }
