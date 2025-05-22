@@ -7,7 +7,7 @@ import axios from 'axios';
 export class CategoriesService {
   constructor() { }
 
-  async getCategoies(){
+  async getCategories(){
     try {
       const responce = await axios.get("http://localhost:5000/categories/");
       return responce.data;
@@ -17,7 +17,7 @@ export class CategoriesService {
     }
   }
 
-  async getPopularCategoies(){
+  async getPopularCategories(){
     try {
       const responce = await axios.get("http://localhost:5000/categories/");
       return responce.data.slice(0, 6);

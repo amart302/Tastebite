@@ -5,6 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 
+interface FormData {
+  email: string;
+  password: string;
+}
+
+interface FormErrors {
+  email: string;
+  password: string;
+  general: string;
+}
+
 @Component({
   selector: 'app-signin',
   imports: [RouterLink, FormsModule, NgIf],
@@ -15,9 +26,12 @@ export class SigninComponent {
   email: string = "";
   password: string = "";
 
-  emailError: string = "";
-  passwordError: string = "";
-  generalError: string = "";
+  errors: FormErrors = {
+    email: "",
+    password: "",
+    general: ""
+  };
+
   isLoading: boolean = false;
 
   constructor(
@@ -25,29 +39,36 @@ export class SigninComponent {
     private router: Router
   ){}
 
-  validateData(){
-        this.emailError = "";
-        this.passwordError = "";
-        this.generalError = "";
+  private validateData(): boolean{
+        this.errors.email = "";
+        this.errors.password = "";
+        this.errors.general = "";
         
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let hasErrors = false;
+
         if(!this.email.trim()){
-            this.emailError = "Это поле обязательно для заполнения";
+            this.errors.email = "Это поле обязательно для заполнения";
+            hasErrors = true;
         }else if(!emailPattern.test(this.email)){
-            this.emailError = "Некорректная формат почты";
+            this.errors.email = "Некорректная формат почты";
+            hasErrors = true;
         }
 
         if(!this.password.trim()){
-            this.passwordError = "Это поле обязательно для заполнения";
+            this.errors.password = "Это поле обязательно для заполнения";
+            hasErrors = true;
         }else if(this.password.trim().length < 6){
-            this.passwordError = "Минимальная длина пароля 6 символов";
+            this.errors.password = "Минимальная длина пароля 6 символов";
+            hasErrors = true;
         }
-    };
 
-  async handleSubmit(){
-    this.validateData();
-    if(this.generalError || this.emailError || this.passwordError) return;
-    const data = { 
+        return hasErrors;
+  };
+
+  async handleSubmit(): Promise<void>{
+    if(this.validateData()) return;
+    const data: FormData = { 
       email: this.email,
       password: this.password
     };
@@ -60,7 +81,7 @@ export class SigninComponent {
     } catch (error) {
       console.error('Ошибка при входе:', error);
       if(axios.isAxiosError(error)){
-        setTimeout(() => this.generalError = error.response?.data?.message, 600);
+        setTimeout(() => this.errors.general = error.response?.data?.message, 600);
       }
     } finally {
       setTimeout(() => this.isLoading = false, 600);

@@ -5,7 +5,7 @@
     <div class="form-group">
       <label class="form-group__label">Title</label>
       <input class="form-group__input" type="text" placeholder="Very tasty cake" name="title" [(ngModel)]="title">
-      <span class="form-error-message" *ngIf="titleError">{{ titleError }}</span>
+      <span class="form-error-message" *ngIf="errors.title">{{ errors.title }}</span>
     </div>
     <div class="form-group">
       <select class="form-group__select" name="category" [(ngModel)]="category">
@@ -14,18 +14,18 @@
           {{ category.title }}
         </option>
       </select>
-      <span class="form-error-message" *ngIf="categoryError">{{ categoryError }}</span>
+      <span class="form-error-message" *ngIf="errors.category">{{ errors.category }}</span>
     </div>
     <div class="form-group">
       <label class="form-group__label">Description</label>
       <textarea class="form-group__textarea" rows="4" placeholder="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis, sequi." name="description" [(ngModel)]="description"></textarea>
-      <span class="form-error-message" *ngIf="descriptionError">{{ descriptionError }}</span>
+      <span class="form-error-message" *ngIf="errors.description">{{ errors.description }}</span>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-group__label">Prep Time (minutes)</label>
         <input class="form-group__input" type="number" min="1" placeholder="30" name="prepTime" [(ngModel)]="prepTime">
-        <span class="form-error-message" *ngIf="prepTimeError">{{ prepTimeError }}</span>
+        <span class="form-error-message" *ngIf="errors.prepTime">{{ errors.prepTime }}</span>
       </div>
       <div class="form-group">
         <label class="form-group__label">Servings</label>
@@ -59,9 +59,9 @@
           </select>
         </div>
         <div class="ingredient-item">
-          <span class="form-error-message">{{ ingredientNameError }}</span>
-          <span class="form-error-message">{{ ingredientAmountError }}</span>
-          <span class="form-error-message">{{ ingredientUnitError }}</span>
+          <span class="form-error-message">{{ errors.ingredientName }}</span>
+          <span class="form-error-message">{{ errors.ingredientAmount }}</span>
+          <span class="form-error-message">{{ errors.ingredientUnit}}</span>
         </div>
       </div>
       <button type="button" class="form-group__add-button" (click)="addIngredient()">Add Ingredient</button>
@@ -69,13 +69,16 @@
     <div class="form-group">
       <label class="form-group__label">Instructions</label>
       <div class="instructions-list">
+        <div class="instruction-item" *ngFor="let item of instructions; let ind = index">
+          <div class="instruction-item__meaning">{{ item }}</div>
+          <button type="button" class="form-group__remove-button" (click)="removeInstruction(ind)">×</button>
+        </div>
         <div class="instruction-item">
           <textarea class="form-group__textarea" rows="2" placeholder="Step description" name="instructionStep" [(ngModel)]="instructionStep"></textarea>
-          <!-- <button type="button" class="form-group__remove-button">×</button> -->
         </div>
-        <span class="form-error-message" *ngIf="instructionStepError">{{ instructionStepError }}</span>
+        <span class="form-error-message" *ngIf="errors.instructionStep">{{ errors.instructionStep }}</span>
       </div>
-      <button type="button" class="form-group__add-button">Add Step</button>
+      <button type="button" class="form-group__add-button" (click)="addInstruction()">Add Step</button>
     </div>
     <div class="form-group">
       <label class="form-group__label">Featured Image</label>
@@ -86,7 +89,7 @@
         </label>
       </div>
     </div>
-    <span class="form-error-message" *ngIf="generalError">{{ generalError }}</span>
+    <span class="form-error-message" *ngIf="errors.general">{{ errors.general }}</span>
         <button class="form-group__submit-button" type="submit" (click)="handleSubmit()">
             <svg *ngIf="isLoading" class="spinner" viewBox="0 0 50 50">
                 <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>

@@ -5,28 +5,62 @@ import { FormsModule } from '@angular/forms';
 import { CategoriesService } from '../../services/categories.service';
 import { NgFor, NgIf } from '@angular/common';
 
+interface RecipePost {
+  title: string;
+  category: string;
+  description: string;
+  prepTime: number;
+  servings?: number;
+  ingredients: Ingredient[];
+  instructions: string[];
+}
+
+interface Ingredient {
+  name: string;
+  amount?: number;
+  unit: string;
+}
+
+interface Category {
+  id: string;
+  title: string;
+}
+
+interface FormErrors {
+  title: string;
+  category: string;
+  description: string;
+  prepTime: string;
+  ingredientName: string;
+  ingredientAmount: string;
+  ingredientUnit: string;
+  instructionStep: string;
+  general: string;
+}
+
 @Component({
   selector: 'app-add-recipe',
+  standalone: true,
   imports: [HeaderComponent, FooterComponent, FormsModule, NgFor, NgIf],
   templateUrl: './add-recipe.component.html',
   styleUrl: './add-recipe.component.scss'
 })
 export class AddRecipeComponent {
-  categories: any;
-  ingredients: any = [];
-  instructions: any = [];
+  categories: Category[] = [];
+  ingredients: Ingredient[] = [];
+  instructions: string[] = [];
 
-  title: string = "";
-  category: string = "";
-  description: string = "";
-  prepTime: number | undefined;
-  servings: number | undefined;
-  ingredientName: string = "";
-  ingredientAmount: number | undefined;
-  ingredientUnit: string = "";
-  instructionStep: string = "";
+  title = "";
+  category = "";
+  description = "";
+  prepTime: number | null = null;
+  servings: number | null = null;
+  ingredientName = "";
+  ingredientAmount: number | null = null;
+  ingredientUnit = "";
+  instructionStep = "";
 
-  errors = {
+  errors: FormErrors = {
     title: "",
     category: "",
     description: "",
@@ -36,137 +70,168 @@ export class AddRecipeComponent {
     ingredientUnit: "",
     instructionStep: "",
     general: ""
-  }
+  };
 
-  isLoading: boolean = false;
+  isLoading = false;
 
   constructor(private categoriesService: CategoriesService){}
 
-  addIngredient(){
+  addIngredient(): void{
+    console.log(this.ingredientValidate());
+    
     if(this.ingredientValidate()) return;
     
-    const data = {
+    const newIngredient: Ingredient = {
       name: this.ingredientName.trim(),
-      amount: this.ingredientAmount,
+      amount: this.ingredientAmount!,
       unit: this.ingredientUnit
     };
-    this.ingredients.push(data);
-
+    
+    this.ingredients.push(newIngredient);
     this.ingredientName = "";
-    this.ingredientAmount = undefined;
+    this.ingredientAmount = null;
     this.ingredientUnit = "";
-  };
+  }
 
-  removeIngredient(index: number){
+  removeIngredient(index: number): void{
     this.ingredients.splice(index, 1);
-  };
+  }
 
-  ingredientValidate(){
+  addInstruction(): void{
+    if(this.instructionValidate()) return;
+
+    this.instructions.push(this.instructionStep);
+    this.instructionStep = "";
+  }
+
+  removeInstruction(index: number): void{
+    this.instructions.splice(index, 1);
+  }
+
+  private ingredientValidate(): boolean{
     this.errors.ingredientName = "";
     this.errors.ingredientAmount = "";
     this.errors.ingredientUnit = "";
-
+    
     if(!this.ingredientName.trim()){
-        this.errors.ingredientName = "Это поле обязательно для заполнения";
+      this.errors.ingredientName = "Это поле обязательно для заполнения";
     }else if(this.ingredientName.trim().length > 50){
-        this.errors.ingredientName = "Максимальная длина 50 символов";
+      this.errors.ingredientName = "Максимальная длина 50 символов";
     }
 
-    if(!this.ingredientAmount){
-        this.errors.ingredientAmount = "Это поле обязательно для заполнения";
+    if(this.ingredientAmount === null){
+      this.errors.ingredientAmount = "Это поле обязательно для заполнения";
     }
 
     if(!this.ingredientUnit){
       this.errors.ingredientUnit = "Это поле обязательно для заполнения";
     }
+    
+    return !!this.errors.ingredientName ||
+            !!this.errors.ingredientAmount ||
+            !!this.errors.ingredientUnit;
+  }
 
-    if(this.errors.ingredientName ||
-      this.errors.ingredientAmount ||
-      this.errors.ingredientUnit){
-        return true;
-    }
-    return false;
-  };
-
-  validateData(){
-    this.errors.title = "";
-    this.errors.category = "";
-    this.errors.description = "";
-    this.errors.prepTime = "";
-    this.errors.ingredientName = "";
-    this.errors.ingredientAmount = "";
-    this.errors.ingredientUnit = "";
+  private instructionValidate(): boolean{
     this.errors.instructionStep = "";
-    this.errors.general = "";
+
+    if(!this.instructionStep.trim()){
+      this.errors.instructionStep = "Это поле обязательно для заполнения";
+    }else if(this.instructionStep.trim().length > 500){
+      this.errors.instructionStep = "Максимальная длина 500 символов";
+    }
+    return !!this.errors.instructionStep;
+  }
+
+  private validateData(): boolean{
+    this.resetErrors();
+
+    let hasErrors = false;
 
     if(!this.title.trim()){
-        this.errors.title = "Это поле обязательно для заполнения";
+      this.errors.title = "Это поле обязательно для заполнения";
+      hasErrors = true;
     }else if(this.title.trim().length > 50){
-        this.errors.title = "Максимальная длина 50 символов";
+      this.errors.title = "Максимальная длина 50 символов";
+      hasErrors = true;
     }
     
     if(!this.category){
       this.errors.category = "Это поле обязательно для заполнения";
+      hasErrors = true;
     }
 
     if(this.description.trim().length > 1000){
-        this.errors.description = "Максимальная длина 1000 символов";
+      this.errors.description = "Максимальная длина 1000 символов";
+      hasErrors = true;
     }
 
-    if(!this.prepTime){
-        this.errors.prepTime = "Это поле обязательно для заполнения";
-    }
-
-    if(!this.instructionStep.trim() && !this.instructions.length){
-        this.errors.instructionStep = "Это поле обязательно для заполнения";
-    }else if(this.instructionStep.trim().length > 500){
-        this.errors.instructionStep = "Максимальная длина 500 символов";
+    if(this.prepTime === null){
+      this.errors.prepTime = "Это поле обязательно для заполнения";
+      hasErrors = true;
     }
     
     if(!this.ingredients.length){
-      this.errors.general = "Добавьте ингредиенты";
+      this.errors.ingredientName = "Это поле обязательно для заполнения";
+      this.errors.ingredientAmount = "Это поле обязательно для заполнения";
+      this.errors.ingredientUnit = "Это поле обязательно для заполнения";
+      hasErrors = true;
     }
 
-    if(this.errors.title ||
-      this.errors.category ||
-      this.errors.description ||
-      this.errors.prepTime ||
-      this.errors.instructionStep ||
-      this.errors.general){
-      return true;
+    if(!this.instructions.length){
+      this.errors.instructionStep = "Это поле обязательно для заполнения";
+      hasErrors = true;
     }
-    return false;
-  };
 
-  async handleSubmit(){
+    return hasErrors;
+  }
+
+  private resetErrors(): void{
+    this.errors = {
+      title: "",
+      category: "",
+      description: "",
+      prepTime: "",
+      ingredientName: "",
+      ingredientAmount: "",
+      ingredientUnit: "",
+      instructionStep: "",
+      general: ""
+    };
+  }
+
+  async handleSubmit(): Promise<void>{
+    if(this.validateData()) return;
+    
+    this.isLoading = true;
+
     try {
-      const validateData = this.validateData();
-      if(validateData) return;
-      
-      const data = {
+      const recipeData: RecipePost = {
         title: this.title,
         category: this.category,
         description: this.description,
-        prepTime: this.prepTime,
-        servings: this.servings,
+        prepTime: this.prepTime!,
+        servings: this.servings ?? undefined,
         ingredients: this.ingredients,
-        instructionStep: this.instructionStep
+        instructions: this.instructions
       };
 
-      console.log(data);
+      console.log('Отправка данных:', recipeData);
       
-    } catch (error) {
+    } catch (error){
       console.error("Ошибка при добавлении поста", error);
+      this.errors.general = "Произошла ошибка при сохранении рецепта";
     } finally {
-      setTimeout(() => this.isLoading = false, 600);
+      this.isLoading = false;
     }
-  };
+  }
 
-  async ngOnInit(){
+  async ngOnInit(): Promise<void>{
     try {
-      this.categories = await this.categoriesService.getCategoies();
-    } catch (error) {
+      this.categories = await this.categoriesService.getCategories();
+    } catch (error){
       console.error("Не удалось загрузить категории", error);
+      this.errors.general = "Не удалось загрузить категории";
     }
-  };
+  }
 }

@@ -22,7 +22,7 @@ export class MainComponent {
 
   async ngOnInit(){
     this.recipes = this.recipesService.getRecipes();
-    this.categories = await this.categoriesService.getPopularCategoies();
+    this.categories = await this.categoriesService.getPopularCategories();
     this.latestRecipes = this.recipesService.getLatestRecipes();
   }
 
