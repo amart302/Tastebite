@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CategoriesService } from '../../services/categories.service';
 import { NgFor, NgIf } from '@angular/common';
 
-interface RecipePost {
+interface Recipe {
   title: string;
   category: string;
   description: string;
@@ -13,6 +13,7 @@ interface RecipePost {
   servings?: number;
   ingredients: Ingredient[];
   instructions: string[];
+  files: File[];
 }
 
 interface Ingredient {
@@ -24,6 +25,15 @@ interface Ingredient {
 interface Category {
   id: string;
   title: string;
+}
+
+interface File {
+  lastModified: number,
+  lastModifiedDate: string,
+  name: string,
+  size: number,
+  type: string,
+  webkitRelativePath: string
 }
 
 interface FormErrors {
@@ -49,6 +59,7 @@ export class AddRecipeComponent {
   categories: Category[] = [];
   ingredients: Ingredient[] = [];
   instructions: string[] = [];
+  files: File[] = [];
 
   title = "";
   category = "";
@@ -77,8 +88,6 @@ export class AddRecipeComponent {
   constructor(private categoriesService: CategoriesService){}
 
   addIngredient(): void{
-    console.log(this.ingredientValidate());
-    
     if(this.ingredientValidate()) return;
     
     const newIngredient: Ingredient = {
@@ -143,6 +152,20 @@ export class AddRecipeComponent {
     return !!this.errors.instructionStep;
   }
 
+  private resetErrors(): void{
+    this.errors = {
+      title: "",
+      category: "",
+      description: "",
+      prepTime: "",
+      ingredientName: "",
+      ingredientAmount: "",
+      ingredientUnit: "",
+      instructionStep: "",
+      general: ""
+    };
+  }
+
   private validateData(): boolean{
     this.resetErrors();
 
@@ -186,34 +209,21 @@ export class AddRecipeComponent {
     return hasErrors;
   }
 
-  private resetErrors(): void{
-    this.errors = {
-      title: "",
-      category: "",
-      description: "",
-      prepTime: "",
-      ingredientName: "",
-      ingredientAmount: "",
-      ingredientUnit: "",
-      instructionStep: "",
-      general: ""
-    };
-  }
-
   async handleSubmit(): Promise<void>{
     if(this.validateData()) return;
     
     this.isLoading = true;
 
     try {
-      const recipeData: RecipePost = {
+      const recipeData: Recipe = {
         title: this.title,
         category: this.category,
         description: this.description,
         prepTime: this.prepTime!,
         servings: this.servings ?? undefined,
         ingredients: this.ingredients,
-        instructions: this.instructions
+        instructions: this.instructions,
+        files: this.files
       };
 
       console.log('Отправка данных:', recipeData);
@@ -225,6 +235,26 @@ export class AddRecipeComponent {
       this.isLoading = false;
     }
   }
+
+  createPreviewUrl(file: any){
+    return URL.createObjectURL(file);
+  };
+
+  handleFileInput(event: any, callback: any) {
+  const files = event.target.files;
+  
+  if (!files || files.length === 0) {
+    console.log('Файлы не выбраны');
+    return;
+  }
+
+  for(let item of files){
+    this.files.push(item);
+  }
+
+  console.log(this.files[0]);
+  
+}
 
   async ngOnInit(): Promise<void>{
     try {
