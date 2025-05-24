@@ -5,16 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 
-interface FormData {
-  email: string;
-  password: string;
-}
+type FormData = Record<"email" | "password", string>;
 
-interface FormErrors {
-  email: string;
-  password: string;
-  general: string;
-}
+type FormErrors = Record< "email" | "password" | "general", string>;
 
 @Component({
   selector: 'app-signin',

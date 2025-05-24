@@ -82,16 +82,16 @@
     </div>
     <div class="form-group">
       <label class="form-group__label">Featured Image</label>
-      <div>
-        <div *ngFor="let item of files">
-          {{ item.name }}
-          <!-- <img [src]="item" alt=""> -->
+      <div class="selected-files">
+        <div *ngFor="let item of files" class="selected-files__item">
+          <img class="selected-files__image" *ngIf="item.type.startsWith('image/')" [src]="createImageUrl(item)" alt="">
+          <video class="selected-files__video" *ngIf="item.type.startsWith('video/')" [src]="createImageUrl(item)" controls></video>
         </div>
       </div>
       <div class="form-group__file-upload">
         <label class="form-group__upload-label">
-          <input class="form-group__upload-input" type="file" accept="image/*, video/*"  (change)="handleFileInput($event, handleSubmit)" multiple>
-          <span>Choose files</span>
+          <input class="form-group__upload-input" type="file" accept="image/*, video/*"  (change)="handleFileInput($event)" multiple>
+          <span>+</span>
         </label>
       </div>
     </div>

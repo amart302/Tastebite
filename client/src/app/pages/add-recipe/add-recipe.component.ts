@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CategoriesService } from '../../services/categories.service';
 import { NgFor, NgIf } from '@angular/common';
 
-interface Recipe {
+type Recipe = {
   title: string;
   category: string;
   description: string;
@@ -16,18 +16,18 @@ interface Recipe {
   files: File[];
 }
 
-interface Ingredient {
+type Ingredient = {
   name: string;
   amount?: number;
   unit: string;
 }
 
-interface Category {
+type Category = {
   id: string;
   title: string;
 }
 
-interface File {
+type File = {
   lastModified: number,
   lastModifiedDate: string,
   name: string,
@@ -36,17 +36,15 @@ interface File {
   webkitRelativePath: string
 }
 
-interface FormErrors {
-  title: string;
-  category: string;
-  description: string;
-  prepTime: string;
-  ingredientName: string;
-  ingredientAmount: string;
-  ingredientUnit: string;
-  instructionStep: string;
-  general: string;
-}
+type FormErrors = Record<"title" |
+  "category" |
+  "description" |
+  "prepTime" |
+  "ingredientName" |
+  "ingredientAmount" |
+  "ingredientUnit" |
+  "instructionStep" |
+  "general", string>
 
 @Component({
   selector: 'app-add-recipe',
@@ -209,6 +207,23 @@ export class AddRecipeComponent {
     return hasErrors;
   }
 
+  createImageUrl(file: any): string {
+    return URL.createObjectURL(file);
+  }
+
+  handleFileInput(event: any) {
+    const files = event.target.files;
+    
+    if (!files || files.length === 0) {
+      console.log('Файлы не выбраны');
+      return;
+    }
+  
+    for(let item of files){
+      this.files.push(item);
+    }
+  }
+
   async handleSubmit(): Promise<void>{
     if(this.validateData()) return;
     
@@ -223,7 +238,7 @@ export class AddRecipeComponent {
         servings: this.servings ?? undefined,
         ingredients: this.ingredients,
         instructions: this.instructions,
-        files: this.files
+        files: this.files,
       };
 
       console.log('Отправка данных:', recipeData);
@@ -235,26 +250,6 @@ export class AddRecipeComponent {
       this.isLoading = false;
     }
   }
-
-  createPreviewUrl(file: any){
-    return URL.createObjectURL(file);
-  };
-
-  handleFileInput(event: any, callback: any) {
-  const files = event.target.files;
-  
-  if (!files || files.length === 0) {
-    console.log('Файлы не выбраны');
-    return;
-  }
-
-  for(let item of files){
-    this.files.push(item);
-  }
-
-  console.log(this.files[0]);
-  
-}
 
   async ngOnInit(): Promise<void>{
     try {

@@ -19,7 +19,7 @@ export async function addCategories(req, res) {
             { title: "Chicken", image: "http://localhost:5000/public/images/chicken.png" },
             { title: "Desserts", image: "http://localhost:5000/public/images/desserts.png" },
             { title: "Dips", image: "http://localhost:5000/public/images/dips.png" },
-            { title: "LessThan30Min", image: "http://localhost:5000/public/images/lessThan30Min.png" },
+            { title: "Less Than 30 Min", image: "http://localhost:5000/public/images/lessThan30Min.png" },
             { title: "Meet", image: "http://localhost:5000/public/images/meet.png" },
             { title: "Pancakes", image: "http://localhost:5000/public/images/pancakes.png" },
             { title: "Pasta", image: "http://localhost:5000/public/images/pasta.png" },
@@ -35,8 +35,7 @@ export async function addCategories(req, res) {
             { title: "Waffles", image: "http://localhost:5000/public/images/waffles.png" }
         ];
 
-        const result = await Category.insertMany(categories);
-
+        await Category.insertMany(categories);
         res.status(201).json({ message: "Категории успешно добавлены" });
     } catch (error) {
         console.error("Ошибка при добавлении категорий:", error);

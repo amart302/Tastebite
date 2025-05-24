@@ -5,18 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 
-interface FormData {
-  fullname: string;
-  email: string;
-  password: string;
-}
+type FormData = Record<"fullname" | "email" | "password", string>
 
-interface FormErrors {
-  fullname: string;
-  email: string;
-  password: string;
-  general: string;
-}
+type FormErrors = Record<"fullname" | "email" | "password" | "general", string>
 
 @Component({
   selector: 'app-signup',
