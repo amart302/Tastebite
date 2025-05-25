@@ -224,6 +224,10 @@ export class AddRecipeComponent {
     }
   }
 
+  removeFile(index: number): void{
+    this.files.splice(index, 1);
+  }
+
   async handleSubmit(): Promise<void>{
     if(this.validateData()) return;
     

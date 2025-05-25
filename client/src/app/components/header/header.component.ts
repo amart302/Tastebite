@@ -18,18 +18,16 @@ export class HeaderComponent {
   avatar: any;
 
   ngOnInit(){
-    const token = localStorage.getItem("token") || "";
-    if(token){
-      this.userAvatar(token);
-    }
+    const token: string | null = localStorage.getItem("token");
+    this.userData(token);
   }
 
-  async userAvatar(token: string){
+  async userData(token: string | null){
     try {
-      const response = await this.userService.getUserAvatar(token);
-      this.avatar = response.data;
+      const response = await this.userService.getUserData(token);
+      this.avatar = response.avatar;
     } catch (error) {
-      console.error("Ошибка при попытке получить аватар пользователя", error);
+      console.error("Ошибка при попытке получить данные пользователя", error);
     }
   }
 

@@ -1,47 +1,47 @@
-.main{
-    max-width: 800px;
+.main {
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.page-title{
+.page-title {
     text-align: center;
     margin-bottom: 30px;
     color: #333;
 }
 
-.add-recipe-form{
+.add-recipe-form {
     display: flex;
     flex-direction: column;
     gap: 25px;
 }
 
-.form-group{
+.form-group {
     display: flex;
     flex-direction: column;
     gap: 8px;
 
-    &__label{
+    &__label {
         font-weight: 600;
         color: #444;
         font-size: 0.95rem;
     }
 
-    &__input{
+    &__input {
         width: calc(100% - 24px);
         padding: 10px 12px;
         border: 1px solid #ddd;
         border-radius: 6px;
-        font-size: 1rem;
+        font-size: 16px;
         transition: border 0.2s;
 
-        &:focus{
+        &:focus {
             outline: none;
             border-color: #FF642F;
         }
     }
 
-    &__select{
+    &__select {
         width: 100%;
         padding: 10px 12px;
         border: 1px solid #ddd;
@@ -51,13 +51,13 @@
         appearance: none;
         transition: border 0.2s;
 
-        &:focus{
+        &:focus {
             outline: none;
             border-color: #FF642F;
         }
     }
 
-    &__textarea{
+    &__textarea {
         width: calc(100% - 24px);
         min-height: 100px;
         max-height: 300px;
@@ -66,77 +66,78 @@
         border-radius: 6px;
         resize: vertical;
         font-family: inherit;
-        font-size: 1rem;
+        font-size: 16px;
 
-        &:focus{
+        &:focus {
             outline: none;
             border-color: #FF642F;
         }
     }
 
-    &__add-button{
+    &__add-button,
+    &__remove-button,
+    &__submit-button {
+        font-size: 16px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: opacity 0.2s;
+        cursor: pointer;
+    }
+
+    &__add-button {
         background-color: #2196f3;
         color: white;
         align-self: flex-start;
 
-        &:hover{
+        &:hover {
             opacity: 0.8;
         }
     }
 
-    &__remove-button{
+    &__remove-button {
         position: absolute;
         right: -45px;
         background-color: #ff6b6b;
         color: white;
         padding: 5px 10px;
 
-        &:hover{
+        &:hover {
             opacity: 0.8;
         }
     }
 
-    &__submit-button{
+    &__submit-button {
         background-color: #FF642F;
         color: white;
         font-size: 1rem;
         padding: 12px 20px;
         margin-top: 10px;
 
-        &:hover{
+        &:hover {
             opacity: 0.8;
         }
     }
 
-    &__add-button,
-    &__remove-button,
-    &__submit-button{
-        padding: 10px 15px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: 500;
-        transition: opacity 0.2s;
-    }
-
-    &__file-upload{
-        margin-top: 5px;
-    }
-
-    &__upload-label{
-        display: inline-block;
-        padding: 20px 25px;
+    &__upload-label {
+        height: 240px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background-color: #d4d4d4;
+        font-size: 26px;
         border-radius: 6px;
         cursor: pointer;
         transition: opacity 0.2s;
 
-        &:hover{
+        &:hover {
             opacity: 0.8;
         }
     }
 
-    &__upload-input{
+    &__upload-input {
         display: none;
     }
 }
@@ -154,16 +155,14 @@
     gap: 10px;
 }
 
-.ingredient-item{
+.ingredient-item {
     position: relative;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
-    justify-content: center;
     gap: 10px;
-    align-items: center;
 
-    &__meaning{
+    &__meaning {
         padding-block: 10px;
         border: 1px solid #ddd;
         border-radius: 6px;
@@ -171,11 +170,13 @@
     }
 }
 
-.instruction-item{
+.instruction-item {
     position: relative;
     display: flex;
+    gap: 10px;
+    align-items: center;
 
-    &__meaning{
+    &__meaning {
         width: calc(100% - 24px);
         padding-block: 10px;
         border: 1px solid #ddd;
@@ -185,29 +186,39 @@
     }
 }
 
-.instruction-item {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.selected-files{
+.selected-files {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
     gap: 20px;
 
-    &__image{
-        width: 100%;
-        height: 200px;
+    &__item {
+        height: 240px;
+        position: relative;
+        overflow: hidden;
         border-radius: 10px;
-        object-fit: cover;
     }
 
-    &__video{
+    &__remove {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        background-color: #ff6b6b;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 500;
+        border: none;
+        border-radius: 50%;
+        z-index: 4;
+        cursor: pointer;
+    }
+
+    &__image,
+    &__video {
         width: 100%;
-        height: 200px;
-        border-radius: 10px;
-        object-fit: none;
+        height: 100%;
+        object-fit: cover;
     }
 }

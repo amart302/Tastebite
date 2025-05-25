@@ -83,16 +83,19 @@
     <div class="form-group">
       <label class="form-group__label">Featured Image</label>
       <div class="selected-files">
-        <div *ngFor="let item of files" class="selected-files__item">
+        <div *ngFor="let item of files; let ind = index" class="selected-files__item">
+          <button class="selected-files__remove" (click)="removeFile(ind)">×</button>
           <img class="selected-files__image" *ngIf="item.type.startsWith('image/')" [src]="createImageUrl(item)" alt="">
           <video class="selected-files__video" *ngIf="item.type.startsWith('video/')" [src]="createImageUrl(item)" controls></video>
         </div>
-      </div>
-      <div class="form-group__file-upload">
-        <label class="form-group__upload-label">
-          <input class="form-group__upload-input" type="file" accept="image/*, video/*"  (change)="handleFileInput($event)" multiple>
-          <span>+</span>
-        </label>
+        <div class="selected-files__item">
+          <div class="form-group__file-upload">
+            <label class="form-group__upload-label">
+              <input class="form-group__upload-input" type="file" accept="image/*, video/*"  (change)="handleFileInput($event)" multiple>
+              <span>+</span>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
     <span class="form-error-message" *ngIf="errors.general">{{ errors.general }}</span>

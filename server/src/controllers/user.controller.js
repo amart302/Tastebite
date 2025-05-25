@@ -17,7 +17,7 @@ export async function getUserAvatar(req, res){
 export async function getUserData(req, res){
     try {
         const { id } = req.user;
-        const user = await User.findOne({ _id: id });
+        const user = await User.findOne({ _id: id }).select("-password -role");
         if(!user){
             res.status(404).json({ message: "Пользователь не найден" });
         }
