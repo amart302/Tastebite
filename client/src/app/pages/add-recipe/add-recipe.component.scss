@@ -1,5 +1,10 @@
 .main {
     max-width: 1000px;
+    height: calc(100vh - 92px - 153px);
+    min-height: calc(1250px + 92px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin: 0 auto;
     padding: 20px;
 }

@@ -4,17 +4,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { CategoriesService } from '../../services/categories.service';
 import { NgFor, NgIf } from '@angular/common';
-
-type Recipe = {
-  title: string;
-  category: string;
-  description: string;
-  prepTime: number;
-  servings?: number;
-  ingredients: Ingredient[];
-  instructions: string[];
-  files: File[];
-}
+import { RecipesService } from '../../services/recipes.service';
 
 type Ingredient = {
   name: string;
@@ -25,15 +15,6 @@ type Ingredient = {
 type Category = {
   id: string;
   title: string;
-}
-
-type File = {
-  lastModified: number,
-  lastModifiedDate: string,
-  name: string,
-  size: number,
-  type: string,
-  webkitRelativePath: string
 }
 
 type FormErrors = Record<"title" |
@@ -58,6 +39,7 @@ export class AddRecipeComponent {
   ingredients: Ingredient[] = [];
   instructions: string[] = [];
   files: File[] = [];
+  filesPreview: any[] = [];
 
   title = "";
   category = "";
@@ -83,7 +65,7 @@ export class AddRecipeComponent {
 
   isLoading = false;
 
-  constructor(private categoriesService: CategoriesService){}
+  constructor(private recipesService: RecipesService,private categoriesService: CategoriesService){}
 
   addIngredient(): void{
     if(this.ingredientValidate()) return;
@@ -207,10 +189,6 @@ export class AddRecipeComponent {
     return hasErrors;
   }
 
-  createImageUrl(file: any): string {
-    return URL.createObjectURL(file);
-  }
-
   handleFileInput(event: any) {
     const files = event.target.files;
     
@@ -221,10 +199,13 @@ export class AddRecipeComponent {
   
     for(let item of files){
       this.files.push(item);
+      const url = URL.createObjectURL(item);
+      this.filesPreview.push({ url: url, type: item.type });
     }
   }
 
   removeFile(index: number): void{
+    this.filesPreview.splice(index, 1);
     this.files.splice(index, 1);
   }
 
@@ -234,18 +215,21 @@ export class AddRecipeComponent {
     this.isLoading = true;
 
     try {
-      const recipeData: Recipe = {
-        title: this.title,
-        category: this.category,
-        description: this.description,
-        prepTime: this.prepTime!,
-        servings: this.servings ?? undefined,
-        ingredients: this.ingredients,
-        instructions: this.instructions,
-        files: this.files,
-      };
+      const formData = new FormData();
+    
+      formData.append('title', this.title);
+      formData.append('category', this.category);
+      formData.append('description', this.description);
+      formData.append('prepTime', this.prepTime!.toString());
+      formData.append('servings', this.servings?.toString() ?? '');
+      formData.append('ingredients', JSON.stringify(this.ingredients));
+      formData.append('instructions', JSON.stringify(this.instructions));
+      
+      this.files.forEach((file: File) => {
+        formData.append('files', file);
+      });
 
-      console.log('Отправка данных:', recipeData);
+      await this.recipesService.addRecipe(formData);
       
     } catch (error){
       console.error("Ошибка при добавлении поста", error);

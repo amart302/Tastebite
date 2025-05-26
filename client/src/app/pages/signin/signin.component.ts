@@ -70,14 +70,14 @@ export class SigninComponent {
   
     try {
       await this.authService.signIn(data);
-      setTimeout(() => this.router.navigate(["/"]), 600);
+      this.router.navigate(["/"]);
     } catch (error) {
       console.error('Ошибка при входе:', error);
       if(axios.isAxiosError(error)){
         setTimeout(() => this.errors.general = error.response?.data?.message, 600);
       }
     } finally {
-      setTimeout(() => this.isLoading = false, 600);
+      this.isLoading = false;
     }
   }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import axios from 'axios';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +7,22 @@ import { Injectable } from '@angular/core';
 export class RecipesService {
   constructor() { }
 
+  async addRecipe(data: any): Promise<void>{
+    try {
+      const token: string | null = localStorage.getItem("token");
+
+      const responce = await axios.post("http://localhost:5000/recipes/additem", data,  {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          
+        }
+      });
+      console.log(responce);
+      
+    } catch (error) {
+      throw error;
+    }
+  }
   getRecipes(){
     try {
       const responce = [
