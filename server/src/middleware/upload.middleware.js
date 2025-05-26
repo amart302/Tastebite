@@ -2,19 +2,22 @@ import path from "path";
 import multer from "multer";
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "uploads/");
+    destination: function (req, file, callback) {
+        let uploadDir = "uploads/images";
+        
+        if(file.mimetype.startsWith("video/")) uploadDir = "uploads/video";
+        callback(null, uploadDir);
     },
-    filename: function (req, file, cb) {
-        let ext = path.extname(file.originalname);
-        cb(null, Date.now() + ext);
+    filename: function (req, file, callback) {
+        let filename = Date.now() + path.extname(file.originalname);
+        callback(null, filename);
     },
 });
 
-const upload = multer({
+export default multer({
     storage: storage,
     fileFilter: function (req, file, callback) {
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/quicktime'];
+        const allowedTypes = ["image/jpeg", "image/png", "image/gif", "video/mp4"];
         if(allowedTypes.includes(file.mimetype)){
             callback(null, true);
         }else{
@@ -22,7 +25,5 @@ const upload = multer({
             callback(new Error("Ошибка загрузки"), false);
         }
     },
-    limits: { fileSize: 1024 * 1024 * 10 }
+    limits: { fileSize: 1024 * 1024 * 100 }
 });
-
-export default upload;
