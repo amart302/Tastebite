@@ -30,6 +30,7 @@
       <div class="form-group">
         <label class="form-group__label">Servings</label>
         <input class="form-group__input" type="number" min="1" placeholder="5" name="servings" [(ngModel)]="servings">
+        <span class="form-error-message" *ngIf="errors.servings">{{ errors.servings }}</span>
       </div>
     </div>
     <div class="form-group">

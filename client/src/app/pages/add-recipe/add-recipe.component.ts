@@ -21,6 +21,7 @@ type FormErrors = Record<"title" |
   "category" |
   "description" |
   "prepTime" |
+  "servings" |
   "ingredientName" |
   "ingredientAmount" |
   "ingredientUnit" |
@@ -56,6 +57,7 @@ export class AddRecipeComponent {
     category: "",
     description: "",
     prepTime: "",
+    servings: "",
     ingredientName: "",
     ingredientAmount: "",
     ingredientUnit: "",
@@ -110,6 +112,8 @@ export class AddRecipeComponent {
 
     if(this.ingredientAmount === null){
       this.errors.ingredientAmount = "Это поле обязательно для заполнения";
+    }else if(this.ingredientAmount){
+      this.errors.ingredientAmount = "Это поле не должно быть отрицательным числом";
     }
 
     if(!this.ingredientUnit){
@@ -138,6 +142,7 @@ export class AddRecipeComponent {
       category: "",
       description: "",
       prepTime: "",
+      servings: "",
       ingredientName: "",
       ingredientAmount: "",
       ingredientUnit: "",
@@ -164,25 +169,39 @@ export class AddRecipeComponent {
       hasErrors = true;
     }
 
-    if(this.description.trim().length > 1000){
-      this.errors.description = "Максимальная длина 1000 символов";
+    if(this.description.trim().length > 3000){
+      this.errors.description = "Максимальная длина 3000 символов";
       hasErrors = true;
     }
 
     if(this.prepTime === null){
       this.errors.prepTime = "Это поле обязательно для заполнения";
       hasErrors = true;
+    }else if(this.prepTime){
+      this.errors.prepTime = "Это поле не должно быть отрицательным числом";
+      hasErrors = true;
+    }
+
+    if(this.servings){
+      this.errors.servings = "Это поле не должно быть отрицательным числом";
+      hasErrors = true;
     }
     
     if(!this.ingredients.length){
-      this.errors.ingredientName = "Это поле обязательно для заполнения";
-      this.errors.ingredientAmount = "Это поле обязательно для заполнения";
-      this.errors.ingredientUnit = "Это поле обязательно для заполнения";
+      this.errors.ingredientName = "Добавьте ингредиенты";
       hasErrors = true;
     }
 
     if(!this.instructions.length){
-      this.errors.instructionStep = "Это поле обязательно для заполнения";
+      this.errors.instructionStep = "Добавьте интрукцию";
+      hasErrors = true;
+    }
+
+    if(!this.files.length){
+      this.errors.general = "Загрузите файлы";
+      hasErrors = true;
+    }else if(this.files.length > 10){
+      this.errors.general = "Количество загружаемых файлов не должно превышать число 10";
       hasErrors = true;
     }
 
@@ -191,11 +210,6 @@ export class AddRecipeComponent {
 
   handleFileInput(event: any) {
     const files = event.target.files;
-    
-    if (!files || files.length === 0) {
-      console.log('Файлы не выбраны');
-      return;
-    }
   
     for(let item of files){
       this.files.push(item);
