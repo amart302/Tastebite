@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { body } from "express-validator";
+import { body, check } from "express-validator";
 import { addrecipe } from "../controllers/recipes.controller.js";
 import authMiddleware from "../middleware/auth.middleware.js";
 import uploadMiddleware from "../middleware/upload.middleware.js";
@@ -22,8 +22,10 @@ router.post("/additem", [
         .notEmpty().withMessage("Время готовки обязательно")
         .isInt({ min: 1 }).withMessage("Время приготовления не должно быть отрицательным числом"),
     body('servings')
-        .optional()
-        .isInt({ min: 1 }).withMessage('Количество порций должно быть положительным числом')
+        .notEmpty().withMessage("Количество порций обязательно")
+        .isInt({ min: 1 }).withMessage('Количество порций должно быть положительным числом'),
+    body("ingredients").isArray({ min: 1 }).withMessage("Добавьте игредиенты"),
+    body("instructions").isArray({ min: 1 }).withMessage("Добавьте инструкцию"),
 ], uploadMiddleware.array("files", 10), addrecipe);
 
 export default router;

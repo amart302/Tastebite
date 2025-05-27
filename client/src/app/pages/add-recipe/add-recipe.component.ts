@@ -112,7 +112,7 @@ export class AddRecipeComponent {
 
     if(this.ingredientAmount === null){
       this.errors.ingredientAmount = "Это поле обязательно для заполнения";
-    }else if(this.ingredientAmount){
+    }else if(this.ingredientAmount > 0){
       this.errors.ingredientAmount = "Это поле не должно быть отрицательным числом";
     }
 
@@ -177,12 +177,15 @@ export class AddRecipeComponent {
     if(this.prepTime === null){
       this.errors.prepTime = "Это поле обязательно для заполнения";
       hasErrors = true;
-    }else if(this.prepTime){
+    }else if(this.prepTime > 0){
       this.errors.prepTime = "Это поле не должно быть отрицательным числом";
       hasErrors = true;
     }
 
-    if(this.servings){
+    if(this.servings === null){
+      this.errors.servings = "Это поле обязательно для заполнения";
+      hasErrors = true;
+    }else if(this.servings > 0){
       this.errors.servings = "Это поле не должно быть отрицательным числом";
       hasErrors = true;
     }
@@ -239,9 +242,7 @@ export class AddRecipeComponent {
       formData.append('ingredients', JSON.stringify(this.ingredients));
       formData.append('instructions', JSON.stringify(this.instructions));
       
-      this.files.forEach((file: File) => {
-        formData.append('files', file);
-      });
+      this.files.forEach((file: File) => formData.append('files', file));
 
       await this.recipesService.addRecipe(formData);
       
