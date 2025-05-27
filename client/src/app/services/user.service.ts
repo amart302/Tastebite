@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import axios from 'axios';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor() { }
+  constructor(private router: Router) { }
 
   async getUserAvatar(token: string): Promise<any>{
     try {
@@ -16,6 +17,7 @@ export class UserService {
       });
       return responce;
     } catch (error) {
+      this.router.navigate(["/signin"]);
       throw error;
     }
   }
@@ -34,6 +36,7 @@ export class UserService {
 
       return response.data;
     } catch (error) {
+      this.router.navigate(["/signin"])
       throw error;
     }
   }

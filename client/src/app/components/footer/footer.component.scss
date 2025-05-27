@@ -1,8 +1,19 @@
 .footer{
     padding: 50px 20px;
     background-color: #F9F9F9;
-    &__inner{
+
+    &__container{
         max-width: 1200px;
         margin-inline: auto;
+    }
+
+    &__main{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &__columns{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
     }
 }

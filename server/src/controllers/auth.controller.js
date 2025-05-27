@@ -45,7 +45,7 @@ export async function signup(req, res){
         res.status(200).json({ token: token });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Ошибка регистрации" });
+        res.status(500).json({ message: "Произошла ошибка при регистрации" });
     }
 };
 
@@ -68,6 +68,6 @@ export async function signin(req, res){
         res.status(200).json({ token: token });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Ошибка авторизации" });
+        res.status(500).json({ message: "Произошла ошибка при входе" });
     }
 };

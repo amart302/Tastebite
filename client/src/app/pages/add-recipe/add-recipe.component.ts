@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { CategoriesService } from '../../services/categories.service';
 import { NgFor, NgIf } from '@angular/common';
 import { RecipesService } from '../../services/recipes.service';
+import { Router } from '@angular/router';
+import axios from 'axios';
 
 type Ingredient = {
   name: string;
@@ -67,7 +69,20 @@ export class AddRecipeComponent {
 
   isLoading = false;
 
-  constructor(private recipesService: RecipesService,private categoriesService: CategoriesService){}
+  constructor(
+    private recipesService: RecipesService,
+    private categoriesService: CategoriesService,
+    private router: Router
+  ){}
+
+  async ngOnInit(): Promise<void>{
+    try {
+      this.categories = await this.categoriesService.getCategories();
+    } catch (error){
+      console.error("Не удалось загрузить категории", error);
+      this.errors.general = "Не удалось загрузить категории";
+    }
+  }
 
   addIngredient(): void{
     if(this.ingredientValidate()) return;
@@ -112,7 +127,9 @@ export class AddRecipeComponent {
 
     if(this.ingredientAmount === null){
       this.errors.ingredientAmount = "Это поле обязательно для заполнения";
-    }else if(this.ingredientAmount > 0){
+    }else if(this.ingredientAmount < 0){
+      console.log(this.ingredientAmount);
+      
       this.errors.ingredientAmount = "Это поле не должно быть отрицательным числом";
     }
 
@@ -177,7 +194,7 @@ export class AddRecipeComponent {
     if(this.prepTime === null){
       this.errors.prepTime = "Это поле обязательно для заполнения";
       hasErrors = true;
-    }else if(this.prepTime > 0){
+    }else if(this.prepTime < 0){
       this.errors.prepTime = "Это поле не должно быть отрицательным числом";
       hasErrors = true;
     }
@@ -185,7 +202,7 @@ export class AddRecipeComponent {
     if(this.servings === null){
       this.errors.servings = "Это поле обязательно для заполнения";
       hasErrors = true;
-    }else if(this.servings > 0){
+    }else if(this.servings < 0){
       this.errors.servings = "Это поле не должно быть отрицательным числом";
       hasErrors = true;
     }
@@ -245,21 +262,14 @@ export class AddRecipeComponent {
       this.files.forEach((file: File) => formData.append('files', file));
 
       await this.recipesService.addRecipe(formData);
-      
+      this.router.navigate(["/"]);
     } catch (error){
-      console.error("Ошибка при добавлении поста", error);
-      this.errors.general = "Произошла ошибка при сохранении рецепта";
+      console.error('Ошибка при входе:', error);
+      if(axios.isAxiosError(error)){
+        this.errors.general = error.response?.data?.message;
+      }
     } finally {
       this.isLoading = false;
-    }
-  }
-
-  async ngOnInit(): Promise<void>{
-    try {
-      this.categories = await this.categoriesService.getCategories();
-    } catch (error){
-      console.error("Не удалось загрузить категории", error);
-      this.errors.general = "Не удалось загрузить категории";
     }
   }
 }

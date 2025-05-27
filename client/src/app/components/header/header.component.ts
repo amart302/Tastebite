@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import axios from 'axios';
 import { UserService } from '../../services/user.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink],
+  imports: [RouterLink, NgIf],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -34,5 +35,9 @@ export class HeaderComponent {
   goToAddRecipe(){
     if(!localStorage.getItem("token")) this.router.navigate(["/signin"]);
     else this.router.navigate(["/addrecipe"]);
+  }
+
+  checkUrl(){
+    return this.router.url == "/" || this.router.url == "/profile";
   }
 }

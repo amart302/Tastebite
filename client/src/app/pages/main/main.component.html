@@ -15,7 +15,7 @@
         <h2 class="recipes__title">Super Delicious</h2>
         <div class="recipes__content">
             <div *ngFor="let item of recipes" class="recipe-container">
-                <img class="recipe-container__image" [src]="item.image" alt="">
+                <img class="recipe-container__image" [src]="`http://localhost:5000/media/image/${item.files[0].name}`" alt="">
                 <div class="recipe-container__content">
                     <div class="recipe-container__rating">
                         <svg class="recipe-container__star-icon" *ngFor="let elem of getRatingArray(item.rating)" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 15" fill="none">
@@ -31,7 +31,7 @@
         <h2 class="recipes__title">Sweet Tooth</h2>
         <div class="recipes__content">
             <div *ngFor="let item of recipes" class="recipe-container">
-                <img class="recipe-container__image" [src]="item.image" alt="">
+                <img class="recipe-container__image" [src]="`http://localhost:5000/media/image/${item.files[0].name}`" alt="">
                 <div class="recipe-container__content">
                     <div class="recipe-container__rating">
                         <svg class="recipe-container__star-icon" *ngFor="let elem of getRatingArray(item.rating)" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 15" fill="none">
@@ -67,7 +67,7 @@
         <h2 class="latest-recipes__title">Latest Recipes</h2>
         <div class="latest-recipes__content">
             <div *ngFor="let item of latestRecipes" class="recipe-container">
-                <img class="recipe-container__image" [src]="item.image" alt="">
+                <img class="recipe-container__image" [src]="`http://localhost:5000/media/image/${item.files[0].name}`" alt="">
                 <div class="recipe-container__content">
                     <!-- <div class="recipe-container__rating">
                         <svg class="recipe-container__star-icon" *ngFor="let elem of getRatingArray(item.rating)" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 15" fill="none">

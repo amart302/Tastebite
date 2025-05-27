@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { body, check } from "express-validator";
-import { addrecipe } from "../controllers/recipes.controller.js";
+import { addRecipe, getRecipes } from "../controllers/recipes.controller.js";
 import authMiddleware from "../middleware/auth.middleware.js";
 import uploadMiddleware from "../middleware/upload.middleware.js";
 
 const router = new Router();
 
-// router.get("/", getCategories);
-router.post("/additem", [
+router.get("/", getRecipes);
+router.post("/additem", authMiddleware, [
     body("title")
         .trim()
         .notEmpty().withMessage("Название обязательно")
@@ -26,6 +26,6 @@ router.post("/additem", [
         .isInt({ min: 1 }).withMessage('Количество порций должно быть положительным числом'),
     body("ingredients").isArray({ min: 1 }).withMessage("Добавьте игредиенты"),
     body("instructions").isArray({ min: 1 }).withMessage("Добавьте инструкцию"),
-], uploadMiddleware.array("files", 10), addrecipe);
+], uploadMiddleware.array("files", 10), addRecipe);
 
 export default router;

@@ -82,9 +82,8 @@ export class SignupComponent {
       await this.authService.signUp(data);
       this.router.navigate(["/"]);
     } catch (error) {
-      console.error('Ошибка при регистрации:', error);
       if(axios.isAxiosError(error)){
-        setTimeout(() => this.errors.general = error.response?.data?.message, 600);
+        this.errors.general = error.response?.data?.message;
       }
     } finally {
       this.isLoading = false;

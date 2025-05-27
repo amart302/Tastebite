@@ -23,6 +23,7 @@ const UserSchema = new Schema({
     required: true,
     default: "user"
   },
+  posts: [{ type: String }],
   password: {
     type: String,
     length: 6,

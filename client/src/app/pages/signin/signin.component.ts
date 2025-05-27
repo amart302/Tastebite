@@ -72,9 +72,8 @@ export class SigninComponent {
       await this.authService.signIn(data);
       this.router.navigate(["/"]);
     } catch (error) {
-      console.error('Ошибка при входе:', error);
       if(axios.isAxiosError(error)){
-        setTimeout(() => this.errors.general = error.response?.data?.message, 600);
+        this.errors.general = error.response?.data?.message;
       }
     } finally {
       this.isLoading = false;
