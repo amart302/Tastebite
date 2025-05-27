@@ -46,7 +46,7 @@ export class AddRecipeComponent {
 
   title = "";
   category = "";
-  description = "";
+  description = "Best";
   prepTime: number | null = null;
   servings: number | null = null;
   ingredientName = "";
@@ -185,8 +185,10 @@ export class AddRecipeComponent {
       this.errors.category = "Это поле обязательно для заполнения";
       hasErrors = true;
     }
-
-    if(this.description.trim().length > 3000){
+    
+    if(!this.description.trim()){
+      this.errors.description = "Это поле обязательно для заполнения";
+    }else if(this.description.trim().length > 3000){
       this.errors.description = "Максимальная длина 3000 символов";
       hasErrors = true;
     }

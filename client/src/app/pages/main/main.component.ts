@@ -2,31 +2,25 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { RecipesService } from '../../services/recipes.service';
 import { NgFor } from '@angular/common';
 import { CategoriesService } from '../../services/categories.service';
+import { RecipeCardsComponent } from '../../components/recipe-cards/recipe-cards.component';
+import { LatestRecipeCardsComponent } from '../../components/latest-recipe-cards/latest-recipe-cards.component';
 
 
 @Component({
   selector: 'app-main',
-  imports: [HeaderComponent, FooterComponent, NgFor],
+  imports: [HeaderComponent, FooterComponent, RecipeCardsComponent, LatestRecipeCardsComponent, NgFor],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'
 })
 export class MainComponent {
-  recipes: any;
   categories: any;
   latestRecipes: any;
 
-  constructor(private recipesService: RecipesService, private categoriesService: CategoriesService, private router: Router){}
+  constructor(private categoriesService: CategoriesService, private router: Router){}
 
   async ngOnInit(){
-    this.recipes = await this.recipesService.getRecipes();
     this.categories = await this.categoriesService.getPopularCategories();
-    this.latestRecipes = await this.recipesService.getLatestRecipes();
-  }
-
-  getRatingArray(rating: number): number[] {
-    return Array(rating).fill(0);
   }
 }

@@ -5,6 +5,8 @@ import axios from 'axios';
   providedIn: 'root'
 })
 export class RecipesService {
+  private recipes: any[] | null = null;
+
   constructor() { }
 
   async addRecipe(data: any): Promise<void>{
@@ -24,8 +26,11 @@ export class RecipesService {
   }
   async getRecipes(){
     try {
+      if(this.recipes?.length) return this.recipes;
+
       const responce = await axios.get("http://localhost:5000/recipes");      
-      return responce.data;
+      this.recipes = responce.data;
+      return this.recipes;
     } catch (error) {
       console.error("Не удалось загрузить рецепты", error);
       throw error;
@@ -34,10 +39,13 @@ export class RecipesService {
 
   async getLatestRecipes(){
     try {
+      if(this.recipes?.length) return this.recipes;
+      
       const responce = await axios.get("http://localhost:5000/recipes");      
-      return responce.data;
+      this.recipes = responce.data;
+      return this.recipes;
     } catch (error) {
-      console.error("Не удалось загрузить рецепты", error);
+      console.error("Не удалось загрузить свежие рецепты", error);
       throw error;
     }
   }
