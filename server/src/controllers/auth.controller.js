@@ -1,4 +1,3 @@
-import { validationResult } from "express-validator";
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
 import "dotenv/config";
@@ -11,10 +10,6 @@ const generateAccessToken = (id, role) => {
 
 export async function signup(req, res){
     try {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ message: errors.array()[0].msg });
-        }
 
         const { fullname, email, role, password, } = req.body;
         const hashPassword = bcrypt.hashSync(password, 8);
@@ -51,7 +46,8 @@ export async function signup(req, res){
 
 export async function signin(req, res){
     try {
-        const { email, password, } = req.body;
+        const { email, password } = req.body;
+        console.log(req.body);
         
         const existingUser = await User.findOne({ email });
         

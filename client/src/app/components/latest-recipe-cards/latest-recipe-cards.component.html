@@ -1,8 +1,10 @@
 <div class="recipes__content">
-    <div *ngFor="let item of latestRecipes" class="recipe-container">
-        <img class="recipe-container__image" [src]="`http://localhost:5000/media/image/${item.files[0].name}`" alt="">
-        <div class="recipe-container__content">
-            <span class="recipe-container__name">{{ item.title }}</span>
+    <a [routerLink]="['/recipe/', item._id]" *ngFor="let item of latestRecipes" class="recipe-container-link">
+        <div class="recipe-container">
+            <img class="recipe-container__image" [src]="`http://localhost:5000/media/image/${item.mainImage}`" alt="">
+            <div class="recipe-container__content">
+                <span class="recipe-container__name">{{ item.title }}</span>
+            </div>
         </div>
-    </div>
+    </a>
 </div>

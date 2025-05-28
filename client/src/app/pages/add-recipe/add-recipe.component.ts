@@ -209,10 +209,10 @@ export class AddRecipeComponent {
       hasErrors = true;
     }
     
-    if(!this.ingredients.length){
-      this.errors.ingredientName = "Добавьте ингредиенты";
-      hasErrors = true;
-    }
+    // if(!this.ingredients.length){
+    //   this.errors.ingredientName = "Добавьте ингредиенты";
+    //   hasErrors = true;
+    // }
 
     if(!this.instructions.length){
       this.errors.instructionStep = "Добавьте интрукцию";
@@ -222,10 +222,11 @@ export class AddRecipeComponent {
     if(!this.files.length){
       this.errors.general = "Загрузите файлы";
       hasErrors = true;
-    }else if(this.files.length > 10){
-      this.errors.general = "Количество загружаемых файлов не должно превышать число 10";
-      hasErrors = true;
     }
+    // else if(this.files.length > 10){
+    //   this.errors.general = "Количество загружаемых файлов не должно превышать число 10";
+    //   hasErrors = true;
+    // }
 
     return hasErrors;
   }
@@ -253,22 +254,21 @@ export class AddRecipeComponent {
     try {
       const formData = new FormData();
     
-      formData.append('title', this.title);
-      formData.append('category', this.category);
-      formData.append('description', this.description);
-      formData.append('prepTime', this.prepTime!.toString());
-      formData.append('servings', this.servings?.toString() ?? '');
-      formData.append('ingredients', JSON.stringify(this.ingredients));
-      formData.append('instructions', JSON.stringify(this.instructions));
-      
-      this.files.forEach((file: File) => formData.append('files', file));
+      formData.append("title", this.title);
+      formData.append("category", this.category);
+      formData.append("description", this.description);
+      formData.append("prepTime", this.prepTime!.toString());
+      formData.append("servings", this.servings?.toString() ?? "");
+      formData.append("ingredients", JSON.stringify(this.ingredients));
+      formData.append("instructions", JSON.stringify(this.instructions));
+      this.files.forEach((item: File) => formData.append("files", item));
 
       await this.recipesService.addRecipe(formData);
       this.router.navigate(["/"]);
     } catch (error){
-      console.error('Ошибка при входе:', error);
+      console.error("Ошибка при входе:", error);
       if(axios.isAxiosError(error)){
-        this.errors.general = error.response?.data?.message;
+        this.errors.general = error.response?.data?.errors[0].msg;
       }
     } finally {
       this.isLoading = false;

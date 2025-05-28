@@ -13,13 +13,15 @@ export async function addRecipe(req, res){
         
         const { id } = req.user;
         const files = [];
+        let mainImage = null;
         req.files.forEach(item => {
+            if(!mainImage && item.mimetype.startsWith("image/")) mainImage = item.filename;
             files.push({
                 type: item.mimetype,
                 name: item.filename
             });
         });
-
+        
         const newPost = new Recipe({
             title,
             category,
@@ -28,7 +30,8 @@ export async function addRecipe(req, res){
             servings,
             ingredients: JSON.parse(ingredients),
             instructions: JSON.parse(instructions),
-            files
+            files,
+            mainImage
         });
         await newPost.save();
         
@@ -45,7 +48,7 @@ export async function addRecipe(req, res){
 
 export async function getRecipes(req, res){
     try {
-        const recipes = await Recipe.find({}, { title: 1,files: 1, rating: 1 });
+        const recipes = await Recipe.find({}, { title: 1,files: 1, rating: 1, mainImage: 1 });
         res.status(200).json(recipes);
     } catch (error) {
         res.status(500).json({ message: "Ошибка при попытке получить список рецепт" });
@@ -56,9 +59,9 @@ export async function getRecipes(req, res){
 export async function getRecipe(req, res){
     try {
         const { id } = req.params;
+        
         const recipe = await Recipe.findOne({ _id: id });
-
-        if(recipe) res.status(404).json({ message: "Рецепт не найден" });
+        if(!recipe) return res.status(404).json({ message: "Рецепт не найден" });
         res.status(200).json(recipe);
     } catch (error) {
         res.status(500).json({ message: "Ошибка при попытке получить список рецепт" });

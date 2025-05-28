@@ -22,6 +22,7 @@ const RecipeSchema = new Schema({
     instructions: [{ type: String, required: true }],
     rating: { type: Number, default: 5 },
     files: [FileSchema],
+    mainImage: { type: String }
 }, {
     timestamps: true,
     collection: "recipes"

@@ -1,5 +1,5 @@
 .footer{
-    padding: 50px 20px;
+    padding: 80px 20px;
     background-color: #F9F9F9;
 
     &__container{
@@ -10,10 +10,74 @@
     &__main{
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+        gap: 100px;
+    }
+
+    &__brand{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &__description{
+        color: #7F7F7F;
+        font-size: 16px;
+        font-weight: 400;
     }
 
     &__columns{
         display: grid;
         grid-template-columns: repeat(3, 1fr);
+    }
+    
+    &__column{
+        display: flex;
+        flex-direction: column;
+        text-align: right;
+        gap: 12px;
+    }
+
+    &__column-title{
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    &__list{
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    &__item{
+        color: #7F7F7F;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    &__divider{
+        width: 96%;
+        margin-inline: auto;
+        height: 1px;
+        margin-block: 40px;
+        background-color: #E8E8E8;
+        border: none;
+    }
+
+    &__copyright{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    &__copyright-text{
+        color: #7F7F7F;
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    &__social{
+        display: flex;
+        justify-content: end;
+        align-content: center;
+        gap: 40px;
     }
 }

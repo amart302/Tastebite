@@ -73,7 +73,7 @@ export class SigninComponent {
       this.router.navigate(["/"]);
     } catch (error) {
       if(axios.isAxiosError(error)){
-        this.errors.general = error.response?.data?.message;
+        this.errors.general = error.response?.data?.errors[0].msg;
       }
     } finally {
       this.isLoading = false;

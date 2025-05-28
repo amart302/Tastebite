@@ -49,4 +49,14 @@ export class RecipesService {
       throw error;
     }
   }
+
+  async getRecipeData(id: string | null){
+    try {
+      const responce = await axios.get(`http://localhost:5000/recipes/${id}`)
+      return responce.data;
+    } catch (error) {
+      console.error("Не удалось загрузить рецепт", error);
+      throw error;
+    }
+  }
 }

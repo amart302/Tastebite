@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { body } from "express-validator";
 import { signup, signin } from '../controllers/auth.controller.js';
+import validateRequestMiddleware from "../middleware/validateRequest.middleware.js";
 
 const router = new Router();
 
@@ -18,7 +19,7 @@ router.post("/signup", [
         .trim()
         .notEmpty().withMessage("Пароль не должен быть пустым")
         .isLength({ min: 6, max: 6 }).withMessage("Пароль должен состоять из 6 символов")
-], signup);
+], validateRequestMiddleware, signup);
 
 router.post("/signin", [
     body("email")
@@ -29,7 +30,7 @@ router.post("/signin", [
     body("password")
         .trim()
         .notEmpty().withMessage("Пароль не должен быть пустым")
-        .isLength({ min: 6, max: 6 }).withMessage("Пароль должен состоять из 4 символов")
-], signin);
+        .isLength({ min: 6, max: 6 }).withMessage("Пароль должен состоять из 6 символов")
+], validateRequestMiddleware, signin);
 
 export default router;

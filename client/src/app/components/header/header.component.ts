@@ -15,21 +15,10 @@ export class HeaderComponent {
     private router: Router,
     private userService: UserService
   ){}
-  user: any;
   avatar: any;
 
-  ngOnInit(){
-    const token: string | null = localStorage.getItem("token");
-    this.userData(token);
-  }
-
-  async userData(token: string | null){
-    try {
-      const response = await this.userService.getUserData(token);
-      this.avatar = response.avatar;
-    } catch (error) {
-      console.error("Ошибка при попытке получить данные пользователя", error);
-    }
+  async ngOnInit(){
+    this.avatar = await this.userService.getUserAvatar();
   }
 
   goToAddRecipe(){
