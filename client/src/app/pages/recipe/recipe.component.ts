@@ -18,7 +18,5 @@ export class RecipeComponent {
   async ngOnInit(){
     const id: string | null = this.route.snapshot.paramMap.get("id");
     this.recipe = await this.resipesService.getRecipeData(id);
-    console.log(this.recipe);
-    
   }
 }

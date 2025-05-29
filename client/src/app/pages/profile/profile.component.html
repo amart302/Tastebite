@@ -1,5 +1,63 @@
 <app-header />
-<main class="main">
-    
+<main class="profile">
+    <div class="profile__header">
+        <h1 class="profile__title">Profile</h1>
+        <button class="profile__save-button">Save</button>
+    </div>
+    <hr class="profile__divider">
+    <div class="profile__container">
+        <div class="profile__avatar-section">
+            <div class="profile__avatar-wrapper">
+                <img src="/assets/images/defaultAvatar.png" alt="User avatar" class="profile__avatar">
+            </div>
+            <div class="profile__avatar-buttons">
+                <button class="profile__avatar-button update">Change photo</button>
+                <button class="profile__avatar-button remove">Delete</button>
+            </div>
+        </div>
+    </div>
+    <div class="profile__container">
+        <form class="profile-form">
+            <div class="profile-form__row">
+                <div class="profile-form__group">
+                    <label class="profile-form__label">FULL NAME</label>
+                    <div class="profile-form__input-container">
+                        <img src="/assets/icons/userIcon.svg" alt="email icon" class="profile-form__icon">
+                        <input class="profile-form__input"type="text" placeholder="Suzan M">
+                    </div>
+                </div>
+                <div class="profile-form__group">
+                    <label class="profile-form__label">USERNAME</label>
+                    <div class="profile-form__input-container">
+                        <img src="/assets/icons/user.svg" alt="email icon" class="profile-form__icon">
+                        <input class="profile-form__input"type="text" placeholder="Miller">
+                    </div>
+                </div>
+            </div>
+            <div class="profile-form__row">
+                <div class="profile-form__group">
+                    <label class="profile-form__label">EMAIL</label>
+                    <div class="profile-form__input-container">
+                        <img src="/assets/icons/mailIcon.svg" alt="email icon" class="profile-form__icon">
+                        <input class="profile-form__input"type="text" placeholder="suzan@gmail.com">
+                    </div>
+                </div>
+                <div class="profile-form__group">
+                    <label class="profile-form__label">PASSWORD</label>
+                    <div class="profile-form__input-container">
+                        <img src="/assets/icons/lockIcon.svg" alt="email icon" class="profile-form__icon">
+                        <input class="profile-form__input"type="text" placeholder="•••••••">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- <hr class="profile__divider"> -->
+    <div class="profile__container">
+        <div class="profile__actions">
+            <button class="profile__actions__button button-sign-out" (click)="signOut()"><img src="/assets/icons/log-out.svg" alt=""><span>Sign out</span></button>
+            <button class="profile__actions__button button-delete-account">Delete account</button>
+        </div>
+    </div>
 </main>
 <app-footer />

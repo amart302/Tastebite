@@ -1,0 +1,152 @@
+.profile{
+    max-width: 1000px;
+    min-height: calc(100vh - 420px);
+    margin-inline: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    &__title{
+        font-family: none;
+        font-size: 36px;
+        font-weight: 700;
+    }
+
+    &__save-button{
+        width: 142px;
+        height: 48px;
+        background-color: #FF642F;
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 500;
+        border-radius: 6px;
+        border: none;
+        transition: opacity 0.2s;
+        cursor: pointer;
+
+        &:hover{
+            opacity: 0.8;
+        }
+    }
+
+    &__divider{
+        height: 1px;
+        width: 100%;
+        background-color: #D8D8D8;
+        border: none;
+    }
+
+    &__avatar-section{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &__avatar{
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    &__avatar-buttons{
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        gap: 10px;
+    }
+
+    &__avatar-button{
+        width: 140px;
+        height: 38px;
+        border-radius: 6px;
+        transition: opacity 0.2s;
+        cursor: pointer;
+
+        &:hover{
+            opacity: 0.8;
+        }
+    }
+
+    &__actions{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 180px;
+    }
+}
+
+.update{
+    background-color: #FF642F;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.remove{
+    background: transparent;
+    border: solid 1px #000000;
+    font-size: 14px;
+    font-weight: 500;
+}
+.button-sign-out{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border: none;
+    background: transparent;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+}
+.button-delete-account{
+    border: none;
+    background: transparent;
+    color: #FF642F;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.profile-form{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    &__row{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 100px;
+    }
+
+    &__label{
+        font-size: 14px;
+        font-weight: 400;
+        color: #7F7F7F;
+    }
+
+    &__input-container{
+        display: grid;
+        grid-template-columns: 24px 1fr;
+        gap: 6px;
+        align-items: center;
+        border-bottom: solid 1px #E8E8E8;
+        padding: 10px 6px;
+    }
+
+    &__input{
+        border: none;
+
+        &:focus{
+            outline: none;
+        }
+    }
+}
