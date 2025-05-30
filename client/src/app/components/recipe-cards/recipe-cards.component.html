@@ -1,10 +1,12 @@
-<!-- <div class="recipes__content" *ngIf="!recipes">
-    <p-skeleton styleClass="mb-2" />
-    <p-skeleton width="10rem" styleClass="mb-2" />
-    <p-skeleton width="5rem" styleClass="mb-2" />
-    <p-skeleton height="2rem" styleClass="mb-2" />
-    <p-skeleton width="10rem" height="4rem" />
-</div> -->
+<div class="recipes__content" *ngIf="!recipes">
+    <div class="recipe-sceleton-container" *ngFor="let item of skeletonItems">
+        <ngx-skeleton-loader [theme]="{ height: '250px', width: '100%', borderRadius: '10px' }" />
+        <div class="recipe-sceleton-container__content">
+            <ngx-skeleton-loader [theme]="{ height: '26px', width: '30%', borderRadius: '6px' }" />
+            <ngx-skeleton-loader [theme]="{ height: '26px', width: '56%', borderRadius: '6px' }" />
+        </div>
+    </div>
+</div>
 
 <div class="recipes__content" *ngIf="recipes">
     <a [routerLink]="['/recipe/', item._id]" *ngFor="let item of recipes" class="recipe-container-link">

@@ -2,17 +2,25 @@
 <main class="profile">
     <div class="profile__header">
         <h1 class="profile__title">Profile</h1>
-        <button class="profile__save-button">Save</button>
+        <button class="profile__save-button" type="submit" (click)="handleSubmit()">
+            <svg *ngIf="isLoading" class="spinner" viewBox="0 0 50 50">
+                <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+            </svg>
+            <span class="profile__save-button-text" *ngIf="!isLoading">Save</span>
+        </button>
     </div>
     <hr class="profile__divider">
     <div class="profile__container">
         <div class="profile__avatar-section">
             <div class="profile__avatar-wrapper">
-                <img src="/assets/images/defaultAvatar.png" alt="User avatar" class="profile__avatar">
+                <img [src]="avatarPreview || '/assets/images/defaultAvatar.png'" alt="User avatar" class="profile__avatar">
             </div>
             <div class="profile__avatar-buttons">
-                <button class="profile__avatar-button update">Change photo</button>
-                <button class="profile__avatar-button remove">Delete</button>
+                <label class="profile__avatar-button update-avatar">
+                    Change photo
+                    <input type="file" class="update-avatar__input" accept="image/*" (change)="handleFileInput($event)">
+                </label>
+                <button class="profile__avatar-button remove" (click)="deletePreview()">Delete</button>
             </div>
         </div>
     </div>
@@ -22,15 +30,15 @@
                 <div class="profile-form__group">
                     <label class="profile-form__label">FULL NAME</label>
                     <div class="profile-form__input-container">
-                        <img src="/assets/icons/userIcon.svg" alt="email icon" class="profile-form__icon">
-                        <input class="profile-form__input"type="text" placeholder="Suzan M">
+                        <img src="/assets/icons/user.svg" alt="email icon" class="profile-form__icon">
+                        <input class="profile-form__input"type="text" placeholder="Suzan M" name="fullname" [(ngModel)]="fullname">
                     </div>
                 </div>
                 <div class="profile-form__group">
-                    <label class="profile-form__label">USERNAME</label>
+                    <label class="profile-form__label">PASSWORD</label>
                     <div class="profile-form__input-container">
-                        <img src="/assets/icons/user.svg" alt="email icon" class="profile-form__icon">
-                        <input class="profile-form__input"type="text" placeholder="Miller">
+                        <img src="/assets/icons/lock.svg" alt="email icon" class="profile-form__icon">
+                        <input class="profile-form__input"type="password" placeholder="•••••••" name="password" [(ngModel)]="password">
                     </div>
                 </div>
             </div>
@@ -38,21 +46,25 @@
                 <div class="profile-form__group">
                     <label class="profile-form__label">EMAIL</label>
                     <div class="profile-form__input-container">
-                        <img src="/assets/icons/mailIcon.svg" alt="email icon" class="profile-form__icon">
-                        <input class="profile-form__input"type="text" placeholder="suzan@gmail.com">
+                        <img src="/assets/icons/mail.svg" alt="email icon" class="profile-form__icon">
+                        <input class="profile-form__input"type="text" placeholder="suzan@gmail.com" name="email" [(ngModel)]="email">
                     </div>
                 </div>
                 <div class="profile-form__group">
-                    <label class="profile-form__label">PASSWORD</label>
+                    <label class="profile-form__label">CONFIRM PASSWORD</label>
                     <div class="profile-form__input-container">
-                        <img src="/assets/icons/lockIcon.svg" alt="email icon" class="profile-form__icon">
-                        <input class="profile-form__input"type="text" placeholder="•••••••">
+                        <img src="/assets/icons/lock.svg" alt="email icon" class="profile-form__icon">
+                        <input class="profile-form__input"type="password" placeholder="•••••••" name="confirmPassword" [(ngModel)]="confirmPassword">
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    <!-- <hr class="profile__divider"> -->
+    <div class="profile__container recipes" *ngIf="recipes">
+        <h2 class="recipes__title">Your publications</h2>
+        <app-recipe-cards [recipes]="recipes" />
+    </div>
+    <hr class="profile__divider" *ngIf="recipes">
     <div class="profile__container">
         <div class="profile__actions">
             <button class="profile__actions__button button-sign-out" (click)="signOut()"><img src="/assets/icons/log-out.svg" alt=""><span>Sign out</span></button>

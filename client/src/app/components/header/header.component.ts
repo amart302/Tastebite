@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import axios from 'axios';
 import { UserService } from '../../services/user.service';
 import { NgIf } from '@angular/common';
+import { SigninComponent } from '../signin/signin.component';
+import { SignupComponent } from '../signup/signup.component';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, NgIf],
+  imports: [RouterLink, NgIf, SignupComponent, SigninComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -16,17 +17,27 @@ export class HeaderComponent {
     private userService: UserService
   ){}
   avatar: any;
+  formType: "login" | "regist" | null = null;
 
-  async ngOnInit(){
+  async ngOnInit(): Promise<void>{
     this.avatar = await this.userService.getUserAvatar();
   }
 
-  goToAddRecipe(){
-    if(!localStorage.getItem("token")) this.router.navigate(["/signin"]);
+  goToAddRecipe(): void{
+    if(!localStorage.getItem("token")) this.changeFormType();
     else this.router.navigate(["/addrecipe"]);
   }
 
-  checkUrl(){
+  checkUrl(): boolean{
     return this.router.url == "/" || this.router.url == "/profile";
+  }
+
+  changeFormType(): void{
+    this.formType = this.formType === 'login' ? 'regist' : 'login';
+  }
+
+  goToProfile(): void{
+    if(!localStorage.getItem("token")) this.changeFormType();
+    else this.router.navigate(["/profile"]);
   }
 }

@@ -42,7 +42,7 @@ export class AddRecipeComponent {
   ingredients: Ingredient[] = [];
   instructions: string[] = [];
   files: File[] = [];
-  filesPreview: any[] = [];
+  filesPreviews: any[] = [];
 
   title = "";
   category = "";
@@ -209,10 +209,10 @@ export class AddRecipeComponent {
       hasErrors = true;
     }
     
-    // if(!this.ingredients.length){
-    //   this.errors.ingredientName = "Добавьте ингредиенты";
-    //   hasErrors = true;
-    // }
+    if(!this.ingredients.length){
+      this.errors.ingredientName = "Добавьте ингредиенты";
+      hasErrors = true;
+    }
 
     if(!this.instructions.length){
       this.errors.instructionStep = "Добавьте интрукцию";
@@ -222,27 +222,28 @@ export class AddRecipeComponent {
     if(!this.files.length){
       this.errors.general = "Загрузите файлы";
       hasErrors = true;
+    }else if(this.files.length > 10){
+      this.errors.general = "Количество загружаемых файлов не должно превышать число 10";
+      hasErrors = true;
     }
-    // else if(this.files.length > 10){
-    //   this.errors.general = "Количество загружаемых файлов не должно превышать число 10";
-    //   hasErrors = true;
-    // }
 
     return hasErrors;
   }
 
-  handleFileInput(event: any) {
-    const files = event.target.files;
+  handleFileInput(event: any): void{
+    const input = event.target;
+    const files = input.files;
   
     for(let item of files){
       this.files.push(item);
       const url = URL.createObjectURL(item);
-      this.filesPreview.push({ url: url, type: item.type });
+      this.filesPreviews.push({ url: url, type: item.type });
     }
+    input.value = "";
   }
 
   removeFile(index: number): void{
-    this.filesPreview.splice(index, 1);
+    this.filesPreviews.splice(index, 1);
     this.files.splice(index, 1);
   }
 

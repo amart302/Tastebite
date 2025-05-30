@@ -1,20 +1,15 @@
-import { Component } from '@angular/core';
-import { RecipesService } from '../../services/recipes.service';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-latest-recipe-cards',
-  imports: [NgFor, RouterLink],
+  imports: [NgFor, NgIf, RouterLink, NgxSkeletonLoaderModule],
   templateUrl: './latest-recipe-cards.component.html',
   styleUrl: './latest-recipe-cards.component.scss'
 })
 export class LatestRecipeCardsComponent {
-  latestRecipes: any;
-
-  constructor(private recipesService: RecipesService){}
-
-  async ngOnInit(){
-    this.latestRecipes = await this.recipesService.getLatestRecipes();
-  }
+  @Input() recipes!: any;
+  skeletonItems = Array(8).fill(null);
 }

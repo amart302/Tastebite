@@ -15,7 +15,7 @@ export class RecipeComponent {
 
   constructor(private route: ActivatedRoute, private resipesService: RecipesService){}
 
-  async ngOnInit(){
+  async ngOnInit(): Promise<void>{
     const id: string | null = this.route.snapshot.paramMap.get("id");
     this.recipe = await this.resipesService.getRecipeData(id);
   }

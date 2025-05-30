@@ -40,7 +40,7 @@ export function getVideo(req, res){
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Ошибка загрузки видео" });
+        res.status(500).json({ message: "Не удалось загрузить видео" });
     }
 }
 
@@ -55,6 +55,6 @@ export function getImage(req, res){
         res.sendFile(imagePath);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Ошибка загрузки изображения" })
+        res.status(500).json({ message: "Не удалось загрузить изображение" })
     }
 }

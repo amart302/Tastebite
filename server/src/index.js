@@ -18,12 +18,13 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json());
-app.use("/public", express.static(path.join(__dirname, "../public")))
+app.use("/public", express.static(path.join(__dirname, "../public")));
+app.use("/media/image", express.static(path.join(__dirname, "../uploads/images")))
 app.use("/auth", authRoutes);
 app.use("/user", userRouter);
 app.use("/categories", categoriesRouter);
 app.use("/recipes", recipesRoutes);
-app.use("/media", mediaRoutes);
+// app.use("/media", mediaRoutes);
 
 const PORT = process.env.PORT || 5000;
 

@@ -24,7 +24,7 @@ const UserSchema = new Schema({
     required: true,
     default: "user"
   },
-  posts: [{ type: String }],
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipe" }],
   password: {
     type: String,
     length: 6,

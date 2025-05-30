@@ -1,3 +1,4 @@
+import { Recipe } from "../models/Recipe.js";
 import { User } from "../models/User.js";
 
 export async function getUserData(req, res){
@@ -10,7 +11,7 @@ export async function getUserData(req, res){
         res.status(200).json(user);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Ошибка при попытке получить данные пользователя" });
+        res.status(500).json({ message: "Не удалось загрузить данные пользователя" });
     }
 }
 
@@ -24,6 +25,32 @@ export async function getUserAvatar(req, res){
         res.status(200).json(avatar);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Ошибка при попытке получить данные пользователя" });
+        res.status(500).json({ message: "Не удалось загрузить аватар пользователя" });
+    }
+}
+
+export async function updateUserData(req, res){
+    try {
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Не удалось обновить данные пользователя" });
+    }
+}
+
+export async function getUserRecipes(req, res){
+    try {
+        const { id } = req.user;
+        const user = await User.findOne({ _id: id }).select("-password -role");
+        if (!user || !user.posts.length) {
+            return res.status(404).json({ message: "Посты не найдены" });
+        }
+
+        const posts = await Recipe.find({ _id: { $in: user.posts } });
+        
+        res.status(200).json(posts);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Не удалось загрузить рецепты пользователя" });
     }
 }

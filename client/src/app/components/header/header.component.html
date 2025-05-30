@@ -19,11 +19,14 @@
                 <button class="search__button"><img class="search__icon" src="/assets/icons/searchIcon.svg" alt="search"></button>
             </div>
             <div class="user-avatar">
-                <a routerLink="/profile" class="user-avatar__link">
-                    <img class="user-avatar__image" [src]="avatar" alt="avatar">
+                <a (click)="goToProfile()" class="user-avatar__link">
+                    <img class="user-avatar__image" [src]="avatar || '/assets/images/defaultAvatar.png'" alt="avatar">
                 </a>
             </div>
         </div>
         
     </div>
 </header>
+
+<app-signin *ngIf="formType === 'login'" (switchForm)="changeFormType()" />
+<app-signup *ngIf="formType === 'regist'" (switchForm)="changeFormType()" />

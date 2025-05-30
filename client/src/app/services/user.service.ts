@@ -6,14 +6,11 @@ import axios from 'axios';
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private router: Router) { }
-
   async getUserAvatar(): Promise<any>{
     try {
       const token: string | null = localStorage.getItem("token");
 
       if(!token){
-        console.log("Пользователь не авторизаван");
         return;
       }
       const responce = await axios.get("http://localhost:5000/user/avatar", {
@@ -23,7 +20,6 @@ export class UserService {
       });
       return responce.data.avatar;
     } catch (error) {
-      this.router.navigate(["/signin"]);
       throw error;
     }
   }
@@ -44,7 +40,14 @@ export class UserService {
 
       return response.data;
     } catch (error) {
-      this.router.navigate(["/signin"])
+      throw error;
+    }
+  }
+
+  async updateUserData(data: any): Promise<any>{
+    try {
+      
+    } catch (error) {
       throw error;
     }
   }

@@ -13,11 +13,11 @@
     </div>
     <div class="main__container recipes">
         <h2 class="recipes__title">Super Delicious</h2>
-        <app-recipe-cards />
+        <app-recipe-cards [recipes]="recipes" />
     </div>
     <div class="main__container recipes">
         <h2 class="recipes__title">Sweet Tooth</h2>
-        <app-recipe-cards />
+        <app-recipe-cards [recipes]="recipes" />
     </div>
     <div class="main__container categories">
         <h2 class="categories__title">Popular Categoies</h2>
@@ -41,7 +41,7 @@
     </div>
     <div class="main__container recipes">
         <h2 class="recipes__title">Latest Recipes</h2>
-        <app-latest-recipe-cards />
+        <app-latest-recipe-cards [recipes]="latestRecipes" />
     </div>
 </main>
 <app-footer />

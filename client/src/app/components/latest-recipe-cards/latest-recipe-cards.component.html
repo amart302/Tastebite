@@ -1,5 +1,14 @@
+<div class="recipes__content" *ngIf="!recipes">
+    <div class="recipe-sceleton-container" *ngFor="let item of skeletonItems">
+        <ngx-skeleton-loader [theme]="{ height: '250px', width: '100%', borderRadius: '10px' }" />
+        <div class="recipe-sceleton-container__content">
+            <ngx-skeleton-loader [theme]="{ height: '26px', width: '56%', borderRadius: '6px' }" />
+        </div>
+    </div>
+</div>
+
 <div class="recipes__content">
-    <a [routerLink]="['/recipe/', item._id]" *ngFor="let item of latestRecipes" class="recipe-container-link">
+    <a [routerLink]="['/recipe/', item._id]" *ngFor="let item of recipes" class="recipe-container-link">
         <div class="recipe-container">
             <img class="recipe-container__image" [src]="`http://localhost:5000/media/image/${item.mainImage}`" alt="">
             <div class="recipe-container__content">

@@ -24,33 +24,42 @@ export class RecipesService {
       throw error;
     }
   }
-  async getRecipes(){
+  async getRecipes(): Promise<any>{
     try {
-      if(this.recipes?.length) return this.recipes;
-
       const responce = await axios.get("http://localhost:5000/recipes");      
-      this.recipes = responce.data;
-      return this.recipes;
+      return responce.data;
     } catch (error) {
       console.error("Не удалось загрузить рецепты", error);
       throw error;
     }
   }
 
-  async getLatestRecipes(){
+  async getUserRecipes(): Promise<any>{
     try {
-      if(this.recipes?.length) return this.recipes;
-      
+      const token: string | null = localStorage.getItem("token");
+      const responce = await axios.get("http://localhost:5000/user/recipes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      return responce.data;
+    } catch (error) {
+      console.error("Не удалось посты пользователя", error);
+      throw error;
+    }
+  }
+
+  async getLatestRecipes(): Promise<any>{
+    try {
       const responce = await axios.get("http://localhost:5000/recipes");      
-      this.recipes = responce.data;
-      return this.recipes;
+      return responce.data;
     } catch (error) {
       console.error("Не удалось загрузить свежие рецепты", error);
       throw error;
     }
   }
 
-  async getRecipeData(id: string | null){
+  async getRecipeData(id: string | null): Promise<any>{
     try {
       const responce = await axios.get(`http://localhost:5000/recipes/${id}`)
       return responce.data;

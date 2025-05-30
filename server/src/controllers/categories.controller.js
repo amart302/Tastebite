@@ -6,7 +6,7 @@ export async function getCategories(req, res){
         res.status(200).json(categories);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Ошибка при попытке получить список категорий" });
+        res.status(500).json({ message: "Не удалось загрузить категории" });
     }
 }
 
@@ -40,7 +40,7 @@ export async function addCategories(req, res) {
     } catch (error) {
         console.error("Ошибка при добавлении категорий:", error);
         res.status(500).json({ 
-            message: "Ошибка при попытке добавить категории",
+            message: "Не удалось добавить категории",
             error: error.message 
         });
     }
