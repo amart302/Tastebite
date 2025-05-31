@@ -33,6 +33,7 @@
                         <img src="/assets/icons/user.svg" alt="email icon" class="profile-form__icon">
                         <input class="profile-form__input"type="text" placeholder="Suzan M" name="fullname" [(ngModel)]="fullname">
                     </div>
+                    <span class="form-error-message" *ngIf="errors.fullname">{{ errors.fullname }}</span>
                 </div>
                 <div class="profile-form__group">
                     <label class="profile-form__label">PASSWORD</label>

@@ -29,7 +29,7 @@ export class ProfileComponent {
   isLoading: boolean = false;
 
   errors: FormErrors = {
-    fullname: "",
+    fullname: "Это поле обязательно для ввода",
     email: "",
     password: "",
     confirmPassword: "",
@@ -71,6 +71,48 @@ export class ProfileComponent {
 
     let hasErrors = false;
 
+    if(!this.fullname.trim()){
+      this.errors.fullname = "Это поле обязательно для заполнения";
+      hasErrors = true;
+    }else if(this.fullname.trim().length > 150){
+        this.errors.fullname = "Максимальная длина 150 символов";
+        hasErrors = true;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!this.email.trim()){
+        this.errors.email = "Это поле обязательно для заполнения";
+        hasErrors = true;
+    }else if(!emailPattern.test(this.email)){
+        this.errors.email = "Некорректная формат почты";
+        hasErrors = true;
+    }else if(this.email.trim().length > 250){
+        this.errors.email = "Максимальная длина 250 символов";
+        hasErrors = true;
+    }
+
+    if(!this.password.trim()){
+        this.errors.password = "Это поле обязательно для заполнения";
+        hasErrors = true;
+    }else if(this.password.trim().length < 6){
+        this.errors.password = "Минимальная длина пароля 6 символов";
+        hasErrors = true;
+    }else if(this.password.trim().length > 150){
+        this.errors.password = "Максимальная длина 150 символов";
+        hasErrors = true;
+    }
+
+    if(!this.confirmPassword.trim()){
+        this.errors.confirmPassword = "Это поле обязательно для заполнения";
+        hasErrors = true;
+    }else if(this.confirmPassword.trim().length < 6){
+        this.errors.confirmPassword = "Минимальная длина пароля 6 символов";
+        hasErrors = true;
+    }else if(this.confirmPassword.trim().length > 150){
+        this.errors.confirmPassword = "Максимальная длина 150 символов";
+        hasErrors = true;
+    }
+
     return hasErrors;
   }
 
@@ -81,9 +123,8 @@ export class ProfileComponent {
 
     formData.append("fullname", this.fullname);
     formData.append("email", this.email);
-    formData.append("password", this.password);
+    if(this.password) formData.append("password", this.password);
     if(this.avatar) formData.append("avatar", this.avatar);
-    
     this.isLoading = true;
   
     try {

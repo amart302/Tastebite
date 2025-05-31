@@ -31,7 +31,8 @@ export async function getUserAvatar(req, res){
 
 export async function updateUserData(req, res){
     try {
-        
+        console.log(req.body, 123);
+        res.status(200);
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Не удалось обновить данные пользователя" });

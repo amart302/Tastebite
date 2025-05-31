@@ -138,6 +138,12 @@
         gap: 100px;
     }
 
+    &__group{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
     &__label{
         font-size: 15px;
         font-weight: 400;

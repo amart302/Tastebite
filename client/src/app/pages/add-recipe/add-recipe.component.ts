@@ -46,7 +46,7 @@ export class AddRecipeComponent {
 
   title = "";
   category = "";
-  description = "Best";
+  description = "";
   prepTime: number | null = null;
   servings: number | null = null;
   ingredientName = "";

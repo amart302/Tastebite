@@ -42,6 +42,9 @@ export class SigninComponent {
         }else if(!emailPattern.test(this.email)){
             this.errors.email = "Некорректная формат почты";
             hasErrors = true;
+        }else if(this.email.trim().length > 250){
+            this.errors.email = "Максимальная длина 250 символов";
+            hasErrors = true;
         }
 
         if(!this.password.trim()){
@@ -49,6 +52,9 @@ export class SigninComponent {
             hasErrors = true;
         }else if(this.password.trim().length < 6){
             this.errors.password = "Минимальная длина пароля 6 символов";
+            hasErrors = true;
+        }else if(this.password.trim().length > 150){
+            this.errors.password = "Максимальная длина 150 символов";
             hasErrors = true;
         }
 

@@ -46,7 +46,17 @@ export class UserService {
 
   async updateUserData(data: any): Promise<any>{
     try {
-      
+      const token: string | null = localStorage.getItem("token");
+      if(!token){
+        console.log("Пользователь не авторизаван");
+        return;
+      }
+      const response = await axios.patch("http://localhost:5000/user", data, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log(response);
     } catch (error) {
       throw error;
     }
