@@ -29,7 +29,7 @@ export class ProfileComponent {
   isLoading: boolean = false;
 
   errors: FormErrors = {
-    fullname: "Это поле обязательно для ввода",
+    fullname: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -40,7 +40,7 @@ export class ProfileComponent {
 
   async ngOnInit(): Promise<void>{
     this.user = await this.userService.getUserData();
-    this.avatarPreview = this.user.avatar;
+    this.avatarPreview = `http://localhost:5000/media/image/${this.user.avatar}`;
     this.fullname = this.user.fullname;
     this.email = this.user.email;
     this.recipes = await this.recipesService.getUserRecipes();
@@ -67,6 +67,7 @@ export class ProfileComponent {
     this.errors.fullname = "";
     this.errors.email = "";
     this.errors.password = "";
+    this.errors.confirmPassword = "";
     this.errors.general = "";
 
     let hasErrors = false;
@@ -86,15 +87,12 @@ export class ProfileComponent {
     }else if(!emailPattern.test(this.email)){
         this.errors.email = "Некорректная формат почты";
         hasErrors = true;
-    }else if(this.email.trim().length > 250){
-        this.errors.email = "Максимальная длина 250 символов";
+    }else if(this.email.trim().length > 150){
+        this.errors.email = "Максимальная длина 150 символов";
         hasErrors = true;
     }
 
-    if(!this.password.trim()){
-        this.errors.password = "Это поле обязательно для заполнения";
-        hasErrors = true;
-    }else if(this.password.trim().length < 6){
+    if(this.password.trim().length > 0 && this.password.trim().length < 6){
         this.errors.password = "Минимальная длина пароля 6 символов";
         hasErrors = true;
     }else if(this.password.trim().length > 150){
@@ -102,15 +100,22 @@ export class ProfileComponent {
         hasErrors = true;
     }
 
-    if(!this.confirmPassword.trim()){
-        this.errors.confirmPassword = "Это поле обязательно для заполнения";
-        hasErrors = true;
-    }else if(this.confirmPassword.trim().length < 6){
+    if(this.confirmPassword.trim().length > 0 && this.confirmPassword.trim().length < 6){
         this.errors.confirmPassword = "Минимальная длина пароля 6 символов";
         hasErrors = true;
     }else if(this.confirmPassword.trim().length > 150){
         this.errors.confirmPassword = "Максимальная длина 150 символов";
         hasErrors = true;
+    }
+
+    if(this.password.trim() !== this.confirmPassword.trim()){
+      this.errors.general = "Пароли не совпадают";
+      hasErrors = true;
+    }
+
+    if(this.avatar && !this.avatar.type.startsWith("image")){
+      this.errors.general = "Недопустимый формат файла.";
+      hasErrors = true;
     }
 
     return hasErrors;
@@ -129,7 +134,7 @@ export class ProfileComponent {
   
     try {
       await this.userService.updateUserData(formData);
-      window.location.reload();
+      this.router.navigate(["/"]);
     } catch (error) {
       if(axios.isAxiosError(error)){
         this.errors.general = error.response?.data?.errors[0].msg;

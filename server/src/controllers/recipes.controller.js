@@ -39,9 +39,9 @@ export async function addRecipe(req, res){
             { _id: id },
             { $push: { posts: newPost._id } },
         );
-        res.status(200).json({ message: "Пост успешно добавлен" });
+        res.status(200).json({ message: "Рецепт успешно добавлен" });
     } catch (error) {
-        res.status(500).json({ message: "Не удалось сохранить пост" });
+        res.status(500).json({ message: "Не удалось сохранить рецепт" });
         console.error(error);
     }
 }

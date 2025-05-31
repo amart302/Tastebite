@@ -5,7 +5,7 @@ import { NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 
 type FormData = Record<"fullname" | "email" | "password", string>
-type FormErrors = Record<"fullname" | "email" | "password" | "general", string>
+type FormErrors = Record<"fullname" | "email" | "password" | "confirmPassword" | "general", string>
 
 @Component({
   selector: 'app-signup',
@@ -15,14 +15,17 @@ type FormErrors = Record<"fullname" | "email" | "password" | "general", string>
 })
 export class SignupComponent {
   @Output() switchForm = new EventEmitter<void>();
+  @Output() closeForm = new EventEmitter<void>();
   fullname: string = "";
   email: string = "";
   password: string = "";
+  confirmPassword: string = "";
 
   errors: FormErrors = {
     fullname: "",
     email: "",
     password: "",
+    confirmPassword: "",
     general: ""
   };
 
@@ -34,6 +37,7 @@ export class SignupComponent {
         this.errors.fullname = "";
         this.errors.email = "";
         this.errors.password = "";
+        this.errors.confirmPassword = "";
         this.errors.general = "";
 
         let hasErrors = false;
@@ -54,8 +58,8 @@ export class SignupComponent {
         }else if(!emailPattern.test(this.email)){
             this.errors.email = "Некорректная формат почты";
             hasErrors = true;
-        }else if(this.email.trim().length > 250){
-            this.errors.email = "Максимальная длина 250 символов";
+        }else if(this.email.trim().length > 150){
+            this.errors.email = "Максимальная длина 150 символов";
             hasErrors = true;
         }
 
@@ -66,8 +70,24 @@ export class SignupComponent {
             this.errors.password = "Минимальная длина пароля 6 символов";
             hasErrors = true;
         }else if(this.password.trim().length > 150){
-            this.errors.password = "Максимальная длина 150 символов";
+            this.errors.password = "Максимальная длина пароля 150 символов";
             hasErrors = true;
+        }
+
+        if(!this.confirmPassword.trim()){
+            this.errors.confirmPassword = "Это поле обязательно для заполнения";
+            hasErrors = true;
+        }else if(this.confirmPassword.trim().length < 6){
+            this.errors.confirmPassword = "Минимальная длина пароля 6 символов";
+            hasErrors = true;
+        }else if(this.confirmPassword.trim().length > 150){
+            this.errors.confirmPassword = "Максимальная длина пароля 150 символов";
+            hasErrors = true;
+        }
+
+        if(this.password.trim() !== this.confirmPassword.trim()){
+          this.errors.general = "Пароли не совпадают";
+          hasErrors = true;
         }
 
         return hasErrors;

@@ -15,6 +15,7 @@ type FormErrors = Record< "email" | "password" | "general", string>;
 })
 export class SigninComponent {
   @Output() switchForm = new EventEmitter<void>();
+  @Output() closeForm = new EventEmitter<void>();
   email: string = "";
   password: string = "";
 
@@ -42,8 +43,8 @@ export class SigninComponent {
         }else if(!emailPattern.test(this.email)){
             this.errors.email = "Некорректная формат почты";
             hasErrors = true;
-        }else if(this.email.trim().length > 250){
-            this.errors.email = "Максимальная длина 250 символов";
+        }else if(this.email.trim().length > 150){
+            this.errors.email = "Максимальная длина 150 символов";
             hasErrors = true;
         }
 
@@ -54,7 +55,7 @@ export class SigninComponent {
             this.errors.password = "Минимальная длина пароля 6 символов";
             hasErrors = true;
         }else if(this.password.trim().length > 150){
-            this.errors.password = "Максимальная длина 150 символов";
+            this.errors.password = "Максимальная длина пароля 150 символов";
             hasErrors = true;
         }
 

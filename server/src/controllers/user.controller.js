@@ -31,8 +31,17 @@ export async function getUserAvatar(req, res){
 
 export async function updateUserData(req, res){
     try {
-        console.log(req.body, 123);
-        res.status(200);
+        const { id } = req.user;
+        const data = {
+            ...req.body,
+            avatar: req.file.filename
+        }
+        await User.findOneAndUpdate(
+            { _id: id},
+            data
+        );
+
+        res.status(200).json({ message: "Данные пользователя успешно обновлены" });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Не удалось обновить данные пользователя" });

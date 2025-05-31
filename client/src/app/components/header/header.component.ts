@@ -36,6 +36,10 @@ export class HeaderComponent {
     this.formType = this.formType === 'login' ? 'regist' : 'login';
   }
 
+  closeForm(): void{
+    this.formType = null;
+  }
+
   goToProfile(): void{
     if(!localStorage.getItem("token")) this.changeFormType();
     else this.router.navigate(["/profile"]);

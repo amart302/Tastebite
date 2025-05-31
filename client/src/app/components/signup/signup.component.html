@@ -1,5 +1,6 @@
 <div class="main">
     <form class="auth-form">
+        <img src="/assets/icons/cross.svg" alt="close form" class="auth-form__close-form" (click)="closeForm.emit()">
         <h1>SIGN UP</h1>
         <div class="auth-form__group">
             <img src="/assets/icons/user.svg" alt="fullname icon" class="auth-form__icon">
@@ -15,7 +16,12 @@
             <img src="/assets/icons/lock.svg" alt="password icon" class="auth-form__icon">
             <input type="password" name="password" class="auth-form__input" placeholder="Password" [(ngModel)]="password">
         </div>
-        <span class="form-error-message" *ngIf="errors.general || errors.password">{{ errors.general || errors.password }}</span>
+        <span class="form-error-message" *ngIf="errors.password">{{ errors.password }}</span>
+        <div class="auth-form__group">
+            <img src="/assets/icons/lock.svg" alt="password icon" class="auth-form__icon">
+            <input type="password" name="confirmPassword" class="auth-form__input" placeholder="Confirm password" [(ngModel)]="confirmPassword">
+        </div>
+        <span class="form-error-message" *ngIf="errors.confirmPassword || errors.general">{{ errors.confirmPassword || errors.general }}</span>
         <button class="auth-form__button" type="submit" (click)="handleSubmit()">
             <svg *ngIf="isLoading" class="spinner" viewBox="0 0 50 50">
                 <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
