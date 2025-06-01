@@ -219,13 +219,13 @@ export class AddRecipeComponent {
       hasErrors = true;
     }
 
-    if(!this.files.length){
-      this.errors.general = "Загрузите файлы";
-      hasErrors = true;
-    }else if(this.files.length > 10){
-      this.errors.general = "Количество загружаемых файлов не должно превышать число 10";
-      hasErrors = true;
-    }
+    // if(!this.files.length){
+    //   this.errors.general = "Загрузите файлы";
+    //   hasErrors = true;
+    // }else if(this.files.length > 10){
+    //   this.errors.general = "Количество загружаемых файлов не должно превышать число 10";
+    //   hasErrors = true;
+    // }
 
     return hasErrors;
   }

@@ -1,5 +1,7 @@
+import bcrypt from 'bcryptjs';
 import { Recipe } from "../models/Recipe.js";
 import { User } from "../models/User.js";
+import { deleteFilesByName } from '../utils/fileUtils.js';
 
 export async function getUserData(req, res){
     try {
@@ -32,15 +34,22 @@ export async function getUserAvatar(req, res){
 export async function updateUserData(req, res){
     try {
         const { id } = req.user;
-        const data = {
-            ...req.body,
-            avatar: req.file.filename
-        }
-        await User.findOneAndUpdate(
-            { _id: id},
-            data
-        );
+        const avatar = req.file;
+        const password = req.body.password;
 
+        const user = await User.findOne({ _id: id }).select("-password -role");
+
+        if(password){
+            const hashPassword = bcrypt.hashSync(password, 8);
+            req.body.password = hashPassword;
+        }
+        if(avatar){
+            req.body.avatar = avatar.filename;
+            deleteFilesByName(user.avatar);
+        };
+
+        Object.assign(user, req.body);
+        await user.save();
         res.status(200).json({ message: "Данные пользователя успешно обновлены" });
     } catch (error) {
         console.log(error);
