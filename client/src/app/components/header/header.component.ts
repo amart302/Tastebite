@@ -16,11 +16,12 @@ export class HeaderComponent {
     private router: Router,
     private userService: UserService
   ){}
-  avatar: any;
+  avatar: string = "/assets/images/defaultAvatar.png";
   formType: "login" | "regist" | null = null;
 
   async ngOnInit(): Promise<void>{
-    this.avatar = await this.userService.getUserAvatar();
+    const response = await this.userService.getUserAvatar();
+    if(response) this.avatar =  `http://localhost:5000/media/image/${response}`;
   }
 
   goToAddRecipe(): void{

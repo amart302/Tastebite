@@ -19,7 +19,7 @@ type FormErrors = Record<"fullname" | "email" | "password" | "confirmPassword" |
 })
 export class ProfileComponent {
   avatar: File | null = null;
-  avatarPreview: string = "";
+  avatarPreview: string = "/assets/images/defaultAvatar.png";
   user: any | null = null;
   fullname: string = "";
   email: string = "";
@@ -40,7 +40,7 @@ export class ProfileComponent {
 
   async ngOnInit(): Promise<void>{
     this.user = await this.userService.getUserData();
-    this.avatarPreview = `http://localhost:5000/media/image/${this.user.avatar}`;
+    if(this.user?.avatar) this.avatarPreview = `http://localhost:5000/media/image/${this.user.avatar}`;
     this.fullname = this.user.fullname;
     this.email = this.user.email;
     this.recipes = await this.recipesService.getUserRecipes();
@@ -55,7 +55,7 @@ export class ProfileComponent {
   }
 
   deletePreview(): void{
-    this.avatarPreview = this.user.avatar;
+    this.avatarPreview = "/assets/images/defaultAvatar.png";
   }
 
   signOut(): void{

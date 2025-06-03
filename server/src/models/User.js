@@ -3,8 +3,7 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   avatar: {
-    type: String,
-    default: "/assets/images/defaultAvatar.png"
+    type: String
   },
   fullname: {
     type: String,

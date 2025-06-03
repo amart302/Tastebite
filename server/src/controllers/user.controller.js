@@ -61,10 +61,6 @@ export async function getUserRecipes(req, res){
     try {
         const { id } = req.user;
         const user = await User.findOne({ _id: id }).select("-password -role");
-        if (!user || !user.posts.length) {
-            return res.status(404).json({ message: "Посты не найдены" });
-        }
-
         const posts = await Recipe.find({ _id: { $in: user.posts } });
         
         res.status(200).json(posts);

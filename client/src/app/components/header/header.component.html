@@ -20,7 +20,7 @@
             </div>
             <div class="user-avatar">
                 <a (click)="goToProfile()" class="user-avatar__link">
-                    <img class="user-avatar__image" [src]="`http://localhost:5000/media/image/${avatar}` || '/assets/images/defaultAvatar.png'" alt="avatar">
+                    <img class="user-avatar__image" [src]="avatar" alt="avatar">
                 </a>
             </div>
         </div>
