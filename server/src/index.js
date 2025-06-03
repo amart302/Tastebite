@@ -3,7 +3,7 @@ import path from "path";
 import cors from "cors";
 import "dotenv/config";
 import authRoutes from "./routes/auth.routes.js";
-import userRouter from "./routes/user.routes.js";
+import usersRouter from "./routes/users.routes.js";
 import categoriesRouter from "./routes/categories.routes.js";
 import recipesRoutes from "./routes/recipes.routes.js";
 import mediaRoutes from "./routes/media.routes.js";
@@ -21,7 +21,7 @@ app.use(express.json());
 app.use("/public", express.static(path.join(__dirname, "../public")));
 app.use("/media/image", express.static(path.join(__dirname, "../uploads/images")))
 app.use("/auth", authRoutes);
-app.use("/user", userRouter);
+app.use("/user", usersRouter);
 app.use("/categories", categoriesRouter);
 app.use("/recipes", recipesRoutes);
 // app.use("/media", mediaRoutes);

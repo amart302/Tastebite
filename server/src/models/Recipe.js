@@ -5,12 +5,12 @@ const IngredientSchema = new Schema({
     name: { type: String, required: true },
     amount: { type: Number, required: true },
     unit: { type: String, required: true }
-});
+}, { _id: false });
 
 const FileSchema = new Schema({
     name: { type: String, required: true },
     type: { type: String, required: true }
-});
+}, { _id: false });
 
 const RecipeSchema = new Schema({
     title: { type: String, required: true },

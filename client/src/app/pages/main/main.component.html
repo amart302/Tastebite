@@ -21,14 +21,7 @@
     </div>
     <div class="main__container categories">
         <h2 class="categories__title">Popular Categoies</h2>
-        <div class="categories__content">
-            <div *ngFor="let item of categories" class="category-container">
-                <img class="category-container__image" [src]="item.image" alt="">
-                <div class="category-container__content">
-                    <span class="category-container__name">{{ item.title }}</span>
-                </div>
-            </div>
-        </div>
+        <app-category-cards [categories]="categories" />
     </div>
     <div class="email-subscription">
         <h2 class="email-subscription__title">Deliciousness<br> to your inbox</h2>

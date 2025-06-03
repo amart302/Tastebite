@@ -20,6 +20,7 @@ export class UserService {
       });
       return responce.data.avatar;
     } catch (error) {
+      localStorage.clear();
       throw error;
     }
   }

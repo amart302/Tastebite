@@ -25,5 +25,8 @@ export default multer({
             callback(new Error("Ошибка загрузки"), false);
         }
     },
-    limits: { fileSize: 1024 * 1024 * 100 }
+    limits: {
+        fileSize: 1024 * 1024 * 100,
+        files: 10
+    }
 });

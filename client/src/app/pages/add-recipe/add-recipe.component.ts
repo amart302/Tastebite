@@ -121,16 +121,16 @@ export class AddRecipeComponent {
     
     if(!this.ingredientName.trim()){
       this.errors.ingredientName = "Это поле обязательно для заполнения";
-    }else if(this.ingredientName.trim().length > 50){
-      this.errors.ingredientName = "Максимальная длина 50 символов";
+    }else if(this.ingredientName.trim().length > 40){
+      this.errors.ingredientName = "Максимальная длина 40 символов";
     }
 
     if(this.ingredientAmount === null){
       this.errors.ingredientAmount = "Это поле обязательно для заполнения";
     }else if(this.ingredientAmount < 0){
-      console.log(this.ingredientAmount);
-      
       this.errors.ingredientAmount = "Это поле не должно быть отрицательным числом";
+    }else if(this.ingredientAmount.toString().length > 10){
+      this.errors.ingredientAmount = "Максимальная длина 10 символов"
     }
 
     if(!this.ingredientUnit){
@@ -199,6 +199,8 @@ export class AddRecipeComponent {
     }else if(this.prepTime < 0){
       this.errors.prepTime = "Это поле не должно быть отрицательным числом";
       hasErrors = true;
+    }else if(this.prepTime.toString().length > 4){
+      this.errors.prepTime = "Максимальная длина 4 символов"
     }
 
     if(this.servings === null){
@@ -207,6 +209,8 @@ export class AddRecipeComponent {
     }else if(this.servings < 0){
       this.errors.servings = "Это поле не должно быть отрицательным числом";
       hasErrors = true;
+    }else if(this.servings.toString().length > 3){
+      this.errors.servings = "Максимальная длина 3 символов"
     }
     
     if(!this.ingredients.length){
@@ -215,17 +219,17 @@ export class AddRecipeComponent {
     }
 
     if(!this.instructions.length){
-      this.errors.instructionStep = "Добавьте интрукцию";
+      this.errors.instructionStep = "Добавьте интрукции";
       hasErrors = true;
     }
 
-    // if(!this.files.length){
-    //   this.errors.general = "Загрузите файлы";
-    //   hasErrors = true;
-    // }else if(this.files.length > 10){
-    //   this.errors.general = "Количество загружаемых файлов не должно превышать число 10";
-    //   hasErrors = true;
-    // }
+    if(!this.files.length){
+      this.errors.general = "Загрузите файлы";
+      hasErrors = true;
+    }else if(this.files.length > 10){
+      this.errors.general = "Максимальное количество загружаемых файлов — 10";
+      hasErrors = true;
+    }
 
     return hasErrors;
   }

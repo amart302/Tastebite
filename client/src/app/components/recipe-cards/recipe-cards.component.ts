@@ -13,7 +13,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 export class RecipeCardsComponent {
   @Input() recipes!: any[];
 
-  skeletonItems = Array(6).fill(null);
+  skeletonItems = Array(3).fill(null);
 
   getRatingArray(rating: number): number[] {
     return Array(rating).fill(null);
