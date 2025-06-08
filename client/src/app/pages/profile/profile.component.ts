@@ -8,12 +8,13 @@ import { RecipesService } from '../../services/recipes.service';
 import { RecipeCardsComponent } from '../../components/recipe-cards/recipe-cards.component';
 import { NgIf } from '@angular/common';
 import axios from 'axios';
+import { ConfirmationWindowComponent } from '../../components/confirmation-window/confirmation-window.component';
 
 type FormErrors = Record<"fullname" | "email" | "password" | "confirmPassword" | "general", string>
 
 @Component({
   selector: 'app-profile',
-  imports: [HeaderComponent, FooterComponent, FormsModule, RecipeCardsComponent, NgIf],
+  imports: [HeaderComponent, FooterComponent, FormsModule, RecipeCardsComponent, NgIf, ConfirmationWindowComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
@@ -27,6 +28,7 @@ export class ProfileComponent {
   confirmPassword: string = "";
   recipes: any;
   isLoading: boolean = false;
+  confirmationWindow: boolean = false;
 
   errors: FormErrors = {
     fullname: "",
@@ -43,7 +45,7 @@ export class ProfileComponent {
     if(this.user?.avatar) this.avatarPreview = `http://localhost:5000/media/image/${this.user.avatar}`;
     this.fullname = this.user.fullname;
     this.email = this.user.email;
-    this.recipes = await this.recipesService.getUserRecipes();
+    this.recipes = this.user.posts;
   }
 
   handleFileInput(event: any): void{
@@ -113,7 +115,7 @@ export class ProfileComponent {
       hasErrors = true;
     }
 
-    if(this.avatar && !this.avatar.type.startsWith("image")){
+    if(this.avatar && !this.avatar.type.startsWith("image/")){
       this.errors.general = "Недопустимый формат файла.";
       hasErrors = true;
     }
@@ -137,10 +139,27 @@ export class ProfileComponent {
       this.router.navigate(["/"]);
     } catch (error) {
       if(axios.isAxiosError(error)){
-        this.errors.general = error.response?.data?.errors[0].msg;
+        this.errors.general = error.response?.data?.error || error.response?.data?.errors[0].msg;
       }
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  showConfirmationWindow(): void{
+    this.confirmationWindow = true;
+  }
+
+  hideConfirmationWindow(): void{
+    this.confirmationWindow = false;
+  }
+
+  async deleteAccount(): Promise<void>{
+    try {
+      await this.userService.deleteUser();
+      this.signOut();
+    } catch (error) {
+      console.error("Ошибка при попытку удалить аккаунт", error);
     }
   }
 }

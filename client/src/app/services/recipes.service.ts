@@ -18,8 +18,6 @@ export class RecipesService {
           Authorization: `Bearer ${token}`,
         }
       });
-      console.log(responce);
-      
     } catch (error) {
       throw error;
     }
@@ -27,24 +25,9 @@ export class RecipesService {
   async getRecipes(): Promise<any>{
     try {
       const responce = await axios.get("http://localhost:5000/recipes");      
-      return responce.data;
+      return responce.data.recipes;
     } catch (error) {
       console.error("Не удалось загрузить рецепты", error);
-      throw error;
-    }
-  }
-
-  async getUserRecipes(): Promise<any>{
-    try {
-      const token: string | null = localStorage.getItem("token");
-      const responce = await axios.get("http://localhost:5000/user/recipes", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      });
-      return responce.data;
-    } catch (error) {
-      console.error("Не удалось посты пользователя", error);
       throw error;
     }
   }
@@ -52,7 +35,7 @@ export class RecipesService {
   async getLatestRecipes(): Promise<any>{
     try {
       const responce = await axios.get("http://localhost:5000/recipes");      
-      return responce.data;
+      return responce.data.recipes;
     } catch (error) {
       console.error("Не удалось загрузить свежие рецепты", error);
       throw error;
@@ -62,7 +45,7 @@ export class RecipesService {
   async getRecipeData(id: string | null): Promise<any>{
     try {
       const responce = await axios.get(`http://localhost:5000/recipes/${id}`)
-      return responce.data;
+      return responce.data.recipe;
     } catch (error) {
       console.error("Не удалось загрузить рецепт", error);
       throw error;

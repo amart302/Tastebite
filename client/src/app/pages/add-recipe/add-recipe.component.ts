@@ -203,13 +203,10 @@ export class AddRecipeComponent {
       this.errors.prepTime = "Максимальная длина 4 символов"
     }
 
-    if(this.servings === null){
-      this.errors.servings = "Это поле обязательно для заполнения";
-      hasErrors = true;
-    }else if(this.servings < 0){
+    if(this.servings !== null && this.servings < 0){
       this.errors.servings = "Это поле не должно быть отрицательным числом";
       hasErrors = true;
-    }else if(this.servings.toString().length > 3){
+    }else if(this.servings !== null && this.servings.toString().length > 3){
       this.errors.servings = "Максимальная длина 3 символов"
     }
     
@@ -227,9 +224,20 @@ export class AddRecipeComponent {
       this.errors.general = "Загрузите файлы";
       hasErrors = true;
     }else if(this.files.length > 10){
-      this.errors.general = "Максимальное количество загружаемых файлов — 10";
+      this.errors.general = "Максимальное количество загружаемых файлов: 10";
       hasErrors = true;
     }
+
+    let hasUploadedImage  = false;
+    this.files.forEach(item => {
+        if(item.type.startsWith("image/")) hasUploadedImage = true;
+    });
+
+    if(!hasUploadedImage){
+      this.errors.general = "Загрузите хотя бы одно изображение";
+      hasErrors = true;
+    }
+
 
     return hasErrors;
   }
@@ -263,7 +271,7 @@ export class AddRecipeComponent {
       formData.append("category", this.category);
       formData.append("description", this.description);
       formData.append("prepTime", this.prepTime!.toString());
-      formData.append("servings", this.servings?.toString() ?? "");
+      if(this.servings) formData.append("servings", this.servings!.toString());
       formData.append("ingredients", JSON.stringify(this.ingredients));
       formData.append("instructions", JSON.stringify(this.instructions));
       this.files.forEach((item: File) => formData.append("files", item));
@@ -273,7 +281,7 @@ export class AddRecipeComponent {
     } catch (error){
       console.error("Ошибка при входе:", error);
       if(axios.isAxiosError(error)){
-        this.errors.general = error.response?.data?.errors[0].msg;
+        this.errors.general = error.response?.data?.error || error.response?.data?.errors[0].msg;
       }
     } finally {
       this.isLoading = false;

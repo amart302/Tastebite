@@ -12,20 +12,27 @@ const FileSchema = new Schema({
     type: { type: String, required: true }
 }, { _id: false });
 
+const Comment = new Schema({
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    text: { type: String, required: true }
+});
+
 const RecipeSchema = new Schema({
     title: { type: String, required: true },
     category: { type: String, required: true },
     description: { type: String, required: true },
     prepTime: { type: Number, required: true },
-    servings: { type: Number, required: true },
+    servings: { type: Number },
     ingredients: [IngredientSchema],
     instructions: [{ type: String, required: true }],
     rating: { type: Number, default: 5 },
     files: [FileSchema],
-    mainImage: { type: String }
+    mainImage: { type: String },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    comments: [Comment]
 }, {
     timestamps: true,
     collection: "recipes"
 });
 
-export const Recipe = mongoose.model("recipes", RecipeSchema);
+export const Recipe = mongoose.model("Recipe", RecipeSchema);

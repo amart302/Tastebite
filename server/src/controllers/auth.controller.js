@@ -22,11 +22,11 @@ export async function signup(req, res){
         });
         if (existingUser) {
             if (existingUser.fullname === fullname) {
-                return res.status(409).json({ message: "Пользователь с таким именем уже существует" });
+                return res.status(409).json({ success: false, message: "Пользователь с таким именем уже существует" });
             }
         
             if (existingUser.email === email) {
-                return res.status(409).json({ message: "Пользователь с такой почтой уже существует" });
+                return res.status(409).json({ success: false, message: "Пользователь с такой почтой уже существует" });
             }
         }
         const newUser = new User({
@@ -37,18 +37,16 @@ export async function signup(req, res){
         });
         await newUser.save();
         const token = generateAccessToken(newUser.id, newUser.role);
-        res.status(200).json({ token: token });
+        res.status(200).json({ success: true, token: token });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Произошла ошибка при регистрации" });
+        res.status(500).json({ success: false, message: "Произошла ошибка при регистрации" });
     }
 };
 
 export async function signin(req, res){
     try {
         const { email, password } = req.body;
-        console.log(req.body);
-        
         const existingUser = await User.findOne({ email });
         
         if(!existingUser){
@@ -61,9 +59,9 @@ export async function signin(req, res){
         }
 
         const token = generateAccessToken(existingUser.id, existingUser.role);
-        res.status(200).json({ token: token });
+        res.status(200).json({ success: true, token: token });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Произошла ошибка при входе" });
+        res.status(500).json({ success: false, message: "Произошла ошибка при входе" });
     }
 };

@@ -1,14 +1,101 @@
 <app-header />
 <main class="main">
-    <div class="main__container">
-        <h1>{{ recipe.title }}</h1>
-        <div>
-            <img src="" alt="Bookmark">
-            <img src="" alt="Shape">
+    <div class="main__header">
+        <div class="main__title-block">
+            <h1 class="main__title">{{ recipe.title }}</h1>
+            <div class="main__actions">
+                <button class="main__action share-action"><img src="/assets/icons/share.svg" alt="share"></button>
+                <button class="main__action save-action"><img src="/assets/icons/bookmark.svg" alt="save"></button>
+            </div>
+        </div>
+        <div class="main__meta">
+            <div class="main__meta-info">
+                <div class="main__author">
+                    <img class="main__author-avatar" [src]="`http://localhost:5000/media/image/${recipe.author.avatar}` ||'/assets/images/defaultAvatar.png'" alt="">
+                    <span class="main__author-name">{{ recipe.author.fullname }}</span>
+                </div>
+                <div class="main__date-of-publication">
+                    <img class="meta__icon" src="/assets/icons/calendar.svg" alt="calendar">
+                    <span class="meta__text">{{ formattedDate(recipe.createdAt) }}</span>
+                </div>
+                <div class="main__number-of-comments">
+                    <img class="meta__icon" src="/assets/icons/comments.svg" alt="comments">
+                    <span class="meta__text">{{ recipe.comments.length }}</span>
+                </div>
+                <div class="main__rating">
+                    <svg class="main__star-icon" *ngFor="let elem of getRatingArray(recipe.rating)" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 15" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.49723 4.89766L7.40227 1.03827C7.64683 0.542826 8.35332 0.542826 8.59788 1.03827L10.5029 4.89766L14.7632 5.52036C15.3098 5.60026 15.5276 6.27215 15.1319 6.65759L12.0498 9.6596L12.7771 13.9007C12.8706 14.4453 12.2989 14.8606 11.8098 14.6034L8.00007 12.5999L4.19038 14.6034C3.70129 14.8606 3.12959 14.4453 3.223 13.9007L3.95039 9.6596L0.868253 6.65759C0.472524 6.27215 0.690379 5.60026 1.23699 5.52036L5.49723 4.89766Z" fill="#FF642F"/>
+                    </svg>
+                </div>
+            </div>
+            <button class="main__button-delete-post" *ngIf="userId === recipe.author._id">Delete post</button>
         </div>
     </div>
+    <hr class="main__divider">
     <div class="main__container">
+        <p class="main__description">{{ recipe.description }}</p>
+    </div>
+    <div class="main__container slider">
+        <button class="slider__button prev-slide" (click)="prevSlide()" *ngIf="recipe.files.length > 1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 20 20"><path fill="#ffffff" d="m4 10l9 9l1.4-1.5L7 10l7.4-7.5L13 1z"/></svg>
+        </button>
+        <button class="slider__button next-slide" (click)="nextSlide()" *ngIf="recipe.files.length > 1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 20 20"><path fill="#ffffff" d="M7 1L5.6 2.5L13 10l-7.4 7.5L7 19l9-9z"/></svg>
+        </button>
+        <div class="slide" [class.active]="ind === activeIndex" *ngFor="let item of recipe.files; let ind = index">
+            <img class="slider__image" *ngIf="item.type.startsWith('image/')" [src]="`http://localhost:5000/media/image/${item.name}`" alt="">
+            <video class="slider__video" *ngIf="item.type.startsWith('video/')" [src]="`http://localhost:5000/media/video/${item.name}`" controls></video>
+        </div>
+    </div>
+    <div class="main__container recipe-info">
+        <table class="recipe-info__table">
+            <thead class="recipe-info__head">
+                <tr class="recipe-info__row">
+                    <td class="recipe-info__cell recipe-info__table-cell--head">PREP TIME</td>
+                    <td class="recipe-info__cell recipe-info__table-cell--head">SERVINGS</td>
+                </tr>
+            </thead>
+            <tbody class="recipe-info__table-body">
+                <tr class="recipe-info__row">
+                    <td class="recipe-info__cell">{{ recipe.prepTime }} MIN</td>
+                    <td class="recipe-info__cell">{{ recipe.servings }} PEOPLE</td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="recipe-info__action print-action" (click)="printPage()"><img class="print-action__image" src="/assets/icons/printer.svg" alt="print page"></button>
+    </div>
+    <div class="main__container recipe-content">
+        <div class="recipe-content__ingredients">
+            <h2 class="recipe-content__subtitle">Ingredients</h2>
+            <div class="recipe-content__ingredient" *ngFor="let item of recipe.ingredients">
+                <span class="recipe-content__ingredient-marker"></span>
+                <p class="recipe-content__ingredient-text">{{ item.amount }}{{ item.unit }} {{ item.name }}</p>
+            </div>
+        </div>
         
+        <div class="recipe-content__instructions">
+            <h2 class="recipe-content__subtitle">Instructions</h2>
+            <div class="recipe-content__instruction" *ngFor="let item of recipe.instructions; let ind = index">
+                <span class="recipe-content__instruction-marker">{{ ind + 1 }}</span>
+                <p class="recipe-content__instruction-text">{{ item }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="main__container comments">
+        <div class="comments__header">
+            <h2 class="comments__subtitle">Already made this?</h2>
+            <button class="comments__button">Share your feedback</button>
+        </div>
+        
+        <hr class="comments__divider">
+        
+        <div class="comments__section" *ngIf="!recipe.comments.length">
+            <h2 class="comments__subtitle no-comments">There are no comments here yet</h2>
+        </div>
+        <div class="comments__section" *ngIf="recipe.comments.length">
+            <h2 class="comments__subtitle">Comments <span class="comments__count">({{ recipe.comments.length }})</span></h2>
+            <div class="comments__content"></div>
+        </div>
     </div>
 </main>
 <app-footer />

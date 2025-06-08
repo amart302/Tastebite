@@ -15,6 +15,6 @@ export default function (req, res, next){
         next();
     } catch (error) {
         console.log(error);
-        return res.status(403).json({ message: "Ошибка доступа" });
+        return res.status(403).json({ success: false, message: "Ошибка доступа" });
     }
 };

@@ -10,7 +10,7 @@ export class CategoriesService {
   async getCategories(){
     try {
       const responce = await axios.get("http://localhost:5000/categories/");
-      return responce.data;
+      return responce.data.categories;
     } catch (error) {
       console.error("Не удалось загрузить категории", error);
       throw error;
@@ -20,7 +20,7 @@ export class CategoriesService {
   async getPopularCategories(){
     try {
       const responce = await axios.get("http://localhost:5000/categories/");
-      return responce.data.slice(0, 6);
+      return responce.data.categories.slice(0, 6);
     } catch (error) {
       throw error;
     }

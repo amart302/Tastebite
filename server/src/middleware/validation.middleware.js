@@ -62,32 +62,24 @@ export const addRecipeValidation = [
     body("prepTime")
         .notEmpty().withMessage("Время готовки обязательно")
         .isInt({ min: 1 }).withMessage("Время приготовления не должно быть отрицательным числом"),
-    body('servings')
-        .notEmpty().withMessage("Количество порций обязательно")
-        .isInt({ min: 1 }).withMessage('Количество порций должно быть положительным числом'),
     body("ingredients")
         .custom(value => {
+            JSON.parse(value).forEach(item => {
+                if(item.name.trim().length > 40) throw new Error("Максимальная длина названия ингредиента 40 символов");
+                if(item.amount.length > 10) throw new Error("Максимальная длина колличества ингредиента 10 символов");
+                if(item.unit.trim().length > 10) throw new Error("Максимальная длина единицы измерения ингредиента 10 символов");
+            });
+            
             if(!JSON.parse(value).length) throw new Error("Добавьте ингредиенты");
             return true;
         }),
     body("instructions")
         .custom(value => {
-            if(!JSON.parse(value).length) throw new Error("Добавьте инструкции");
-            return true;
-        }),
-    body("files")
-        .custom((value, { req }) => {
-            const files = req.files;
-            if (!files || files.length === 0) throw new Error("Загрузите файлы");
-            if (files.length > 10) throw new Error("Максимальное количество загружаемых файлов — 10");
-
-            let hasUploadedImage  = false;
-            files.forEach(item => {
-                if(item.mimetype.startsWith("image")) hasUploadedImage = true;
+            JSON.parse(value).map(item => {
+                if(item.trim().length > 500) throw new Error("Максимальная длина шага инструкции 500 символов");
             });
 
-            if(!hasUploadedImage) throw new Error("Загрузите хотя бы одно изображение");
-
+            if(!JSON.parse(value).length) throw new Error("Добавьте инструкции");
             return true;
         })
 ];

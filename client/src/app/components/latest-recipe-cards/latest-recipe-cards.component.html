@@ -7,7 +7,7 @@
     </div>
 </div>
 
-<div class="recipes__content">
+<div class="recipes__content" *ngIf="recipes">
     <a [routerLink]="['/recipe/', item._id]" *ngFor="let item of recipes" class="recipe-container-link">
         <div class="recipe-container">
             <img class="recipe-container__image" [src]="`http://localhost:5000/media/image/${item.mainImage}`" alt="">

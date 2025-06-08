@@ -18,7 +18,9 @@ export class UserService {
           Authorization: `Bearer ${token}`
         }
       });
-      return responce.data.avatar;
+      
+      localStorage.setItem("userId", responce.data.user._id);
+      return responce.data.user.avatar;
     } catch (error) {
       localStorage.clear();
       throw error;
@@ -39,7 +41,7 @@ export class UserService {
         }
       });
 
-      return response.data;
+      return response.data.user;
     } catch (error) {
       throw error;
     }
@@ -52,12 +54,29 @@ export class UserService {
         console.log("Пользователь не авторизаван");
         return;
       }
-      const response = await axios.patch("http://localhost:5000/user", data, {
+      await axios.patch("http://localhost:5000/user", data, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log(response);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteUser(): Promise<void>{
+    try {
+      const token: string | null = localStorage.getItem("token");
+      if(!token){
+        console.log("Пользователь не авторизаван");
+        return;
+      }
+
+      await axios.delete("http://localhost:5000/user", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
     } catch (error) {
       throw error;
     }

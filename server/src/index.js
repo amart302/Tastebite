@@ -19,7 +19,8 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use("/public", express.static(path.join(__dirname, "../public")));
-app.use("/media/image", express.static(path.join(__dirname, "../uploads/images")))
+app.use("/media/image", express.static(path.join(__dirname, "../uploads/images")));
+app.use("/media/video", express.static(path.join(__dirname, "../uploads/video")));
 app.use("/auth", authRoutes);
 app.use("/user", usersRouter);
 app.use("/categories", categoriesRouter);

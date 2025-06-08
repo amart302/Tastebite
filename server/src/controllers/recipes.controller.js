@@ -31,7 +31,8 @@ export async function addRecipe(req, res){
             ingredients: JSON.parse(ingredients),
             instructions: JSON.parse(instructions),
             files,
-            mainImage
+            mainImage,
+            author: id
         });
         await newPost.save();
         
@@ -39,9 +40,9 @@ export async function addRecipe(req, res){
             { _id: id },
             { $push: { posts: newPost._id } },
         );
-        res.status(200).json({ message: "Рецепт успешно добавлен" });
+        res.status(200).json({ success: true, message: "Рецепт успешно добавлен" });
     } catch (error) {
-        res.status(500).json({ message: "Не удалось сохранить рецепт" });
+        res.status(500).json({ success: false, message: "Не удалось сохранить рецепт" });
         console.error(error);
     }
 }
@@ -49,9 +50,9 @@ export async function addRecipe(req, res){
 export async function getRecipes(req, res){
     try {
         const recipes = await Recipe.find({}, { title: 1,files: 1, rating: 1, mainImage: 1 });
-        res.status(200).json(recipes);
+        res.status(200).json({ success: true, recipes });
     } catch (error) {
-        res.status(500).json({ message: "Не удалось загрузить рецепты" });
+        res.status(500).json({ success: false, message: "Не удалось загрузить рецепты" });
         console.error(error);
     }
 }
@@ -60,11 +61,15 @@ export async function getRecipe(req, res){
     try {
         const { id } = req.params;
         
-        const recipe = await Recipe.findOne({ _id: id });
+        const recipe = await Recipe.findOne({ _id: id }).populate({
+            path: "author",
+            select: "fullname avatar"
+        });
+        
         if(!recipe) return res.status(404).json({ message: "Рецепт не найден" });
-        res.status(200).json(recipe);
+        res.status(200).json({ success: true, recipe });
     } catch (error) {
-        res.status(500).json({ message: "Не удалось загрузить рецепт" });
+        res.status(500).json({ success: false, message: "Не удалось загрузить рецепт" });
         console.error(error);
     }
 }

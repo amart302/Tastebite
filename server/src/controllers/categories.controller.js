@@ -3,10 +3,10 @@ import { Category } from "../models/Categories.js";
 export async function getCategories(req, res){
     try {
         const categories = await Category.find();
-        res.status(200).json(categories);
+        res.status(200).json({ success: true, categories });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Не удалось загрузить категории" });
+        res.status(500).json({ success: false, message: "Не удалось загрузить категории" });
     }
 }
 
@@ -36,12 +36,9 @@ export async function addCategories(req, res) {
         ];
 
         await Category.insertMany(categories);
-        res.status(201).json({ message: "Категории успешно добавлены" });
+        res.status(201).json({ success: true, message: "Категории успешно добавлены" });
     } catch (error) {
         console.error("Ошибка при добавлении категорий:", error);
-        res.status(500).json({ 
-            message: "Не удалось добавить категории",
-            error: error.message 
-        });
+        res.status(500).json({ success: false, message: "Не удалось добавить категории" });
     }
 }

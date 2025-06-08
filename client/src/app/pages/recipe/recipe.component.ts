@@ -3,20 +3,51 @@ import { ActivatedRoute } from '@angular/router';
 import { RecipesService } from '../../services/recipes.service';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-recipe',
-  imports: [HeaderComponent, FooterComponent],
+  imports: [HeaderComponent, FooterComponent, NgFor, NgIf],
   templateUrl: './recipe.component.html',
   styleUrl: './recipe.component.scss'
 })
 export class RecipeComponent {
   recipe: any;
+  activeIndex: number = 0;
+  userId: string | null = localStorage.getItem("userId");
 
   constructor(private route: ActivatedRoute, private resipesService: RecipesService){}
 
   async ngOnInit(): Promise<void>{
     const id: string | null = this.route.snapshot.paramMap.get("id");
     this.recipe = await this.resipesService.getRecipeData(id);
+    console.log(this.recipe);
+    
+  }
+
+  prevSlide(): void{
+    if(this.activeIndex < 1) this.activeIndex = this.recipe.files.length - 1;
+    else this.activeIndex--;
+  }
+  nextSlide(): void{
+    if(this.activeIndex > this.recipe.files.length - 2) this.activeIndex = 0;
+    else this.activeIndex++;
+  }
+
+  printPage(): void{
+    window.print();
+  }
+
+  formattedDate(date: string): string{
+    const isoDate = new Date(date);
+      return [
+      isoDate.getDate().toString().padStart(2, '0'),
+      (isoDate.getMonth() + 1).toString().padStart(2, '0'),
+      isoDate.getFullYear()
+      ].join('.');
+  }
+
+  getRatingArray(rating: number): number[] {
+    return Array(rating).fill(null);
   }
 }

@@ -2,20 +2,6 @@ import fs from "fs/promises";
 import { join } from "path";
 import { getDirname } from "./pathUtils.js";
 
-export async function deleteUploadedFiles(req){
-    if(!req?.files && !req?.file) return;
-
-    try {
-        if(req.file){
-            await fs.unlink(req.file.path);
-        }else if(req.files){
-            await Promise.all(req.files.map(file => fs.unlink(file.path)));
-        }
-    } catch (error) {
-        console.log('Ошибка при удалении файлов:', error.message);
-    }
-}
-
 export async function deleteFilesByName(file, files = null){
     try {
         const __dirname = getDirname(import.meta.url);
@@ -23,7 +9,15 @@ export async function deleteFilesByName(file, files = null){
         if(file){
             await fs.unlink(join(__dirname, "../../uploads/images", file));
         }else if(files){
-            await Promise.all(files.map(file => fs.unlink(join(__dirname, "../../uploads/images", file))));
+            await Promise.all(files.map(async (file) => {
+                const filePath = file.type.startsWith("image/") ? "../../uploads/images" : "../../uploads/video";
+                try {
+                    await fs.unlink(join(__dirname, filePath, file.name));
+                } catch (err) {
+                    console.error(`Не удалось удалить файл`, err.message);
+                }
+                
+            }));
         }
     } catch (error) {
         console.log('Ошибка при удалении файлов:', error.message);

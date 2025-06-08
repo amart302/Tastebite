@@ -1,0 +1,9 @@
+<main class="main">
+    <div class="confirmation-dialog">
+        <span class="confirmation-dialog__title">Do you really want to {{ text }} ?</span>
+        <div class="confirmation-dialog__actions">
+            <button class="confirmation-dialog__button" (click)="hideWindow.emit()">No</button>
+            <button class="confirmation-dialog__button" (click)="action.emit()">Yes</button>
+        </div>
+    </div>
+</main>
