@@ -159,7 +159,7 @@ export class ProfileComponent {
       await this.userService.deleteUser();
       this.signOut();
     } catch (error) {
-      console.error("Ошибка при попытку удалить аккаунт", error);
+      console.error("Не удалось удалить аккаунт", error);
     }
   }
 }

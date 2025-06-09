@@ -51,4 +51,20 @@ export class RecipesService {
       throw error;
     }
   }
+
+  async deleteRecipe(id: string): Promise<void>{
+    try {
+      const token: string | null = localStorage.getItem("token");
+
+      const responce = await axios.delete(`http://localhost:5000/recipes/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      console.log(responce);
+      
+    } catch (error) {
+      throw error;
+    }
+  }
 }

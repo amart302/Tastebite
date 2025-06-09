@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecipesService } from '../../services/recipes.service';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
@@ -16,11 +16,11 @@ export class RecipeComponent {
   activeIndex: number = 0;
   userId: string | null = localStorage.getItem("userId");
 
-  constructor(private route: ActivatedRoute, private resipesService: RecipesService){}
+  constructor(private router: Router, private route: ActivatedRoute, private recipesService: RecipesService){}
 
   async ngOnInit(): Promise<void>{
     const id: string | null = this.route.snapshot.paramMap.get("id");
-    this.recipe = await this.resipesService.getRecipeData(id);
+    this.recipe = await this.recipesService.getRecipeData(id);
     console.log(this.recipe);
     
   }
@@ -49,5 +49,14 @@ export class RecipeComponent {
 
   getRatingArray(rating: number): number[] {
     return Array(rating).fill(null);
+  }
+
+  async deletePost(id: string): Promise<void>{
+    try {
+      await this.recipesService.deleteRecipe(id);
+      this.router.navigate(["/"]);
+    } catch (error) {
+      console.error("Не удалось удалить пост", error);
+    }
   }
 }

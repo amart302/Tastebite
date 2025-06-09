@@ -28,7 +28,7 @@
                     </svg>
                 </div>
             </div>
-            <button class="main__button-delete-post" *ngIf="userId === recipe.author._id">Delete post</button>
+            <button class="main__button-delete-post" *ngIf="userId === recipe.author._id" (click)="deletePost(recipe._id)">Delete post</button>
         </div>
     </div>
     <hr class="main__divider">

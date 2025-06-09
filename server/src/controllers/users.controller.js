@@ -75,12 +75,12 @@ export async function deleteUser(req, res){
             return arr;
         }, []);
         
-        await deleteFilesByName(null, allFiles);
         if(posts.length > 0){
+            await deleteFilesByName(null, allFiles);
             await Recipe.deleteMany({ _id: { $in: posts } });
         }
         await deleteFilesByName(user.avatar);
-        await User.findByIdAndDelete(id);
+        await User.findOneAndDelete({ _id: id });
         res.status(200).json({ success: true, message: "Пользователь успешно удален" });
     } catch (error) {
         console.log(error);

@@ -1,5 +1,6 @@
 import { Recipe } from "../models/Recipe.js"
 import { User } from "../models/User.js";
+import { deleteFilesByName } from "../utils/fileUtils.js";
 
 export async function addRecipe(req, res){
     try {
@@ -70,6 +71,22 @@ export async function getRecipe(req, res){
         res.status(200).json({ success: true, recipe });
     } catch (error) {
         res.status(500).json({ success: false, message: "Не удалось загрузить рецепт" });
+        console.error(error);
+    }
+}
+
+export async function deleteRecipe(req, res){
+    try {
+        const { id } = req.params;
+        const recipe = await Recipe.findOne({ _id: id });
+        if(!recipe){
+            return res.status(404).json({ success: false, message: "Рецепт не найден" });
+        }
+        await deleteFilesByName(null, recipe.files);
+        await Recipe.findOneAndDelete({ _id: id });
+        res.status(200).json({ success: true, message: "Пост успешно удален" });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Не удалось удалить пост" });
         console.error(error);
     }
 }
