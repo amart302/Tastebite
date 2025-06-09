@@ -4,10 +4,11 @@ import { RecipesService } from '../../services/recipes.service';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { NgFor, NgIf } from '@angular/common';
+import { ConfirmationWindowComponent } from '../../components/confirmation-window/confirmation-window.component';
 
 @Component({
   selector: 'app-recipe',
-  imports: [HeaderComponent, FooterComponent, NgFor, NgIf],
+  imports: [HeaderComponent, FooterComponent, NgFor, NgIf, ConfirmationWindowComponent],
   templateUrl: './recipe.component.html',
   styleUrl: './recipe.component.scss'
 })
@@ -15,6 +16,7 @@ export class RecipeComponent {
   recipe: any;
   activeIndex: number = 0;
   userId: string | null = localStorage.getItem("userId");
+  confirmationWindow: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private recipesService: RecipesService){}
 
@@ -58,5 +60,13 @@ export class RecipeComponent {
     } catch (error) {
       console.error("Не удалось удалить пост", error);
     }
+  }
+
+  showConfirmationWindow(): void{
+    this.confirmationWindow = true;
+  }
+
+  hideConfirmationWindow(): void{
+    this.confirmationWindow = false;
   }
 }

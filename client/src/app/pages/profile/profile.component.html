@@ -75,6 +75,6 @@
             <button class="profile__actions__button button-delete-account" (click)="showConfirmationWindow()">Delete account</button>
         </div>
     </div>
+    <app-confirmation-window *ngIf="confirmationWindow" [text]="'delete account'" (hideWindow)="hideConfirmationWindow()" (action)="deleteAccount()"/>
 </main>
-<app-confirmation-window *ngIf="confirmationWindow" [text]="'delete account'" (hideWindow)="hideConfirmationWindow()" (action)="deleteAccount()"/>
 <app-footer />
