@@ -37,7 +37,7 @@ export async function updateUserData(req, res){
         const avatar = req.file;
         const password = req.body.password;
         const user = await User.findOne({ _id: id }).select("-password -role");
-
+        
         if(!user){
             return res.status(404).json({ success: false, message: "Пользователь не найден" });
         }
@@ -48,8 +48,11 @@ export async function updateUserData(req, res){
         }
         if(avatar){
             req.body.avatar = avatar.filename;
-            deleteFilesByName(user.avatar);
-        };
+            await deleteFilesByName(user.avatar);
+        }else if(!avatar && user.avatar){
+            req.body.avatar = null;
+            await deleteFilesByName(user.avatar);
+        }
 
         Object.assign(user, req.body);
         await user.save();

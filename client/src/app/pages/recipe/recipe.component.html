@@ -11,7 +11,7 @@
         <div class="main__meta">
             <div class="main__meta-info">
                 <div class="main__author">
-                    <img class="main__author-avatar" [src]="`http://localhost:5000/media/image/${recipe.author.avatar}` ||'/assets/images/defaultAvatar.png'" alt="">
+                    <img class="main__author-avatar" [src]="(recipe.author.avatar) ? `http://localhost:5000/media/image/${recipe.author.avatar}` : '/assets/images/defaultAvatar.png'" alt="">
                     <span class="main__author-name">{{ recipe.author.fullname }}</span>
                 </div>
                 <div class="main__date-of-publication">

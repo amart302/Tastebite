@@ -109,7 +109,7 @@ export class SignupComponent {
       window.location.reload();
     } catch (error) {
       if(axios.isAxiosError(error)){
-        this.errors.general = error.response?.data?.errors[0].msg;
+        this.errors.general = error.response?.data?.message || error.response?.data?.errors[0].msg;
       }
     } finally {
       this.isLoading = false;
