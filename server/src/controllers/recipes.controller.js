@@ -85,11 +85,25 @@ export async function updateRecipe(req, res){
         }else if(req.user.id != recipe.author._id){
             return res.status(403).json({ success: false, message: "Ошибка доступа" });
         }
-        console.log(req.body);
+        const { title,
+                category,
+                description,
+                prepTime,
+                servings,
+                ingredients,
+                instructions } = req.body;
         
-        Object.assign(recipe, req.body);
+        Object.assign(recipe, {
+            title,
+            category,
+            description,
+            prepTime,
+            servings,
+            ingredients: JSON.parse(ingredients),
+            instructions: JSON.parse(instructions)
+        });
         await recipe.save();
-        res.status(200).json({ success: true, message: "Рецепт успешно обновлен" });
+        res.status(200).json({ success: true, message: "Рецепт успешно обновлен", data: req.body });
     } catch (error) {
         res.status(500).json({ success: false, message: "Не удалось обновить рецепт" });
         console.error(error);

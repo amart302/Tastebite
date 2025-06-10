@@ -98,22 +98,22 @@ export const createUploadMiddleware = (fieldName) => {
                     });
                 }
 
-                const files = req.files;
+                // const files = req.files;
                 
-                if (!files || files.length === 0) {
-                    return res.status(400).json({
-                        success: false,
-                        error: "Загрузите файлы"
-                    });
-                }
+                // if (!files || files.length === 0) {
+                //     return res.status(400).json({
+                //         success: false,
+                //         error: "Загрузите файлы"
+                //     });
+                // }
 
-                const hasImage = files.some(file => file.mimetype.startsWith("image/"));
-                if (!hasImage) {
-                    return res.status(400).json({
-                        success: false,
-                        error: "Загрузите хотя бы одно изображение"
-                    });
-                }
+                // const hasImage = files.some(file => file.mimetype.startsWith("image/"));
+                // if (!hasImage) {
+                //     return res.status(400).json({
+                //         success: false,
+                //         error: "Загрузите хотя бы одно изображение"
+                //     });
+                // }
 
                 next();
             } catch (error) {

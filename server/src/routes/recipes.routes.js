@@ -10,7 +10,7 @@ const router = new Router();
 router.get("/", getRecipes);
 router.get("/:id", getRecipe);
 router.post("/", authMiddleware, createUploadMiddleware("files"), addRecipeValidation, validateRequestMiddleware, addRecipe);
-router.patch("/:id", authMiddleware, updateValidation, validateRequestMiddleware, updateRecipe);
+router.patch("/:id", authMiddleware, createUploadMiddleware("files"), updateValidation, validateRequestMiddleware, updateRecipe);
 router.delete("/:id", authMiddleware, deleteRecipe);
 
 export default router;
