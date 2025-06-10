@@ -13,7 +13,7 @@ export class RecipesService {
     try {
       const token: string | null = localStorage.getItem("token");
 
-      const responce = await axios.post("http://localhost:5000/recipes/additem", data,  {
+      await axios.post("http://localhost:5000/recipes/addrecipe", data,  {
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -22,6 +22,7 @@ export class RecipesService {
       throw error;
     }
   }
+
   async getRecipes(): Promise<any>{
     try {
       const responce = await axios.get("http://localhost:5000/recipes");      
@@ -48,6 +49,20 @@ export class RecipesService {
       return responce.data.recipe;
     } catch (error) {
       console.error("Не удалось загрузить рецепт", error);
+      throw error;
+    }
+  }
+
+  async updateRecipe(id: string | null, data: any): Promise<void>{
+    try {
+      const token: string | null = localStorage.getItem("token");
+
+      await axios.patch(`http://localhost:5000/recipes/${id}`, data,  {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+    } catch (error) {
       throw error;
     }
   }

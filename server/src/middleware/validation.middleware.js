@@ -83,3 +83,39 @@ export const addRecipeValidation = [
             return true;
         })
 ];
+
+export const updateValidation = [
+    body("title")
+        .trim()
+        .notEmpty().withMessage("Название обязательно")
+        .isLength({ max: 50 }).withMessage("Максимальная длина названия 50 символов"),
+    body("category")
+        .trim()
+        .notEmpty().withMessage("Категория обязательна"),
+    body("description")
+        .optional()
+        .isLength({ max: 3000 }).withMessage("Максимальная длина описания 3000 символов"),
+    body("prepTime")
+        .notEmpty().withMessage("Время готовки обязательно")
+        .isInt({ min: 1 }).withMessage("Время приготовления не должно быть отрицательным числом"),
+    body("ingredients")
+        .custom(value => {
+            JSON.parse(value).forEach(item => {
+                if(item.name.trim().length > 40) throw new Error("Максимальная длина названия ингредиента 40 символов");
+                if(item.amount.length > 10) throw new Error("Максимальная длина колличества ингредиента 10 символов");
+                if(item.unit.trim().length > 10) throw new Error("Максимальная длина единицы измерения ингредиента 10 символов");
+            });
+            
+            if(!JSON.parse(value).length) throw new Error("Добавьте ингредиенты");
+            return true;
+        }),
+    body("instructions")
+        .custom(value => {
+            JSON.parse(value).map(item => {
+                if(item.trim().length > 500) throw new Error("Максимальная длина шага инструкции 500 символов");
+            });
+
+            if(!JSON.parse(value).length) throw new Error("Добавьте инструкции");
+            return true;
+        })
+];

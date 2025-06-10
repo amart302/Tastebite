@@ -75,6 +75,27 @@ export async function getRecipe(req, res){
     }
 }
 
+export async function updateRecipe(req, res){
+    try {
+        const { id } = req.params;
+        const recipe = await Recipe.findOne({ _id: id });
+
+        if(!recipe){
+            return res.status(404).json({ success: false, message: "Рецепт не найден" });
+        }else if(req.user.id != recipe.author._id){
+            return res.status(403).json({ success: false, message: "Ошибка доступа" });
+        }
+        console.log(req.body);
+        
+        Object.assign(recipe, req.body);
+        await recipe.save();
+        res.status(200).json({ success: true, message: "Рецепт успешно обновлен" });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Не удалось обновить рецепт" });
+        console.error(error);
+    }
+}
+
 export async function deleteRecipe(req, res){
     try {
         const { id } = req.params;
@@ -84,9 +105,9 @@ export async function deleteRecipe(req, res){
         }
         await deleteFilesByName(null, recipe.files);
         await Recipe.findOneAndDelete({ _id: id });
-        res.status(200).json({ success: true, message: "Пост успешно удален" });
+        res.status(200).json({ success: true, message: "Рецепт успешно удален" });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Не удалось удалить пост" });
+        res.status(500).json({ success: false, message: "Не удалось удалить рецепт" });
         console.error(error);
     }
 }

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CategoriesService } from '../../services/categories.service';
 import { NgFor, NgIf } from '@angular/common';
 import { RecipesService } from '../../services/recipes.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import axios from 'axios';
 
 type Ingredient = {
@@ -38,6 +38,7 @@ type FormErrors = Record<"title" |
   styleUrl: './update-recipe.component.scss'
 })
 export class UpdateRecipeComponent {
+  recipeId: string | null = null;
   categories: Category[] = [];
   ingredients: Ingredient[] = [];
   instructions: string[] = [];
@@ -72,11 +73,23 @@ export class UpdateRecipeComponent {
   constructor(
     private recipesService: RecipesService,
     private categoriesService: CategoriesService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ){}
 
   async ngOnInit(): Promise<void>{
     try {
+      this.recipeId = this.route.snapshot.paramMap.get("id");
+      const recipe = await this.recipesService.getRecipeData(this.recipeId);
+      if(recipe){
+        this.title = recipe.title;
+        this.category = recipe.category;
+        this.description = recipe.description;
+        this.prepTime = recipe.prepTime;
+        if(recipe.servings) this.servings = recipe.servings;
+        this.ingredients = recipe.ingredients;
+        this.instructions = recipe.instructions;
+      }
       this.categories = await this.categoriesService.getCategories();
     } catch (error){
       console.error("Не удалось загрузить категории", error);
@@ -220,44 +233,43 @@ export class UpdateRecipeComponent {
       hasErrors = true;
     }
 
-    if(!this.files.length){
-      this.errors.general = "Загрузите файлы";
-      hasErrors = true;
-    }else if(this.files.length > 10){
-      this.errors.general = "Максимальное количество загружаемых файлов: 10";
-      hasErrors = true;
-    }
+    // if(!this.files.length){
+    //   this.errors.general = "Загрузите файлы";
+    //   hasErrors = true;
+    // }else if(this.files.length > 10){
+    //   this.errors.general = "Максимальное количество загружаемых файлов: 10";
+    //   hasErrors = true;
+    // }
 
-    let hasUploadedImage  = false;
-    this.files.forEach(item => {
-        if(item.type.startsWith("image/")) hasUploadedImage = true;
-    });
+    // let hasUploadedImage  = false;
+    // this.files.forEach(item => {
+    //     if(item.type.startsWith("image/")) hasUploadedImage = true;
+    // });
 
-    if(!hasUploadedImage){
-      this.errors.general = "Загрузите хотя бы одно изображение";
-      hasErrors = true;
-    }
-
+    // if(!hasUploadedImage){
+    //   this.errors.general = "Загрузите хотя бы одно изображение";
+    //   hasErrors = true;
+    // }
 
     return hasErrors;
   }
 
-  handleFileInput(event: any): void{
-    const input = event.target;
-    const files = input.files;
+  // handleFileInput(event: any): void{
+  //   const input = event.target;
+  //   const files = input.files;
   
-    for(let item of files){
-      this.files.push(item);
-      const url = URL.createObjectURL(item);
-      this.filesPreviews.push({ url: url, type: item.type });
-    }
-    input.value = "";
-  }
+  //   for(let item of files){
+  //     this.files.push(item);
+  //     const url = URL.createObjectURL(item);
+  //     this.filesPreviews.push({ url: url, type: item.type });
+  //   }
+  //   input.value = "";
+  // }
 
-  removeFile(index: number): void{
-    this.filesPreviews.splice(index, 1);
-    this.files.splice(index, 1);
-  }
+  // removeFile(index: number): void{
+  //   this.filesPreviews.splice(index, 1);
+  //   this.files.splice(index, 1);
+  // }
 
   async handleSubmit(): Promise<void>{
     if(this.validateData()) return;
@@ -274,10 +286,10 @@ export class UpdateRecipeComponent {
       if(this.servings) formData.append("servings", this.servings!.toString());
       formData.append("ingredients", JSON.stringify(this.ingredients));
       formData.append("instructions", JSON.stringify(this.instructions));
-      this.files.forEach((item: File) => formData.append("files", item));
+      if(this.files.length) this.files.forEach((item: File) => formData.append("files", item));
 
-      await this.recipesService.addRecipe(formData);
-      this.router.navigate(["/"]);
+      await this.recipesService.updateRecipe(this.recipeId, formData);
+      this.router.navigate(["/recipe", this.recipeId]);
     } catch (error){
       console.error("Ошибка при входе:", error);
       if(axios.isAxiosError(error)){
