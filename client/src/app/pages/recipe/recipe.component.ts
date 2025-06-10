@@ -53,6 +53,10 @@ export class RecipeComponent {
     return Array(rating).fill(null);
   }
 
+  updatePost(id: string): void{
+      this.router.navigate(["/updaterecipe", id]);
+  }
+
   async deletePost(id: string): Promise<void>{
     try {
       await this.recipesService.deleteRecipe(id);

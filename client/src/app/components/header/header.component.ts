@@ -30,7 +30,7 @@ export class HeaderComponent {
   }
 
   checkUrl(): boolean{
-    return this.router.url == "/" || this.router.url == "/profile";
+    return (this.router.url !== "/addrecipe") ? true : false;
   }
 
   changeFormType(): void{

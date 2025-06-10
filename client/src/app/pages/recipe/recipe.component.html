@@ -28,7 +28,10 @@
                     </svg>
                 </div>
             </div>
-            <button class="main__button-delete-post" *ngIf="userId === recipe.author._id" (click)="showConfirmationWindow()">Delete post</button>
+            <div class="main__controls">
+                <button class="main__button-update-post" *ngIf="userId === recipe.author._id" (click)="updatePost(recipe._id)">Update post</button>
+                <button class="main__button-delete-post" *ngIf="userId === recipe.author._id" (click)="showConfirmationWindow()">Delete post</button>
+            </div>
         </div>
     </div>
     <hr class="main__divider">
