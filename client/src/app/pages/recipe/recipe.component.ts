@@ -21,10 +21,12 @@ export class RecipeComponent {
   constructor(private router: Router, private route: ActivatedRoute, private recipesService: RecipesService){}
 
   async ngOnInit(): Promise<void>{
-    const id: string | null = this.route.snapshot.paramMap.get("id");
-    this.recipe = await this.recipesService.getRecipeData(id);
-    console.log(this.recipe);
-    
+    try {
+      const id: string | null = this.route.snapshot.paramMap.get("id");
+      this.recipe = await this.recipesService.getRecipeData(id);
+    } catch (error) {
+      console.error("Не удалось загрузить данные", error);
+    }
   }
 
   prevSlide(): void{

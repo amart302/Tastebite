@@ -20,8 +20,12 @@ export class HeaderComponent {
   formType: "login" | "regist" | null = null;
 
   async ngOnInit(): Promise<void>{
-    const response = await this.userService.getUserAvatar();
-    if(response) this.avatar =  `http://localhost:5000/media/image/${response}`;
+    try {
+      const response = await this.userService.getUserAvatar();
+      if(response) this.avatar =  `http://localhost:5000/media/image/${response}`;
+    } catch (error) {
+      console.error("Не удалось загрузить данные", error);
+    }
   }
 
   goToAddRecipe(): void{

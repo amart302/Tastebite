@@ -22,8 +22,12 @@ export class MainComponent {
   constructor(private categoriesService: CategoriesService, private recipesService: RecipesService){}
 
   async ngOnInit(): Promise<void>{
-    this.recipes = await this.recipesService.getRecipes();
-    this.categories = await this.categoriesService.getPopularCategories();
-    this.latestRecipes = await this.recipesService.getLatestRecipes();
+    try {
+      this.recipes = await this.recipesService.getRecipes();
+      this.categories = await this.categoriesService.getPopularCategories();
+      this.latestRecipes = await this.recipesService.getLatestRecipes();
+    } catch (error) {
+      console.error("Не удалось загрузить данные", error);
+    }
   }
 }

@@ -92,8 +92,8 @@ export class UpdateRecipeComponent {
       }
       this.categories = await this.categoriesService.getCategories();
     } catch (error){
-      console.error("Не удалось загрузить категории", error);
-      this.errors.general = "Не удалось загрузить категории";
+      console.error("Не удалось загрузить данные", error);
+      this.errors.general = "Не удалось загрузить данные";
     }
   }
 

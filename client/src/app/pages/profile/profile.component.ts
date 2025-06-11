@@ -41,11 +41,16 @@ export class ProfileComponent {
   constructor(private userService: UserService, private router: Router, private recipesService: RecipesService){}
 
   async ngOnInit(): Promise<void>{
-    this.user = await this.userService.getUserData();
-    if(this.user?.avatar) this.avatarPreview = `http://localhost:5000/media/image/${this.user.avatar}`;
-    this.fullname = this.user.fullname;
-    this.email = this.user.email;
-    this.recipes = this.user.posts;
+    try {
+      this.user = await this.userService.getUserData();
+      if(this.user?.avatar) this.avatarPreview = `http://localhost:5000/media/image/${this.user.avatar}`;
+        this.fullname = this.user.fullname;
+        this.email = this.user.email;
+        this.recipes = this.user.posts;
+    } catch (error) {
+      console.error("Не удалось загрузить данные", error);
+      this.errors.general = "Не удалось загрузить данные";
+    }
   }
 
   handleFileInput(event: any): void{

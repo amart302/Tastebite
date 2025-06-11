@@ -13,7 +13,7 @@ export class RecipesService {
     try {
       const token: string | null = localStorage.getItem("token");
 
-      await axios.post("http://localhost:5000/recipes/addrecipe", data,  {
+      await axios.post("http://localhost:5000/recipes/", data,  {
         headers: {
           Authorization: `Bearer ${token}`,
         }

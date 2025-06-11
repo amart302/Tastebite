@@ -55,13 +55,13 @@
             <thead class="recipe-info__head">
                 <tr class="recipe-info__row">
                     <td class="recipe-info__cell recipe-info__table-cell--head">PREP TIME</td>
-                    <td class="recipe-info__cell recipe-info__table-cell--head">SERVINGS</td>
+                    <td class="recipe-info__cell recipe-info__table-cell--head" *ngIf="recipe.servings">SERVINGS</td>
                 </tr>
             </thead>
             <tbody class="recipe-info__table-body">
                 <tr class="recipe-info__row">
                     <td class="recipe-info__cell">{{ recipe.prepTime }} MIN</td>
-                    <td class="recipe-info__cell">{{ recipe.servings }} PEOPLE</td>
+                    <td class="recipe-info__cell" *ngIf="recipe.servings">{{ recipe.servings }} PEOPLE</td>
                 </tr>
             </tbody>
         </table>

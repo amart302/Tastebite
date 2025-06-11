@@ -1,1 +1,21 @@
-<p>categories works!</p>
+<app-header />
+<main class="main">
+    <h1 class="main__title">Categories</h1>
+    <hr class="main__divider">
+    <div class="categories__content" *ngIf="!categories">
+        <div class="category-sceleton-container" *ngFor="let item of skeletonItems">
+            <ngx-skeleton-loader [theme]="{ height: '200px', width: '200px', borderRadius: '50%' }" />
+            <ngx-skeleton-loader [theme]="{ height: '20px', width: '100px', borderRadius: '4px' }" />
+        </div>
+    </div>
+    
+    <div class="categories__content" *ngIf="categories">
+        <div *ngFor="let item of categories" class="category-container">
+            <img class="category-container__image" [src]="item.image" alt="">
+            <div class="category-container__content">
+                <span class="category-container__name">{{ item.title }}</span>
+            </div>
+        </div>
+    </div>
+</main>
+<app-footer />
