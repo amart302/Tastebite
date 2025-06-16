@@ -5,6 +5,7 @@ import { RecipeComponent } from './pages/recipe/recipe.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { UpdateRecipeComponent } from './pages/update-recipe/update-recipe.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
+import { CategoryComponent } from './pages/category/category.component';
 
 export const routes: Routes = [
     { path: "addrecipe", component: AddRecipeComponent },
@@ -12,5 +13,6 @@ export const routes: Routes = [
     { path: "updaterecipe/:id", component: UpdateRecipeComponent },
     { path: "profile", component: ProfileComponent },
     { path: "categories", component: CategoriesComponent },
+    { path: "category/:title", component: CategoryComponent },
     { path: "", component: MainComponent }
 ];

@@ -75,6 +75,17 @@ export async function getRecipe(req, res){
     }
 }
 
+
+export async function getRecipesByCategory(req, res){
+    try {
+        const { title } = req.params;
+        const recipes = await Recipe.find({ category: title });
+        res.status(200).json({ succes: true, recipes });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Не удалось загрузить рецепты" });
+        console.error(error);
+    }
+}
 export async function updateRecipe(req, res){
     try {
         const { id } = req.params;

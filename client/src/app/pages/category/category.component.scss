@@ -1,0 +1,9 @@
+.main {
+    max-width: 1200px;
+    min-height: calc(100vh - 288px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+}

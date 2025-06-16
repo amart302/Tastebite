@@ -28,13 +28,13 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
 }
-
 .category-container{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 10px;
+    transition: all 0.2s;
     cursor: pointer;
 
     &__content{
@@ -55,6 +55,14 @@
         font-size: 22px;
         font-weight: 600;
     }
+
+    &:hover{
+        transform: scale(1.02);
+    }
+}
+.category-container-link{
+    text-decoration: none;
+    color: #000000;
 }
 .category-sceleton-container{
     display: flex;

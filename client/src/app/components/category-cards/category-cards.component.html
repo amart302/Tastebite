@@ -6,10 +6,12 @@
 </div>
 
 <div class="categories__content" *ngIf="categories">
-    <div *ngFor="let item of categories" class="category-container">
-        <img class="category-container__image" [src]="item.image" alt="">
-        <div class="category-container__content">
-            <span class="category-container__name">{{ item.title }}</span>
+    <a [routerLink]="['/category/', item.title]" *ngFor="let item of categories" class="category-container-link">
+        <div class="category-container">
+            <img class="category-container__image" [src]="item.image" alt="">
+            <div class="category-container__content">
+                <span class="category-container__name">{{ item.title }}</span>
+            </div>
         </div>
-    </div>
+    </a>
 </div>
