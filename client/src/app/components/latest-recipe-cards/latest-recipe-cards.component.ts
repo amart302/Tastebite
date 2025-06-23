@@ -11,5 +11,5 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 })
 export class LatestRecipeCardsComponent {
   @Input() recipes!: any;
-  skeletonItems = Array(4).fill(null);
+  skeletonItems = Array(3).fill(null);
 }
