@@ -6,7 +6,6 @@ import authRoutes from "./routes/auth.routes.js";
 import usersRouter from "./routes/users.routes.js";
 import categoriesRouter from "./routes/categories.routes.js";
 import recipesRoutes from "./routes/recipes.routes.js";
-import mediaRoutes from "./routes/media.routes.js";
 import { connectDB } from "./db.js";
 import { getDirname } from "./utils/pathUtils.js";
 
@@ -25,7 +24,6 @@ app.use("/auth", authRoutes);
 app.use("/user", usersRouter);
 app.use("/categories", categoriesRouter);
 app.use("/recipes", recipesRoutes);
-// app.use("/media", mediaRoutes);
 
 const PORT = process.env.PORT || 5000;
 
